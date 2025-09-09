@@ -3,14 +3,13 @@ set(CMAKE_CXX_STANDARD 17)
 cmake_minimum_required(VERSION 3.25)
 project(test_cross_compile CXX)
 
-message("PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
-include("../cmake/deps.cmake")
+include("../../cmake/deps.cmake")
 
 
 add_ip(${PROJECT_NAME}_ip)
 
 ip_sources(${IP} SYSTEMRDL
-    ../simple/simple.rdl
+    ../../simple/fixp.rdl
 )
 
 peakrdl_halcpp(${IP})
@@ -34,4 +33,6 @@ target_compile_options(${PROJECT_NAME} PUBLIC
 
 firmware_size(${PROJECT_NAME})
 firmware_disasemble(${PROJECT_NAME})
+
+
 
