@@ -7,10 +7,10 @@ message("PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
 
 include("../cmake/deps.cmake")
 
-# add_hal_test(test_simple
-#     SYSTEMRDL ./simple.rdl
-#     CPP ./test_simple.cpp
-#     )
+add_hal_test(test_simple
+    SYSTEMRDL ./simple.rdl
+    CPP ./test_simple.cpp
+    )
 
 # add_hal_test(test_simple_ro
 #     SYSTEMRDL ./simple_ro.rdl
