@@ -4,10 +4,10 @@ int main () {
 
     volatile SIMPLE_HAL<0> soc;
  
-    float num = 4.8;
+    int num = 4;
     soc.r1.f1 = num;
 
-    float read_num = soc.r1.f1;
+    [[maybe_unused]] int read_num = soc.r1.f1;
     // soc.r1 = 2;
     // soc.r1.f2 = 10;
     //

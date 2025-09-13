@@ -9,7 +9,7 @@ include("../../cmake/deps.cmake")
 add_ip(${PROJECT_NAME}_ip)
 
 ip_sources(${IP} SYSTEMRDL
-    ../../simple/fixp.rdl
+    ../../simple/simple.rdl
 )
 
 peakrdl_halcpp(${IP})
@@ -29,6 +29,7 @@ target_link_libraries(${PROJECT_NAME}
 target_compile_options(${PROJECT_NAME} PUBLIC
     -Os
     -fno-delete-null-pointer-checks
+    -Wall -Wextra -Wpedantic -Werror
 )
 
 firmware_size(${PROJECT_NAME})

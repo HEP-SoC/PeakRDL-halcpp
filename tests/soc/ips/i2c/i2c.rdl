@@ -1,0 +1,28 @@
+addrmap i2c {
+    reg {
+        field {
+            sw=w;
+        } f1[1:0] = 0;
+
+        field {
+            desc = "These bits select the transfer mode";
+            sw=r;
+        } f2[3:2] = 0;
+
+        field {
+            hw=rw; we;
+        } f3[4:4] = 0;
+
+        field {
+        } f4[16:5] = 0;
+
+    } r1;
+
+    reg {
+
+        field {} f5[15:0] = 0;
+        field {} f6[31:16] = 0;
+    } r2;
+};
+
+

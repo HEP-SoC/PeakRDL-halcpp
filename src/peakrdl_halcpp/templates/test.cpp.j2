@@ -1,0 +1,23 @@
+#include "mock_io.h"
+#include "{{ top.orig_type_name }}_hal.h"
+#include "test_utils.h"
+
+inline constexpr {{ top.orig_type_name|upper }}_HAL<0> {{ top.orig_type_name }}{};
+
+int main (int argc, char *argv[]) {
+
+{% for field in fields %}
+    test_generic_field({{ field.get_path() }}, {{ field.width }}, {{ field.parent.absolute_address }}, {{ field.low }}, {{ field.high }}, "{{ field.get_path() }}");
+    {% if field.is_sw_readable and field.is_sw_writable %}
+    test_rw_field<decltype({{ field.get_path() }}), {{ field.width }}>({{ field.get_path() }}, "{{ field.get_path() }}");
+    {% elif field.is_sw_readable and not field.is_sw_writable %}
+    test_ro_field<decltype({{ field.get_path() }}), {{ field.width }}>({{ field.get_path() }}, "{{ field.get_path() }}");
+    {% elif not field.is_sw_readable and field.is_sw_writable %}
+    test_wo_field<decltype({{ field.get_path() }}), {{ field.width }}>({{ field.get_path() }}, "{{ field.get_path() }}");
+    {% endif %}
+
+{% endfor %}
+    
+    return 0;
+}
+

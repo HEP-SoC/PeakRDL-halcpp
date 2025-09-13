@@ -1,0 +1,8 @@
+addrmap soc{
+
+    gpio gpio_1;
+    gpio gpio_2;
+    gpio gpio_3;
+    gpio gpio_4;
+    i2c i2c_1;
+};
