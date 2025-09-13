@@ -36,6 +36,18 @@ namespace halcpp
         static constexpr uint32_t get_width() { return width; }
 
         /**
+         *
+         * @brief Return the index of first bit of the field in the parent register
+         */
+        static constexpr uint32_t get_start_bit() { return start_bit; }
+
+        /**
+         *
+         * @brief Return the index of last bit of the field in the parent register
+         */
+        static constexpr uint32_t get_end_bit() { return end_bit; }
+
+        /**
          * @brief Calculate the field mask.
          *
          * Example: START_BIT = 3, width = 4 => field_mask = 0000 0000 0111 1000
@@ -125,10 +137,8 @@ namespace halcpp
     template <typename BASE_TYPE>
     class FieldRdMixin : public BASE_TYPE
     {
-    private:
-        using parent = typename BASE_TYPE::parent_type;
-
     public:
+        using parent = typename BASE_TYPE::parent_type;
         /**
          * @brief Check if the field has a get operation (read capability).
          */
@@ -249,12 +259,13 @@ namespace halcpp
             static_assert(IDX >= -1);
             // Calculate the index to be used for accessing the mixin based on the given index
             constexpr uint32_t idx = IDX == -1 ? first_mixin::width - 1 : IDX;
+            constexpr uint32_t start_bit = first_mixin::start_bit;
 
             // Calculate the number of mixins in the tuple
             constexpr std::size_t num_of_mixins = sizeof...(FieldMixins);
 
             // Define the base type using the calculated index and parent type
-            using base_type = FieldBase<idx, idx, parent_type>;
+            using base_type = FieldBase<start_bit + idx, start_bit + idx, parent_type>;
 
             // Check if there's only one mixin
             if constexpr (num_of_mixins == 1)
