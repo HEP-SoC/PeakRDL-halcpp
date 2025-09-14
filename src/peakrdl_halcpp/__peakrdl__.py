@@ -1,6 +1,9 @@
 from typing import TYPE_CHECKING
+import pathlib
 
-from peakrdl.plugins.exporter import ExporterSubcommandPlugin  # pylint: disable=import-error
+from peakrdl.plugins.exporter import ExporterSubcommandPlugin
+
+from peakrdl_halcpp.test_generator import TestGenerator  # pylint: disable=import-error
 
 from .exporter import HalExporter
 
@@ -42,6 +45,14 @@ class Exporter(ExporterSubcommandPlugin):
                 passing --skip-buses flag."
         )
 
+        arg_group.add_argument(
+            "--generate-tests",
+            dest="generate_tests",
+            default=False,
+            action="store_true",
+            help="Generate tests"
+        )
+
     def do_export(self, top_node: 'AddrmapNode', options: 'argparse.Namespace') -> None:
         """Plugin entry function."""
         hal = HalExporter()
@@ -52,3 +63,11 @@ class Exporter(ExporterSubcommandPlugin):
             ext_modules=options.ext,
             skip_buses=options.skip_buses,
         )
+
+        if options.generate_tests:
+            tests = TestGenerator()
+
+            test_outdir = pathlib.Path(options.output) / "tests"
+            test_outdir.mkdir(parents=True, exist_ok=True)
+            tests.export(node=top_node,
+                         outdir=str(test_outdir))

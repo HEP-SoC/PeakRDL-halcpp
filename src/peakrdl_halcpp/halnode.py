@@ -90,7 +90,10 @@ class HalBaseNode(Node):
     def _halfactory(inst: Node, env: 'RDLEnvironment', parent: Optional['Node'] = None) -> Optional['Node']:
         """HAL node factory method adapted from systemrdl Node class."""
         if isinstance(inst, FieldNode):
-            return HalFieldNode(inst)
+            if inst.get_property("intwidth", default=None) or inst.get_property("fracwidth", default=None):
+                return HalFixpFieldNode(inst)
+            else:
+                return HalFieldNode(inst)
         elif isinstance(inst, RegNode):
             return HalRegNode(inst)
         elif isinstance(inst, RegfileNode):
@@ -243,6 +246,50 @@ class HalFieldNode(HalBaseNode, FieldNode):
 
         return False, None, None, None, None, None
 
+class HalFixpFieldNode(HalFieldNode, FieldNode):
+    """HalFixpFieldNode class inheriting from HalBaseNode class and systemrdl FieldNode class.
+
+        Class methods:
+
+        - :func:`get_enums`
+    """
+
+    @property
+    def fracwidth(self) -> int:
+        intwidth: int|None = self.get_property("intwidth", default=None)
+        fracwidth: int|None = self.get_property("fracwidth", default=None)
+
+        if fracwidth:
+            return int(fracwidth)
+        elif intwidth:
+            return self.width - intwidth
+        
+        raise ValueError("One of intwidth or fracwidth properties need to be defined fro FixpFieldNode")
+
+    @property
+    def intwidth(self) -> int:
+        intwidth: int|None = self.get_property("intwidth", default=None)
+        fracwidth: int|None = self.get_property("fracwidth", default=None)
+
+        if intwidth:
+            return int(intwidth)
+        elif fracwidth:
+            return self.width - fracwidth
+        
+        raise ValueError("One of intwidth or fracwidth properties need to be defined fro FixpFieldNode")
+
+    @property
+    def cpp_access_type(self) -> str:
+        """C++ access right template selection."""
+        if self.is_sw_readable and self.is_sw_writable:
+            return "FixpFieldRW"
+        elif self.is_sw_writable and not self.is_sw_readable:
+            return "FixpFieldWO"
+        elif self.is_sw_readable:
+            return "FixpFieldRO"
+        else:
+            raise ValueError(f'Node field access rights are not found \
+                              {self.inst.inst_name}')
 
 class HalRegNode(HalBaseNode, RegNode):
     """HalRegNode class inheriting from HalBaseNode class and systemrdl RegNode class.

@@ -1,0 +1,11 @@
+addrmap addrmap_ro {
+    reg {
+        field {sw=r;} f1[4:0] = 0;
+        field {sw=r;} f2[8:5] = 0;
+    } r1;
+
+    reg {
+        field {sw=r;} f5[15:0] = 0;
+        field {sw=r;} f6[31:16] = 0;
+    } r2;
+};
