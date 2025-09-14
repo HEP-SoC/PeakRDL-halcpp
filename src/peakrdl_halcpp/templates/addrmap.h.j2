@@ -8,10 +8,6 @@
 #include <stdint.h>
 #include "include/halcpp_base.h"
 
-#if defined(__clang__)
-#pragma clang diagnostic ignored "-Wundefined-var-template"
-#endif
-
 {# Include the child addrmap nodes #}
 {% for child_addrmap in halnode.halchildren(children_type=HalAddrmapNode, skip_buses=skip_buses, unique_orig_type=True) %}
 #include "{{ halutils.get_include_file(child_addrmap) }}"
