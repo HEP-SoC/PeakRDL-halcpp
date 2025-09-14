@@ -139,7 +139,7 @@ class TestGenerator:
 
     def copy_test_directory(self, outdir: str):
         curr_dir: Path = Path(__file__).resolve().parent
-        src: Path = curr_dir / "test_generator" 
+        src: Path = curr_dir / "test_generator_data" 
         dst = Path(outdir)
 
         shutil.copytree(src, dst, dirs_exist_ok=True)
