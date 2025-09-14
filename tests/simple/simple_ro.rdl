@@ -1,9 +1,0 @@
-addrmap simple_ro {
-    reg {
-        field {
-            sw=r;
-            hw=rw;
-        } f1[1:0] = 0;
-    } r1;
-};
-

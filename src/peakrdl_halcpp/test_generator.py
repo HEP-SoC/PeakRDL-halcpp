@@ -1,9 +1,10 @@
 from pathlib import Path
+import re
 import shutil
 import jinja2 as jj
 import os
 from typing import Any, Dict, Optional
-from systemrdl.node import AddrmapNode, FieldNode
+from systemrdl.node import AddrmapNode, FieldNode, Node, RegNode
 from systemrdl.walker import RDLListener, RDLWalker, WalkerAction
 
 
@@ -11,10 +12,14 @@ class FieldListener(RDLListener):
 
     def __init__(self) -> None:
         self.fields: list[FieldNode] = []
+        self.regs: list[RegNode] = []
         self.curr_addrmap: AddrmapNode|None = None
 
     def enter_Field(self, node: FieldNode) -> Optional[WalkerAction]:
         self.fields.append(node)
+
+    def enter_Reg(self, node: RegNode) -> Optional[WalkerAction]:
+        self.regs.append(node)
 
     def enter_Addrmap(self, node: AddrmapNode) -> Optional[WalkerAction]:
         if self.curr_addrmap is None:
@@ -30,6 +35,27 @@ class TestGeneratorListener(RDLListener):
     def enter_Addrmap(self, node: AddrmapNode) -> Optional[WalkerAction]:
         self.addrmaps.append(node)
     
+def transform_systemrdl_array_indices_to_halcpp(s):
+    # Match identifier followed by group of indexes reg0[0][2][4]
+    pattern = re.compile(r'([a-zA-Z_]\w*)((?:\[\d+\])+)' )
+
+    def repl(match):
+        ident = match.group(1)
+        brackets = match.group(2)
+        # extract numbers from [n]
+        nums = re.findall(r'\[(\d+)\]', brackets)
+        # replace it with .at<0, 2, 4>()
+        return f"{ident}.at<{','.join(nums)}>()"
+
+    return re.sub(pattern, repl, s)
+
+def resolve_path_array_refs(node: Node) -> str:
+    path = node.get_path()
+    # path = path.replace("[", ".template at<")
+    # path = path.replace("]", ">()")
+    path = transform_systemrdl_array_indices_to_halcpp(path)
+
+    return path
 
 class TestGenerator:
 
@@ -52,6 +78,7 @@ class TestGenerator:
             context: dict[str, Any] = {
                     "top": node,
                     "fields": field_listener.fields,
+                    "regs": field_listener.regs,
                     }
             test_content: str = self.process_template(context, "test.cpp.j2")
 
@@ -103,6 +130,7 @@ class TestGenerator:
         # Add the base zip function to the env
         env.filters.update({
             'zip': zip,
+            "resolve_path_array_refs": resolve_path_array_refs
         })
         # Render the C++ header text using the jinja2 template and the
         # specific context

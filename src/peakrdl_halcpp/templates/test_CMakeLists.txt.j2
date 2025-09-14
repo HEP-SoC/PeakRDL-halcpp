@@ -20,6 +20,11 @@ function(hal_test TEST_NAME)
         test_utils
       )
 
+    target_compile_options(${TEST_NAME} PUBLIC
+        -fno-delete-null-pointer-checks
+        -Wall -Wextra -Wpedantic -Werror
+    )
+
     add_test(
       NAME ${TEST_NAME}
       COMMAND $<TARGET_FILE:${TEST_NAME}>

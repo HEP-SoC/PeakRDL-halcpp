@@ -1,0 +1,5 @@
+addrmap addrmap_hier_rw_reg_arrays{
+    addrmap_rw_reg_1d_array rw_1d_ip0;
+    addrmap_rw_reg_2d_array rw_2d_ip0;
+    addrmap_rw_reg_4d_array rw_4d_ip0;
+};
