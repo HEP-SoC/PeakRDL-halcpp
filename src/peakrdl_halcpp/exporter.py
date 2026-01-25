@@ -118,13 +118,10 @@ class HalExporter():
             # HalAddrmap node using a jinja2 template.
             text = self.process_template(context)
 
-            # Addrmaps for memories use the original type name
-            if halnode.is_mem_addrmap:
-                out_file = os.path.join(
-                    outdir, halnode.orig_type_name_hal.lower() + ".h")
-            else:
-                out_file = os.path.join(
-                    outdir, halnode.inst_name_hal.lower() + ".h")
+            # All addrmaps use the original type name (not instance name)
+            # This ensures include statements match the actual filenames
+            out_file = os.path.join(
+                outdir, halnode.orig_type_name_hal.lower() + ".h")
 
             # Generate the files if --list-files parameter is not set
             if list_files:
