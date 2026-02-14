@@ -1,0 +1,19 @@
+property intwidth {
+    type = longint unsigned;
+    component = field;
+};
+
+property fracwidth {
+    type = longint unsigned;
+    component = field;
+};
+
+addrmap fixp_simple {
+    reg {
+        field {
+            intwidth=16;
+            fracwidth=16;
+            sw=rw;
+        } f1[31:0] = 0;
+    }r1 ;
+};
