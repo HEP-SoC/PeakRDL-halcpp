@@ -127,7 +127,7 @@ namespace {{ halnode.orig_type_name }}_nm
     {# ======== 4. Generate the memory classes ======== #}
     {% for m in halnode.halchildren(children_type=HalMemNode, skip_buses=skip_buses, unique_orig_type=True) %}
     {{ m.get_template_line() }}
-    class {{ m.parent.orig_type_name|upper }} : public halcpp::MemNode{{ m.get_cls_tmpl_params() }}
+    class {{ m.orig_type_name|upper }} : public halcpp::MemNode{{ m.get_cls_tmpl_params() }}
     {
 
     };
@@ -153,7 +153,7 @@ public:
     {% elif c.__class__.__name__ == "HalRegfileNode" %}
     static {{ halnode.orig_type_name }}_nm::{{ c.orig_type_name|upper }}<0x{{ "%0x"|format(c.address_offset|int) }}, TYPE> {{ c.inst_name }};
     {% elif c.__class__.__name__ == "HalMemNode" %}
-    static {{ halnode.orig_type_name }}_nm::{{ c.parent.orig_type_name|upper }}<0x{{ "%0x"|format(c.address_offset|int) }}, {{ c.size }}, TYPE> {{ c.inst_name }};
+    static {{ halnode.orig_type_name }}_nm::{{ c.orig_type_name|upper }}<0x{{ "%0x"|format(c.address_offset|int) }}, {{ c.size }}, TYPE> {{ c.inst_name }};
     {% else %}
     static {{ halutils.get_extern(c)|upper }}<0x{{ "%0x"|format(c.address_offset|int) }}, TYPE> {{ c.inst_name }};
     {% endif %}
