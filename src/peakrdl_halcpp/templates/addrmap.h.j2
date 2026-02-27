@@ -114,7 +114,12 @@ namespace {{ halnode.orig_type_name }}_nm
         using TYPE = {{ rf.orig_type_name|upper }}{{ rf.get_cls_tmpl_params() }};
 
     {% for c in rf.halchildren((HalRegNode, HalRegfileNode), skip_buses=skip_buses) %}
+
+        {% if c.__class__.__name__ == "HalRegNode" and c.is_array %}
+        static halcpp::RegArrayNode<{{ halnode.orig_type_name }}_nm::{{ c.orig_type_name|upper }}, 0x{{ "%0x"|format(c.address_offset|int) }}, {{ c.width }}, {{ c.array_stride }}, TYPE , {{ c.array_dimensions|join(', ') }}> {{ c.inst_name }};
+        {% elif c.__class__.__name__ == "HalRegNode" %}
         static {{ c.orig_type_name|upper }}<0x{{ "%0x"|format(c.address_offset|int) }}, {{ c.width }}, TYPE> {{ c.inst_name }};
+        {% endif %}
     {% endfor %}
     };
     {% endfor %}
