@@ -1,21 +1,23 @@
 from systemrdl import RDLCompiler
 from peakrdl_halcpp import HalExporter
 
-rdlc = RDLCompiler()
-rdlc.compile_file("atxmega_spi.rdl")
+rdl_files = ["atxmega_spi.rdl", "regs_and_mem.rdl"]
 
-root = rdlc.elaborate()
-top_gen = root.children(unroll=True)
+for rdl_file in rdl_files:
+    rdlc = RDLCompiler()
+    rdlc.compile_file(rdl_file)
 
-top = None
-for top in top_gen:
-    top = top
-assert top is not None
+    root = rdlc.elaborate()
+    top_gen = root.children(unroll=True)
 
-exporter = HalExporter()
+    top = None
+    for top in top_gen:
+        top = top
+    assert top is not None
 
-exporter.export(
-        node=top,
-        outdir="generated",
-        )
+    exporter = HalExporter()
 
+    exporter.export(
+            node=top,
+            outdir="generated",
+            )

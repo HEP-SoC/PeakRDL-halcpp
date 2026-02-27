@@ -353,14 +353,6 @@ class HalMemNode(HalBaseNode, MemNode):
 
         self.bus_offset = 0
 
-        # Memory component instantiation is limited for simplicity
-        if self.parent is not None:
-            for c in self.parent.children():
-                if isinstance(c, AddressableNode):
-                    assert c.inst == self.inst, (f"Addrmaps with anything else than "
-                                                 "one memory node is currently not allowed, "
-                                                 "it could be easily added")
-
     @property
     def address_offset(self) -> int:
         """Property adapted HalRegNode class."""
