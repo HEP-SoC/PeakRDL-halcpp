@@ -1,24 +1,22 @@
 name: Deploy to GitHub Pages
-
 on:
   push:
     branches:
       - master
-
 jobs:
   deploy:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      
+      - uses: actions/checkout@v4
+
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '16.14'
+          node-version: '20'
 
       - name: Cache Yarn packages
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/.yarn
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -27,13 +25,12 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-        working-directory: ./docs  # Change this to the directory containing package.json
+        working-directory: ./docs
 
       - name: Build website
         run: yarn build
-        working-directory: ./docs  # Change this to the directory containing package.json
+        working-directory: ./docs
 
-      # Popular action to deploy to GitHub Pages:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
