@@ -237,9 +237,7 @@
         </div>
         <article role="main" id="furo-main-content">
           <h1>Source code for peakrdl_halcpp.halutils</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">getpass</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.halnode</span><span class="w"> </span><span class="kn">import</span> <span class="n">HalAddrmapNode</span>
 
@@ -247,8 +245,7 @@
 <div class="viewcode-block" id="HalUtils">
 <a class="viewcode-back" href="../../peakrdl_halcpp.html#peakrdl_halcpp.halutils.HalUtils">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">HalUtils</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    HAL utility class.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Utility helpers used by the jinja2 template during C++ header generation.</span>
 
 <span class="sd">    Class methods:</span>
 
@@ -261,6 +258,13 @@
 <div class="viewcode-block" id="HalUtils.__init__">
 <a class="viewcode-back" href="../../peakrdl_halcpp.html#peakrdl_halcpp.halutils.HalUtils.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ext_modules</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ext_modules : List[str]</span>
+<span class="sd">            List of addrmap instance names that have user-supplied ``*_hal_ext.h``</span>
+<span class="sd">            extension headers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1">#: List of modules (i.e., SystemRDL addrmap objects) with extended functionalities.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ext_modules</span> <span class="o">=</span> <span class="n">ext_modules</span></div>
 
@@ -268,7 +272,21 @@
 <div class="viewcode-block" id="HalUtils.get_include_file">
 <a class="viewcode-back" href="../../peakrdl_halcpp.html#peakrdl_halcpp.halutils.HalUtils.get_include_file">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_include_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">halnode</span><span class="p">:</span> <span class="n">HalAddrmapNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the HAL node header file to include.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the header filename to ``#include`` for a given HAL node.</span>
+
+<span class="sd">        If the node has an extension header, returns ``&lt;name&gt;_hal_ext.h``;</span>
+<span class="sd">        otherwise returns ``&lt;name&gt;_hal.h``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        halnode : HalAddrmapNode</span>
+<span class="sd">            The HAL addrmap node whose include filename is needed.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            Header filename (without path).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">has_extern</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_extern</span><span class="p">(</span><span class="n">halnode</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">halnode</span><span class="o">.</span><span class="n">orig_type_name_hal</span> <span class="o">+</span> <span class="s2">&quot;_ext.h&quot;</span> <span class="k">if</span> <span class="n">has_extern</span> <span class="k">else</span> <span class="n">halnode</span><span class="o">.</span><span class="n">orig_type_name_hal</span> <span class="o">+</span> <span class="s2">&quot;.h&quot;</span></div>
 
@@ -276,7 +294,18 @@
 <div class="viewcode-block" id="HalUtils.has_extern">
 <a class="viewcode-back" href="../../peakrdl_halcpp.html#peakrdl_halcpp.halutils.HalUtils.has_extern">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">has_extern</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">halnode</span><span class="p">:</span> <span class="n">HalAddrmapNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns True if the HAL node is listed as having extended functionalities.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns True if the HAL node has a user-supplied extension header.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        halnode : HalAddrmapNode</span>
+<span class="sd">            The HAL addrmap node to check.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            True if ``halnode.inst_name`` appears in :attr:`ext_modules`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ext_modules</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">halnode</span><span class="o">.</span><span class="n">inst_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ext_modules</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">True</span>
@@ -286,9 +315,22 @@
 <div class="viewcode-block" id="HalUtils.get_extern">
 <a class="viewcode-back" href="../../peakrdl_halcpp.html#peakrdl_halcpp.halutils.HalUtils.get_extern">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_extern</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">halnode</span><span class="p">:</span> <span class="n">HalAddrmapNode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the HAL node instance name replacing the &#39;_hal&#39; suffix with</span>
-<span class="sd">         the &#39;_ext&#39; suffix if the node is listed as having extended functionalities.</span>
-<span class="sd">         &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the C++ type name for the node, using the ``_ext`` variant when applicable.</span>
+
+<span class="sd">        If the node has an extension header, the ``_hal`` suffix of the original</span>
+<span class="sd">        type name is replaced by ``_ext``; otherwise the standard ``_hal`` name is</span>
+<span class="sd">        returned.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        halnode : HalAddrmapNode</span>
+<span class="sd">            The HAL addrmap node.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            C++ type name string (``&lt;name&gt;_ext`` or ``&lt;name&gt;_hal``).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_extern</span><span class="p">(</span><span class="n">halnode</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">halnode</span><span class="o">.</span><span class="n">orig_type_name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_hal&#39;</span><span class="p">,</span> <span class="s1">&#39;_ext&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">halnode</span><span class="o">.</span><span class="n">orig_type_name_hal</span></div>
@@ -297,9 +339,13 @@
 <div class="viewcode-block" id="HalUtils.generate_file_header">
 <a class="viewcode-back" href="../../peakrdl_halcpp.html#peakrdl_halcpp.halutils.HalUtils.generate_file_header">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_file_header</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns file header for generated files.&quot;&quot;&quot;</span>
-        <span class="n">username</span> <span class="o">=</span> <span class="n">getpass</span><span class="o">.</span><span class="n">getuser</span><span class="p">()</span>
-        <span class="n">current_datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns a one-line C++ comment used as the header of every generated file.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            A ``// Generated with ...`` comment string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">comment</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;// Generated with PeakRD-halcpp : https://github.com/Risto97/PeakRDL-halcpp</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="k">return</span> <span class="n">comment</span></div>
 </div>

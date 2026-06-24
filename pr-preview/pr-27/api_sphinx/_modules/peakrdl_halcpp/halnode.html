@@ -299,7 +299,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">orig_type_name_hal</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the node name with the &#39;_hal&#39; suffix.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the original type name with the &#39;_hal&#39; suffix.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">orig_type_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;_hal&quot;</span>
 
     <span class="nd">@property</span>
@@ -315,13 +315,23 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_bus</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns True if the HAL node is considered a bus (i.e., addrmap containing only addrmaps).&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns True if the HAL node is considered a bus (i.e., an addrmap containing only addrmaps).</span>
+
+<span class="sd">        Always returns False for non-addrmap nodes. Overridden in :class:`HalAddrmapNode`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">False</span>
 
 <div class="viewcode-block" id="HalBaseNode.get_docstring">
 <a class="viewcode-back" href="../../peakrdl_halcpp.html#peakrdl_halcpp.halnode.HalBaseNode.get_docstring">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_docstring</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts the node description into a C++ multi-line comment.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Converts the node description property into a C++ multi-line comment.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            A ``/* ... */`` formatted comment containing the node&#39;s ``desc`` property,</span>
+<span class="sd">            or an empty string if no description is set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">desc</span> <span class="o">=</span> <span class="s2">&quot;/*</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_property</span><span class="p">(</span><span class="s1">&#39;desc&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_property</span><span class="p">(</span><span class="s1">&#39;desc&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
@@ -332,7 +342,25 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_halfactory</span><span class="p">(</span><span class="n">inst</span><span class="p">:</span> <span class="n">Node</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="s1">&#39;RDLEnvironment&#39;</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">&#39;Node&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s1">&#39;Node&#39;</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;HAL node factory method adapted from systemrdl Node class.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Factory method that wraps a systemrdl Node in its corresponding HAL subclass.</span>
+
+<span class="sd">        Adapted from the systemrdl Node factory. Returns ``None`` for unsupported</span>
+<span class="sd">        node types (e.g., :class:`~systemrdl.node.SignalNode`).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        inst : Node</span>
+<span class="sd">            The systemrdl node instance to wrap.</span>
+<span class="sd">        env : RDLEnvironment</span>
+<span class="sd">            The systemrdl compilation environment.</span>
+<span class="sd">        parent : Node, optional</span>
+<span class="sd">            The parent node.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Node or None</span>
+<span class="sd">            The wrapped HAL node, or ``None`` if the node type is not supported.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inst</span><span class="p">,</span> <span class="n">FieldNode</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">HalFieldNode</span><span class="p">(</span><span class="n">inst</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inst</span><span class="p">,</span> <span class="n">RegNode</span><span class="p">):</span>
@@ -353,7 +381,11 @@
 <div class="viewcode-block" id="HalBaseNode.halunrolled">
 <a class="viewcode-back" href="../../peakrdl_halcpp.html#peakrdl_halcpp.halnode.HalBaseNode.halunrolled">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">halunrolled</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="s1">&#39;Node&#39;</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;HAL node unrolling method adapted from systemrdl Node class.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Yields one HAL node per array element, or yields the node itself if not an array.</span>
+
+<span class="sd">        Adapted from the systemrdl Node unrolling logic. For array nodes, each yielded</span>
+<span class="sd">        node has its ``current_idx`` set to the corresponding index tuple.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">cls</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">AddressableNode</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_array</span><span class="p">:</span>  <span class="c1"># pylint: disable=no-member</span>
             <span class="c1"># Is an array. Yield a Node object for each instance</span>
@@ -379,7 +411,31 @@
                     <span class="n">unique_orig_type</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
                     <span class="n">type_dict</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
                     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="s1">&#39;Node&#39;</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;HAL children generator method wrapper around systemrdl Node.children method.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Yields HAL-wrapped children of this node, with optional filtering.</span>
+
+<span class="sd">        Wraps systemrdl ``Node.children`` so that each child is converted to the</span>
+<span class="sd">        appropriate HAL subclass via :func:`_halfactory`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        children_type : Node, optional</span>
+<span class="sd">            Only yield children that are instances of this type. Defaults to :class:`~systemrdl.node.Node`</span>
+<span class="sd">            (all types).</span>
+<span class="sd">        unroll : bool, optional</span>
+<span class="sd">            If True, unroll array children into individual element nodes.</span>
+<span class="sd">        skip_not_present : bool, optional</span>
+<span class="sd">            If True (default), skip nodes whose ``ispresent`` property is False.</span>
+<span class="sd">        skip_buses : bool, optional</span>
+<span class="sd">            If True, transparent bus addrmaps (containing only addrmaps) are</span>
+<span class="sd">            flattened and their children are yielded instead.</span>
+<span class="sd">        bus_offset : int, optional</span>
+<span class="sd">            Cumulative address offset inherited from skipped bus nodes.</span>
+<span class="sd">        unique_orig_type : bool, optional</span>
+<span class="sd">            If True, yield at most one child per unique ``orig_type_name``.</span>
+<span class="sd">        type_dict : dict, optional</span>
+<span class="sd">            Dictionary used internally to track seen ``orig_type_name`` values and</span>
+<span class="sd">            detect parameterised type conflicts. Pass ``None`` to start fresh.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="n">type_dict</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">type_dict</span> <span class="o">=</span> <span class="p">{}</span>
@@ -423,7 +479,34 @@
                        <span class="n">unique_orig_type</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
                        <span class="n">type_dict</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
                        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="s1">&#39;Node&#39;</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;HAL node descedant generator adapted from systemrdl Node.descendants class.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Yields all HAL-wrapped descendants of this node, with optional filtering.</span>
+
+<span class="sd">        Adapted from systemrdl ``Node.descendants``. Recursively calls</span>
+<span class="sd">        :func:`halchildren` to traverse the full subtree.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        descendants_type : Node, optional</span>
+<span class="sd">            Only yield descendants that are instances of this type. Defaults to</span>
+<span class="sd">            :class:`~systemrdl.node.Node` (all types).</span>
+<span class="sd">        unroll : bool, optional</span>
+<span class="sd">            If True, unroll array nodes into individual element nodes.</span>
+<span class="sd">        skip_not_present : bool, optional</span>
+<span class="sd">            If True (default), skip nodes whose ``ispresent`` property is False.</span>
+<span class="sd">        in_post_order : bool, optional</span>
+<span class="sd">            If True, yield children before their parent (post-order traversal).</span>
+<span class="sd">            Defaults to pre-order.</span>
+<span class="sd">        skip_buses : bool, optional</span>
+<span class="sd">            If True, transparent bus addrmaps are flattened and their children</span>
+<span class="sd">            are yielded instead.</span>
+<span class="sd">        bus_offset : int, optional</span>
+<span class="sd">            Cumulative address offset inherited from skipped bus nodes.</span>
+<span class="sd">        unique_orig_type : bool, optional</span>
+<span class="sd">            If True, yield at most one descendant per unique ``orig_type_name``.</span>
+<span class="sd">        type_dict : dict, optional</span>
+<span class="sd">            Dictionary used internally to track seen ``orig_type_name`` values.</span>
+<span class="sd">            Pass ``None`` to start fresh.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">halchildren</span><span class="p">(</span><span class="n">descendants_type</span><span class="p">,</span> <span class="n">unroll</span><span class="p">,</span> <span class="n">skip_not_present</span><span class="p">,</span> <span class="n">skip_buses</span><span class="p">,</span> <span class="n">bus_offset</span><span class="p">,</span> <span class="n">unique_orig_type</span><span class="p">,</span> <span class="n">type_dict</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">descendants_type</span><span class="p">):</span>
@@ -462,7 +545,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">address_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="c1"># FieldNode does not have an address but to avoid extra check it returns 0</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Always returns 0. Fields have no independent address; the offset is on the parent register.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="mi">0</span>
 
     <span class="nd">@property</span>
@@ -484,8 +567,15 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the enumeration(s) of a FieldNode.</span>
 
 <span class="sd">        Inside an addrmap node, all enumerations must have a different name.</span>
-<span class="sd">        The jinja template used to create the C++ header is filtering enumeration</span>
-<span class="sd">        with already existing name.</span>
+<span class="sd">        The jinja template used to create the C++ header filters enumerations</span>
+<span class="sd">        with already-existing names.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            ``(has_enum, enum_cls_name, enum_strings, enum_values, enum_desc, const_width)``</span>
+<span class="sd">            where ``has_enum`` is a bool indicating whether an encoding is defined.</span>
+<span class="sd">            All other elements are ``None`` when ``has_enum`` is False.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">encode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_property</span><span class="p">(</span><span class="s1">&#39;encode&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">encode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -510,12 +600,14 @@
 <div class="viewcode-block" id="HalRegNode">
 <a class="viewcode-back" href="../../peakrdl_halcpp.html#peakrdl_halcpp.halnode.HalRegNode">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">HalRegNode</span><span class="p">(</span><span class="n">HalBaseNode</span><span class="p">,</span> <span class="n">RegNode</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;HalRegNode class inheriting from HalBaseNode class and systemrdl RegNode class.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HAL node wrapping a SystemRDL register (:class:`~systemrdl.node.RegNode`).</span>
 
-<span class="sd">        Class methods:</span>
+<span class="sd">    Inherits from :class:`HalBaseNode` and :class:`~systemrdl.node.RegNode`.</span>
 
-<span class="sd">        - :func:`get_template_line`</span>
-<span class="sd">        - :func:`get_cls_tmpl_params`</span>
+<span class="sd">    Class methods:</span>
+
+<span class="sd">    - :func:`get_template_line`</span>
+<span class="sd">    - :func:`get_cls_tmpl_params`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="HalRegNode.__init__">
@@ -540,7 +632,11 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">address_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Property adapted from systemrdl RegNode class to HalRegNode class.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the address offset adjusted by the accumulated bus offset.</span>
+
+<span class="sd">        For array registers with no current index set, the offset of the first</span>
+<span class="sd">        element is used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_array</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus_offset</span> <span class="o">+</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">halunrolled</span><span class="p">())</span><span class="o">.</span><span class="n">address_offset</span>
         <span class="k">else</span><span class="p">:</span>
@@ -548,6 +644,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">width</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the register width in bits, derived from the highest bit position of its fields.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">max</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">high</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">halchildren</span><span class="p">(</span><span class="n">HalFieldNode</span><span class="p">)])</span> <span class="o">+</span> <span class="mi">1</span>
 
 <div class="viewcode-block" id="HalRegNode.get_template_line">
@@ -572,12 +669,14 @@
 <div class="viewcode-block" id="HalRegfileNode">
 <a class="viewcode-back" href="../../peakrdl_halcpp.html#peakrdl_halcpp.halnode.HalRegfileNode">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">HalRegfileNode</span><span class="p">(</span><span class="n">HalBaseNode</span><span class="p">,</span> <span class="n">RegfileNode</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;HalRegfileNode class inheriting from HalBaseNode class and systemrdl RegfileNode class.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HAL node wrapping a SystemRDL register file (:class:`~systemrdl.node.RegfileNode`).</span>
 
-<span class="sd">        Class methods:</span>
+<span class="sd">    Inherits from :class:`HalBaseNode` and :class:`~systemrdl.node.RegfileNode`.</span>
 
-<span class="sd">        - :func:`get_template_line`</span>
-<span class="sd">        - :func:`get_cls_tmpl_params`</span>
+<span class="sd">    Class methods:</span>
+
+<span class="sd">    - :func:`get_template_line`</span>
+<span class="sd">    - :func:`get_cls_tmpl_params`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="HalRegfileNode.__init__">
@@ -600,7 +699,11 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">address_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Property adapted from systemrdl RegNode class to HalRegNode class.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the address offset adjusted by the accumulated bus offset.</span>
+
+<span class="sd">        For array register files with no current index set, the offset of the</span>
+<span class="sd">        first element is used.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_array</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_idx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus_offset</span> <span class="o">+</span> <span class="nb">next</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">halunrolled</span><span class="p">())</span><span class="o">.</span><span class="n">address_offset</span>
         <span class="k">else</span><span class="p">:</span>
@@ -628,12 +731,14 @@
 <div class="viewcode-block" id="HalMemNode">
 <a class="viewcode-back" href="../../peakrdl_halcpp.html#peakrdl_halcpp.halnode.HalMemNode">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">HalMemNode</span><span class="p">(</span><span class="n">HalBaseNode</span><span class="p">,</span> <span class="n">MemNode</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;HalMemNode class inheriting from HalBaseNode class and systemrdl MemNode class.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HAL node wrapping a SystemRDL memory (:class:`~systemrdl.node.MemNode`).</span>
 
-<span class="sd">        Class methods:</span>
+<span class="sd">    Inherits from :class:`HalBaseNode` and :class:`~systemrdl.node.MemNode`.</span>
 
-<span class="sd">        - :func:`get_template_line`</span>
-<span class="sd">        - :func:`get_cls_tmpl_params`</span>
+<span class="sd">    Class methods:</span>
+
+<span class="sd">    - :func:`get_template_line`</span>
+<span class="sd">    - :func:`get_cls_tmpl_params`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="HalMemNode.__init__">
@@ -647,7 +752,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">address_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Property adapted HalRegNode class.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the address offset adjusted by the accumulated bus offset.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus_offset</span> <span class="o">+</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">address_offset</span>
 
 <div class="viewcode-block" id="HalMemNode.get_template_line">
@@ -672,12 +777,14 @@
 <div class="viewcode-block" id="HalAddrmapNode">
 <a class="viewcode-back" href="../../peakrdl_halcpp.html#peakrdl_halcpp.halnode.HalAddrmapNode">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">HalAddrmapNode</span><span class="p">(</span><span class="n">HalBaseNode</span><span class="p">,</span> <span class="n">AddrmapNode</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;HalAddrmapNode class inheriting from HalBaseNode class and systemrdl AddrmapNode class.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;HAL node wrapping a SystemRDL address map (:class:`~systemrdl.node.AddrmapNode`).</span>
 
-<span class="sd">        Class methods:</span>
+<span class="sd">    Inherits from :class:`HalBaseNode` and :class:`~systemrdl.node.AddrmapNode`.</span>
 
-<span class="sd">        - :func:`get_template_line`</span>
-<span class="sd">        - :func:`get_cls_tmpl_params`</span>
+<span class="sd">    Class methods:</span>
+
+<span class="sd">    - :func:`get_template_line`</span>
+<span class="sd">    - :func:`get_cls_tmpl_params`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="HalAddrmapNode.__init__">
@@ -696,12 +803,12 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">address_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Property adapted HalRegNode class.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the address offset adjusted by the accumulated bus offset.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus_offset</span> <span class="o">+</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">address_offset</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_bus</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if addrmap contains only addrmap&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns True if this addrmap contains only other addrmaps (i.e., is a transparent bus).&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">halchildren</span><span class="p">():</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">HalAddrmapNode</span><span class="p">):</span>
                 <span class="k">return</span> <span class="kc">False</span>
@@ -709,7 +816,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_mem_addrmap</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Checks if this is an addrmap containing (only) a memory.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns True if this addrmap contains only :class:`HalMemNode` children.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">halchildren</span><span class="p">():</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">HalMemNode</span><span class="p">):</span>
                 <span class="k">return</span> <span class="kc">False</span>
