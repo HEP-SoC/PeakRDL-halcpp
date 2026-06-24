@@ -1,0 +1,23 @@
+loaders:
+  - type: python
+    search_path: ['../src']
+    packages:
+      - peakrdl_halcpp
+    modules:
+      - peakrdl_halcpp.exporter
+      - peakrdl_halcpp.halnode
+      - peakrdl_halcpp.halutils
+      - peakrdl_halcpp.__peakrdl__
+
+processors:
+  - type: filter
+    documented_only: true
+    skip_empty_modules: true
+  - type: smart
+  - type: crossref
+
+renderer:
+  type: docusaurus
+  docs_base_path: docs
+  relative_output_path: api
+  sidebar_top_level_label: 'API Reference'

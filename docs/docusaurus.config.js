@@ -13,7 +13,9 @@ const config = {
   url: 'https://hep-soc.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/PeakRDL-halcpp/',
+  // Overridable via DOCS_BASE_URL so PR preview builds can be served from a
+  // sub-path (e.g. /PeakRDL-halcpp/pr-preview/pr-123/) without touching this file.
+  baseUrl: process.env.DOCS_BASE_URL || '/PeakRDL-halcpp/',
 
 
   // GitHub pages deployment config.

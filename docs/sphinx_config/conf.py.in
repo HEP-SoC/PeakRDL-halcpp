@@ -1,25 +1,19 @@
 # Configuration file for the Sphinx documentation builder.
-#
-# For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 {% if append_syspath -%}
-# -- Path setup --------------------------------------------------------------
-
 import os
 import sys
 sys.path.insert(0, {{ module_path | repr }})
 
 {% endif -%}
-# -- Project information -----------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+# -- Project information -----------------------------------------------------
 project = {{ project | repr }}
 copyright = {{ copyright | repr }}
 author = {{ author | repr }}
 
 {%- if version %}
-
 version = {{ version | repr }}
 {%- endif %}
 {%- if release %}
@@ -27,8 +21,6 @@ release = {{ release | repr }}
 {%- endif %}
 
 # -- General configuration ---------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
-
 extensions = [{% if extensions %}
 {%- for ext in extensions %}
     '{{ ext }}',
@@ -37,17 +29,41 @@ extensions = [{% if extensions %}
 
 extensions += [
     'sphinx.ext.napoleon',
+    'sphinx.ext.viewcode',
     'sphinx.ext.graphviz',
     'sphinx.ext.inheritance_diagram',
+    'sphinx.ext.intersphinx',
 ]
 
+# -- autodoc -----------------------------------------------------------------
+autodoc_member_order = 'bysource'
+autodoc_default_options = {
+    'members': True,
+    'undoc-members': False,
+    'show-inheritance': True,
+    'special-members': '__init__',
+}
+
+# -- napoleon (Google/NumPy docstring style) ---------------------------------
+napoleon_google_docstring = True
+napoleon_numpy_docstring = True
+napoleon_include_init_with_doc = True
+napoleon_include_private_with_doc = False
+napoleon_use_admonition_for_notes = True
+napoleon_use_admonition_for_examples = True
+
+# -- inheritance diagrams ----------------------------------------------------
 inheritance_node_attrs = dict(
     color='"#6AB0DE"',
     fillcolor='"#E7F2FA"',
     style='"rounded, filled"'
 )
-
 inheritance_graph_attrs = dict(rankdir="TB")
+
+# -- intersphinx -------------------------------------------------------------
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/3', None),
+}
 
 templates_path = ['{{ dot }}templates']
 exclude_patterns = [{{ exclude_patterns }}]
@@ -55,33 +71,25 @@ exclude_patterns = [{{ exclude_patterns }}]
 {% if suffix != '.rst' -%}
 source_suffix = {{ suffix | repr }}
 {% endif -%}
-
 {% if root_doc != 'index' -%}
 root_doc = {{ root_doc | repr }}
 {% endif -%}
-
 {% if language -%}
 language = {{ language | repr }}
 {%- endif %}
 
-# -- Options for HTML output -------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
-
-html_theme = 'sphinx_rtd_theme'
+# -- HTML output -------------------------------------------------------------
+html_theme = 'furo'
 html_static_path = ['{{ dot }}static']
-html_baseurl = '/PeakRDL-halcpp/api_html/'
+html_baseurl = '/PeakRDL-halcpp/api_sphinx/'
 
-{% if 'sphinx.ext.intersphinx' in extensions %}
-# -- Options for intersphinx extension ---------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/extensions/intersphinx.html#configuration
-
-intersphinx_mapping = {
-    'python': ('https://docs.python.org/3', None),
+html_theme_options = {
+    'light_css_variables': {
+        'color-brand-primary': '#0072B5',
+        'color-brand-content': '#0072B5',
+    },
+    'dark_css_variables': {
+        'color-brand-primary': '#6AB0DE',
+        'color-brand-content': '#6AB0DE',
+    },
 }
-{% endif -%}
-{% if 'sphinx.ext.todo' in extensions %}
-# -- Options for todo extension ----------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/extensions/todo.html#configuration
-
-todo_include_todos = True
-{% endif %}
