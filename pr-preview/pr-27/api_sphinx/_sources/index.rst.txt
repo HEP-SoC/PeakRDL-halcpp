@@ -1,14 +1,12 @@
-.. PeakRDL-halcpp-Documentation documentation master file, created by
-   sphinx-quickstart on Wed Jun 24 08:44:47 2026.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. PeakRDL-halcpp API documentation master file, created by sphinx-apidoc.
 
-PeakRDL-halcpp-Documentation documentation
-==========================================
+PeakRDL-halcpp API Reference
+=============================
 
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
+For the full user documentation, tutorials, and usage guides, see the
+`PeakRDL-halcpp documentation site <https://hep-soc.github.io/PeakRDL-halcpp/>`_.
+
+This page covers the Python API reference only.
 
 
 .. toctree::
