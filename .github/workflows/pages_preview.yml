@@ -68,36 +68,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up Python
+      - name: Build docs
         if: github.event.action != 'closed'
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.12
-
-      - name: Set up Node
-        if: github.event.action != 'closed'
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install dependencies
-        if: github.event.action != 'closed'
-        run: |
-          python -m pip install -U sphinx
-          python -m pip install sphinx-rtd-theme
-          python -m pip install sphinx-autoapi
-
-      - name: Build the docs
-        if: github.event.action != 'closed'
-        run: |
-          cd docs
-          python -m venv .venv
-          source .venv/bin/activate
-          pip install -r python_requirements.txt
-          mkdir -p build
-          cd build
-          cmake ../
-          make docusaurus_doc
+        uses: ./.github/actions/build-docs
 
       - name: Deploy / clean up PR preview
         id: preview
