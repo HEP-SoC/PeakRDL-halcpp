@@ -7,7 +7,6 @@ loaders:
       - peakrdl_halcpp.exporter
       - peakrdl_halcpp.halnode
       - peakrdl_halcpp.halutils
-      - peakrdl_halcpp.__peakrdl__
 
 processors:
   - type: filter
