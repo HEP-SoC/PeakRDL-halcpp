@@ -8,7 +8,7 @@ sidebar_position: 7
 
 ## `RegFileBase`
 
-`RegFileNode` is a class providing `constexpr` constants for basic information about the register.
+`RegFileBase` is a class providing `constexpr` constants for basic information about the register file.
 
 It is a template that takes the following template arguments
 

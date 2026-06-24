@@ -60,16 +60,16 @@ template <uint32_t BASE, uint32_t WIDTH, typename PARENT_TYPE>
 using RegRO = ...
 ```
 
-###  `FieldWO`
-is a `write-only` field with a declaration:
+###  `RegWO`
+is a `write-only` register with a declaration:
 
 ```cpp
 template <uint32_t BASE, uint32_t WIDTH, typename PARENT_TYPE>
 using RegWO = ...
 ```
 
-### `FieldRW`
-is a `read-write` field with a declaration:
+### `RegRW`
+is a `read-write` register with a declaration:
 
 ```cpp
 template <uint32_t BASE, uint32_t WIDTH, typename PARENT_TYPE>

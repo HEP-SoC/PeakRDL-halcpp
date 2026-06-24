@@ -53,7 +53,7 @@ The goal is to avoid magical numbers in your code, which can look like this:
 soc.gpio0.CFG0 = 0x123456;
 ```
 
-In previous case `CFG0` is a 24-bit register and pincfg is a 3-bit enum, so the total number of bits in the concatenation will amount to 12, this will cause a compilation error.
+In the previous case `CFG0` is a 24-bit register and pincfg is a 3-bit enum, so the total number of bits in the concatenation will amount to 12, this will cause a compilation error.
 It is by default strongly typed and does not allow width mismatch. To solve this in previous example, it is necessary to pad the list with Const, like this:
 
 ```cpp

@@ -29,7 +29,6 @@ peakrdl halcpp [-h] [-I INCDIR] [-t TOP] [--rename INST_NAME]
 |[`--list-files`](#__list_files)  |Option    |    0|exporter args        |
 |[`--skip-buses`](#__skip_buses)  |Option    |    0|exporter args        |
 
-
 ### `-h` `--help` {#_h___help}
 
 show this help message and exit
@@ -68,9 +67,8 @@ list of addrmap modules that have implemented {name}_EXT class in {name}_ext.h h
 
 ### `--list-files` {#__list_files}
 
-Dont generate files, but instead just list the files that will be generated, and external files that need to be included
+Don't generate files, but instead just list the files that will be generated, and external files that need to be included
 
 ### `--skip-buses` {#__skip_buses}
 
 By default the SystemRDL hierarchy is preserved but it can be simplified by removing buses (i.e., addrmap containing only addrmaps, not registers). This is achieved by passing the --skip-buses flag.
-
