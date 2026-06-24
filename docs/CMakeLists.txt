@@ -32,8 +32,6 @@ set(API_SPHINX_BUILD_DIR "${API_SPHINX_SRC_DIR}/_build/")
 set(SPHINX_TMPL_DIR "${API_SPHINX_SRC_DIR}/_templates/")
 
 # Template files configured at cmake-configure time.
-# sphinx-quickstart (called by --full) looks for conf.py.jinja in templatedir.
-# Note: conf.py_t was the Sphinx <5 naming convention, silently ignored by Sphinx 9.x.
 configure_file(${PROJECT_SOURCE_DIR}/sphinx_config/conf.py.jinja ${SPHINX_TMPL_DIR}/conf.py.jinja @ONLY)
 configure_file(${PROJECT_SOURCE_DIR}/sphinx_config/master_doc.rst.jinja ${SPHINX_TMPL_DIR}/master_doc.rst.jinja COPYONLY)
 configure_file(${PROJECT_SOURCE_DIR}/sphinx_config/Makefile.in ${API_SPHINX_SRC_DIR}/Makefile @ONLY)
@@ -98,36 +96,9 @@ set_target_properties(copy_sphinx_static PROPERTIES
 )
 
 # -----------------------------------------------------------------------
-# pydoc-markdown → Docusaurus-native Markdown (docs/docs/api/)
-# -----------------------------------------------------------------------
-find_program(
-    PYDOC_MARKDOWN_EXECUTABLE
-    NAMES pydoc-markdown
-    HINTS ${Python3_VIRTUAL_ENV}/bin
-    REQUIRED
-)
-find_package_handle_standard_args(pydoc-markdown DEFAULT_MSG PYDOC_MARKDOWN_EXECUTABLE)
-
-set(API_MD_STAMP "${PROJECT_BINARY_DIR}/api_md.stamp")
-
-add_custom_command(
-        OUTPUT ${API_MD_STAMP}
-        WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-        COMMAND ${PYDOC_MARKDOWN_EXECUTABLE}
-        COMMAND ${CMAKE_COMMAND} -E touch ${API_MD_STAMP}
-        COMMENT "Generating Python API Markdown with pydoc-markdown."
-)
-
-set(API_MD_OUTPUT_DIR "${PROJECT_SOURCE_DIR}/docs/api")
-add_custom_target(api_doc_md DEPENDS ${API_MD_STAMP})
-set_target_properties(api_doc_md PROPERTIES
-        ADDITIONAL_CLEAN_FILES "${API_MD_OUTPUT_DIR}"
-)
-
-# -----------------------------------------------------------------------
 # Docusaurus build and dev server
-# Both targets depend on api_doc_md and copy_sphinx_static so that
-# running either make target drives the full documentation pipeline.
+# Both targets depend on copy_sphinx_static so that running either
+# make target drives the full documentation pipeline.
 # -----------------------------------------------------------------------
 find_program(NPM_EXECUTABLE npm REQUIRED)
 find_package_handle_standard_args(npm DEFAULT_MSG NPM_EXECUTABLE)
@@ -142,7 +113,7 @@ add_custom_command(
         COMMAND ${CMAKE_COMMAND} -E touch ${DOCUSAURUS_STAMP_FILE}
         COMMAND ${NPM_EXECUTABLE} install
         COMMAND ${NPM_EXECUTABLE} run build -- --out-dir ${DOCUSAURUS_OUT_DIR}
-        DEPENDS ${API_MD_STAMP} ${SPHINX_STATIC_STAMP}
+        DEPENDS ${SPHINX_STATIC_STAMP}
         COMMENT "Building Docusaurus documentation."
 )
 
@@ -152,7 +123,7 @@ add_custom_target(docusaurus_doc
 )
 
 add_custom_target(docusaurus_start
-        DEPENDS api_doc_md copy_sphinx_static
+        DEPENDS copy_sphinx_static
         WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
         COMMAND ${NPM_EXECUTABLE} install
         COMMAND ${NPM_EXECUTABLE} run start
