@@ -31,30 +31,53 @@ set(API_SPHINX_SRC_DIR "${PROJECT_BINARY_DIR}/api/sphinx_docs/")
 set(API_SPHINX_BUILD_DIR "${API_SPHINX_SRC_DIR}/_build/")
 set(SPHINX_TMPL_DIR "${API_SPHINX_SRC_DIR}/_templates/")
 
-set(API_DOC_RST_CMD ${SPHINX_APIDOC} --full --module-first -a -H "PeakRDL-halcpp API" -A CERN -R ${PROJECT_VERSION} --templatedir=${SPHINX_TMPL_DIR} -o ${API_SPHINX_SRC_DIR} ${API_DOC_INPUT_DIR})
+# Template files configured at cmake-configure time.
+# sphinx-quickstart (called by --full) looks for conf.py.jinja in templatedir.
+# Note: conf.py_t was the Sphinx <5 naming convention, silently ignored by Sphinx 9.x.
+configure_file(${PROJECT_SOURCE_DIR}/sphinx_config/conf.py.jinja ${SPHINX_TMPL_DIR}/conf.py.jinja @ONLY)
+configure_file(${PROJECT_SOURCE_DIR}/sphinx_config/master_doc.rst.jinja ${SPHINX_TMPL_DIR}/master_doc.rst.jinja COPYONLY)
+configure_file(${PROJECT_SOURCE_DIR}/sphinx_config/Makefile.in ${API_SPHINX_SRC_DIR}/Makefile @ONLY)
+
+# Step 1: sphinx-apidoc --full generates RST stubs and runs sphinx-quickstart,
+#         which renders conf.py from conf.py.jinja and produces index.rst.
+#         conf.py is removed first so quickstart always re-applies the template.
+set(SPHINX_APIDOC_STAMP "${PROJECT_BINARY_DIR}/sphinx_apidoc.stamp")
+set(SPHINX_CONF_PY "${API_SPHINX_SRC_DIR}/conf.py")
+
+set(API_DOC_RST_CMD
+    ${SPHINX_APIDOC} --full --module-first -a
+    -H "PeakRDL-halcpp API" -A CERN -V ${PROJECT_VERSION} -R ${PROJECT_VERSION}
+    --templatedir=${SPHINX_TMPL_DIR}
+    -o ${API_SPHINX_SRC_DIR} ${API_DOC_INPUT_DIR}
+)
+
+add_custom_command(
+        OUTPUT ${SPHINX_APIDOC_STAMP} ${SPHINX_CONF_PY}
+        COMMAND "${CMAKE_COMMAND}" -E make_directory "${API_SPHINX_SRC_DIR}"
+        COMMAND "${CMAKE_COMMAND}" -E rm -f "${SPHINX_CONF_PY}"
+        COMMAND ${API_DOC_RST_CMD}
+        COMMAND "${CMAKE_COMMAND}" -E touch ${SPHINX_APIDOC_STAMP}
+        DEPENDS
+            ${SPHINX_TMPL_DIR}/conf.py.jinja
+            ${SPHINX_TMPL_DIR}/master_doc.rst.jinja
+        COMMENT "Generating PeakRDL-halcpp Sphinx RST files."
+)
+
+# Step 2: Build Sphinx HTML from the generated project.
 set(API_DOC_HTML_CMD make -C ${API_SPHINX_SRC_DIR} html)
 set(API_INDEX_HTML_FILE "${API_SPHINX_BUILD_DIR}/html/index.html")
 
 add_custom_command(
-        OUTPUT ${API_SPHINX_SRC_DIR}
-        COMMAND "${CMAKE_COMMAND}" -E make_directory "${API_SPHINX_SRC_DIR}"
-        COMMENT "Create Sphinx output directory."
-)
-
-add_custom_command(
         OUTPUT ${API_INDEX_HTML_FILE}
-        COMMAND ${API_DOC_RST_CMD}
         COMMAND ${API_DOC_HTML_CMD}
-        DEPENDS ${API_SPHINX_SRC_DIR}
-        COMMENT "Generating PeakRDL-halcpp Sphinx HTML documentation."
+        DEPENDS ${SPHINX_APIDOC_STAMP} ${SPHINX_CONF_PY}
+        COMMENT "Building Sphinx HTML documentation."
 )
 
 add_custom_target(api_doc DEPENDS ${API_INDEX_HTML_FILE})
-
-configure_file(${PROJECT_SOURCE_DIR}/sphinx_config/conf.py.in ${SPHINX_TMPL_DIR}/conf.py_t @ONLY)
-configure_file(${PROJECT_SOURCE_DIR}/sphinx_config/Makefile.in ${SPHINX_TMPL_DIR}/Makefile_t @ONLY)
-configure_file(${PROJECT_SOURCE_DIR}/sphinx_config/master_doc.rst.jinja ${SPHINX_TMPL_DIR}/master_doc.rst.jinja COPYONLY)
-configure_file(${PROJECT_SOURCE_DIR}/sphinx_config/Makefile.in ${API_SPHINX_SRC_DIR}/Makefile @ONLY)
+set_target_properties(api_doc PROPERTIES
+        ADDITIONAL_CLEAN_FILES "${SPHINX_APIDOC_STAMP};${API_SPHINX_SRC_DIR}"
+)
 
 # Copy Sphinx HTML into Docusaurus static folder so it is served as a
 # static asset at /api_sphinx/index.html
