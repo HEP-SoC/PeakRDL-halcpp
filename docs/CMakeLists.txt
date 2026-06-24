@@ -48,6 +48,7 @@ add_custom_target(api_doc DEPENDS ${API_INDEX_HTML_FILE})
 
 configure_file(${PROJECT_SOURCE_DIR}/sphinx_config/conf.py.in ${SPHINX_TMPL_DIR}/conf.py_t @ONLY)
 configure_file(${PROJECT_SOURCE_DIR}/sphinx_config/Makefile.in ${SPHINX_TMPL_DIR}/Makefile_t @ONLY)
+configure_file(${PROJECT_SOURCE_DIR}/sphinx_config/master_doc.rst.jinja ${SPHINX_TMPL_DIR}/master_doc.rst.jinja COPYONLY)
 configure_file(${PROJECT_SOURCE_DIR}/sphinx_config/Makefile.in ${API_SPHINX_SRC_DIR}/Makefile @ONLY)
 
 # Copy Sphinx HTML into Docusaurus static folder so it is served as a
