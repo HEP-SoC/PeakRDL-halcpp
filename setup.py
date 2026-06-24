@@ -11,7 +11,7 @@ with open(os.path.join("src/peakrdl_halcpp", "__about__.py"), encoding='utf-8') 
     version = v_dict['__version__']
 
 setuptools.setup(
-    name="peakrdl-halcpp",
+    name="peakrdl_halcpp",
     version=version,
     author="Risto Pejasinovic",
     author_email="risto.pejasinovic@gmail.com",
