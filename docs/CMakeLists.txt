@@ -1,8 +1,13 @@
 
 cmake_minimum_required(VERSION 3.25)
 
+# Get version from python package
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/../src/peakrdl_halcpp/__about__.py" _about)
+string(REGEX MATCH "__version__ = \"([^\"]+)\"" _ ${_about})
+set(_halcpp_version ${CMAKE_MATCH_1})
+
 project(PeakRDL-halcpp-Documentation
-        VERSION 0.4.2
+        VERSION ${_halcpp_version}
 )
 
 find_package(Python3 COMPONENTS Interpreter REQUIRED)
@@ -26,7 +31,7 @@ set(API_SPHINX_SRC_DIR "${PROJECT_BINARY_DIR}/api/sphinx_docs/")
 set(API_SPHINX_BUILD_DIR "${API_SPHINX_SRC_DIR}/_build/")
 set(SPHINX_TMPL_DIR "${API_SPHINX_SRC_DIR}/_templates/")
 
-set(API_DOC_RST_CMD ${SPHINX_APIDOC} --full --module-first -a -H ${PROJECT_NAME} -A CERN -R ${PROJECT_VERSION} --templatedir=${SPHINX_TMPL_DIR} -o ${API_SPHINX_SRC_DIR} ${API_DOC_INPUT_DIR})
+set(API_DOC_RST_CMD ${SPHINX_APIDOC} --full --module-first -a -H "PeakRDL-halcpp API" -A CERN -R ${PROJECT_VERSION} --templatedir=${SPHINX_TMPL_DIR} -o ${API_SPHINX_SRC_DIR} ${API_DOC_INPUT_DIR})
 set(API_DOC_HTML_CMD make -C ${API_SPHINX_SRC_DIR} html)
 set(API_INDEX_HTML_FILE "${API_SPHINX_BUILD_DIR}/html/index.html")
 
