@@ -1,0 +1,48 @@
+name: Deploy to GitHub Pages
+
+# execute this workflow automatically when a we push to master
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+
+  build_docs_job:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r docs/python_requirements.txt
+
+      - name: Build website
+        run: |
+          mkdir -p docs/build
+          cd docs/build
+          cmake ../
+          make docusaurus_doc
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/build/docusaurus
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
+
