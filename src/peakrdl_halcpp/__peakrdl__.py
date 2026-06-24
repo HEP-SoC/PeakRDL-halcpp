@@ -10,13 +10,23 @@ if TYPE_CHECKING:
 
 
 class Exporter(ExporterSubcommandPlugin):
-    """Generates C++ Hardware Abstraction Layer (HAL) libraries."""
+    """PeakRDL plugin entry point for the halcpp exporter.
+
+    Registers the ``halcpp`` subcommand with PeakRDL and wires it to
+    :class:`~peakrdl_halcpp.exporter.HalExporter`.
+    """
 
     short_desc = 'Generates C++ Hardware Abstraction Layer (HAL) libraries.'
     long_desc = 'Generates C++ Hardware Abstraction Layer (HAL) libraries.'
 
     def add_exporter_arguments(self, arg_group: 'argparse.ArgumentParser') -> None:
-        """Adds custom arguments to the plugin."""
+        """Registers halcpp-specific CLI arguments with the PeakRDL argument parser.
+
+        Parameters
+        ----------
+        arg_group : argparse.ArgumentParser
+            Argument group provided by PeakRDL into which arguments are added.
+        """
         arg_group.add_argument(
             "--ext",
             nargs="*",
@@ -43,7 +53,16 @@ class Exporter(ExporterSubcommandPlugin):
         )
 
     def do_export(self, top_node: 'AddrmapNode', options: 'argparse.Namespace') -> None:
-        """Plugin entry function."""
+        """Invoked by PeakRDL to run the export after argument parsing.
+
+        Parameters
+        ----------
+        top_node : AddrmapNode
+            Top-level addrmap node from the compiled SystemRDL input.
+        options : argparse.Namespace
+            Parsed CLI arguments, including ``output``, ``list_files``,
+            ``ext``, and ``skip_buses``.
+        """
         hal = HalExporter()
         hal.export(
             node=top_node,

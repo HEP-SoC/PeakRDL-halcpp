@@ -71,7 +71,8 @@ class HalExporter():
         ext_modules: List[str]
             List of modules (i.e., SystemRDL addrmap objects) with extended functionalities.
         skip_buses: bool = False
-            Keep AddrMapNodes containing only AddrMapNodes.
+            If True, AddrMapNodes containing only AddrMapNodes (transparent buses)
+            are removed from the hierarchy and their children are promoted.
         """
 
         # Check the node is an AddrmapNode object

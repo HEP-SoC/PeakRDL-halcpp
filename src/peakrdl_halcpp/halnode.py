@@ -58,7 +58,7 @@ class HalBaseNode(Node):
 
     @property
     def orig_type_name_hal(self) -> str:
-        """Return the node name with the '_hal' suffix."""
+        """Return the original type name with the '_hal' suffix."""
         return super().orig_type_name.lower() + "_hal"
 
     @property
@@ -74,11 +74,21 @@ class HalBaseNode(Node):
 
     @property
     def is_bus(self) -> bool:
-        """Returns True if the HAL node is considered a bus (i.e., addrmap containing only addrmaps)."""
+        """Returns True if the HAL node is considered a bus (i.e., an addrmap containing only addrmaps).
+
+        Always returns False for non-addrmap nodes. Overridden in :class:`HalAddrmapNode`.
+        """
         return False
 
     def get_docstring(self) -> str:
-        """Converts the node description into a C++ multi-line comment."""
+        """Converts the node description property into a C++ multi-line comment.
+
+        Returns
+        -------
+        str
+            A ``/* ... */`` formatted comment containing the node's ``desc`` property,
+            or an empty string if no description is set.
+        """
         desc = "/*\n"
         if self.get_property('desc') is not None:
             for l in self.get_property('desc').splitlines():
@@ -88,7 +98,25 @@ class HalBaseNode(Node):
 
     @staticmethod
     def _halfactory(inst: Node, env: 'RDLEnvironment', parent: Optional['Node'] = None) -> Optional['Node']:
-        """HAL node factory method adapted from systemrdl Node class."""
+        """Factory method that wraps a systemrdl Node in its corresponding HAL subclass.
+
+        Adapted from the systemrdl Node factory. Returns ``None`` for unsupported
+        node types (e.g., :class:`~systemrdl.node.SignalNode`).
+
+        Parameters
+        ----------
+        inst : Node
+            The systemrdl node instance to wrap.
+        env : RDLEnvironment
+            The systemrdl compilation environment.
+        parent : Node, optional
+            The parent node.
+
+        Returns
+        -------
+        Node or None
+            The wrapped HAL node, or ``None`` if the node type is not supported.
+        """
         if isinstance(inst, FieldNode):
             return HalFieldNode(inst)
         elif isinstance(inst, RegNode):
@@ -107,7 +135,11 @@ class HalBaseNode(Node):
             raise RuntimeError
 
     def halunrolled(self) -> Iterator['Node']:
-        """HAL node unrolling method adapted from systemrdl Node class."""
+        """Yields one HAL node per array element, or yields the node itself if not an array.
+
+        Adapted from the systemrdl Node unrolling logic. For array nodes, each yielded
+        node has its ``current_idx`` set to the corresponding index tuple.
+        """
         cls = type(self)
         if isinstance(self, AddressableNode) and self.is_array:  # pylint: disable=no-member
             # Is an array. Yield a Node object for each instance
@@ -130,7 +162,31 @@ class HalBaseNode(Node):
                     unique_orig_type: bool = False,
                     type_dict: Optional[dict] = None
                     ) -> Iterator['Node']:
-        """HAL children generator method wrapper around systemrdl Node.children method."""
+        """Yields HAL-wrapped children of this node, with optional filtering.
+
+        Wraps systemrdl ``Node.children`` so that each child is converted to the
+        appropriate HAL subclass via :func:`_halfactory`.
+
+        Parameters
+        ----------
+        children_type : Node, optional
+            Only yield children that are instances of this type. Defaults to :class:`~systemrdl.node.Node`
+            (all types).
+        unroll : bool, optional
+            If True, unroll array children into individual element nodes.
+        skip_not_present : bool, optional
+            If True (default), skip nodes whose ``ispresent`` property is False.
+        skip_buses : bool, optional
+            If True, transparent bus addrmaps (containing only addrmaps) are
+            flattened and their children are yielded instead.
+        bus_offset : int, optional
+            Cumulative address offset inherited from skipped bus nodes.
+        unique_orig_type : bool, optional
+            If True, yield at most one child per unique ``orig_type_name``.
+        type_dict : dict, optional
+            Dictionary used internally to track seen ``orig_type_name`` values and
+            detect parameterised type conflicts. Pass ``None`` to start fresh.
+        """
 
         if type_dict is None:
             type_dict = {}
@@ -171,7 +227,34 @@ class HalBaseNode(Node):
                        unique_orig_type: bool = False,
                        type_dict: Optional[dict] = None
                        ) -> Iterator['Node']:
-        """HAL node descedant generator adapted from systemrdl Node.descendants class."""
+        """Yields all HAL-wrapped descendants of this node, with optional filtering.
+
+        Adapted from systemrdl ``Node.descendants``. Recursively calls
+        :func:`halchildren` to traverse the full subtree.
+
+        Parameters
+        ----------
+        descendants_type : Node, optional
+            Only yield descendants that are instances of this type. Defaults to
+            :class:`~systemrdl.node.Node` (all types).
+        unroll : bool, optional
+            If True, unroll array nodes into individual element nodes.
+        skip_not_present : bool, optional
+            If True (default), skip nodes whose ``ispresent`` property is False.
+        in_post_order : bool, optional
+            If True, yield children before their parent (post-order traversal).
+            Defaults to pre-order.
+        skip_buses : bool, optional
+            If True, transparent bus addrmaps are flattened and their children
+            are yielded instead.
+        bus_offset : int, optional
+            Cumulative address offset inherited from skipped bus nodes.
+        unique_orig_type : bool, optional
+            If True, yield at most one descendant per unique ``orig_type_name``.
+        type_dict : dict, optional
+            Dictionary used internally to track seen ``orig_type_name`` values.
+            Pass ``None`` to start fresh.
+        """
 
         for child in self.halchildren(descendants_type, unroll, skip_not_present, skip_buses, bus_offset, unique_orig_type, type_dict):
             if isinstance(child, descendants_type):
@@ -203,7 +286,7 @@ class HalFieldNode(HalBaseNode, FieldNode):
 
     @property
     def address_offset(self) -> int:
-        # FieldNode does not have an address but to avoid extra check it returns 0
+        """Always returns 0. Fields have no independent address; the offset is on the parent register."""
         return 0
 
     @property
@@ -223,8 +306,15 @@ class HalFieldNode(HalBaseNode, FieldNode):
         """Returns the enumeration(s) of a FieldNode.
 
         Inside an addrmap node, all enumerations must have a different name.
-        The jinja template used to create the C++ header is filtering enumeration
-        with already existing name.
+        The jinja template used to create the C++ header filters enumerations
+        with already-existing names.
+
+        Returns
+        -------
+        tuple
+            ``(has_enum, enum_cls_name, enum_strings, enum_values, enum_desc, const_width)``
+            where ``has_enum`` is a bool indicating whether an encoding is defined.
+            All other elements are ``None`` when ``has_enum`` is False.
         """
         encode = self.get_property('encode')
         if encode is not None:
@@ -245,12 +335,14 @@ class HalFieldNode(HalBaseNode, FieldNode):
 
 
 class HalRegNode(HalBaseNode, RegNode):
-    """HalRegNode class inheriting from HalBaseNode class and systemrdl RegNode class.
+    """HAL node wrapping a SystemRDL register (:class:`~systemrdl.node.RegNode`).
 
-        Class methods:
+    Inherits from :class:`HalBaseNode` and :class:`~systemrdl.node.RegNode`.
 
-        - :func:`get_template_line`
-        - :func:`get_cls_tmpl_params`
+    Class methods:
+
+    - :func:`get_template_line`
+    - :func:`get_cls_tmpl_params`
     """
 
     def __init__(self, node: RegNode):
@@ -272,7 +364,11 @@ class HalRegNode(HalBaseNode, RegNode):
 
     @property
     def address_offset(self) -> int:
-        """Property adapted from systemrdl RegNode class to HalRegNode class."""
+        """Returns the address offset adjusted by the accumulated bus offset.
+
+        For array registers with no current index set, the offset of the first
+        element is used.
+        """
         if self.is_array and self.current_idx is None:
             return self.bus_offset + next(self.halunrolled()).address_offset
         else:
@@ -280,6 +376,7 @@ class HalRegNode(HalBaseNode, RegNode):
 
     @property
     def width(self) -> int:
+        """Returns the register width in bits, derived from the highest bit position of its fields."""
         return max([c.high for c in self.halchildren(HalFieldNode)]) + 1
 
     def get_template_line(self) -> str:
@@ -295,12 +392,14 @@ class HalRegNode(HalBaseNode, RegNode):
 
 
 class HalRegfileNode(HalBaseNode, RegfileNode):
-    """HalRegfileNode class inheriting from HalBaseNode class and systemrdl RegfileNode class.
+    """HAL node wrapping a SystemRDL register file (:class:`~systemrdl.node.RegfileNode`).
 
-        Class methods:
+    Inherits from :class:`HalBaseNode` and :class:`~systemrdl.node.RegfileNode`.
 
-        - :func:`get_template_line`
-        - :func:`get_cls_tmpl_params`
+    Class methods:
+
+    - :func:`get_template_line`
+    - :func:`get_cls_tmpl_params`
     """
 
     def __init__(self, node: RegfileNode):
@@ -320,7 +419,11 @@ class HalRegfileNode(HalBaseNode, RegfileNode):
 
     @property
     def address_offset(self) -> int:
-        """Property adapted from systemrdl RegNode class to HalRegNode class."""
+        """Returns the address offset adjusted by the accumulated bus offset.
+
+        For array register files with no current index set, the offset of the
+        first element is used.
+        """
         if self.is_array and self.current_idx is None:
             return self.bus_offset + next(self.halunrolled()).address_offset
         else:
@@ -339,12 +442,14 @@ class HalRegfileNode(HalBaseNode, RegfileNode):
 
 
 class HalMemNode(HalBaseNode, MemNode):
-    """HalMemNode class inheriting from HalBaseNode class and systemrdl MemNode class.
+    """HAL node wrapping a SystemRDL memory (:class:`~systemrdl.node.MemNode`).
 
-        Class methods:
+    Inherits from :class:`HalBaseNode` and :class:`~systemrdl.node.MemNode`.
 
-        - :func:`get_template_line`
-        - :func:`get_cls_tmpl_params`
+    Class methods:
+
+    - :func:`get_template_line`
+    - :func:`get_cls_tmpl_params`
     """
 
     def __init__(self, node: MemNode):
@@ -355,7 +460,7 @@ class HalMemNode(HalBaseNode, MemNode):
 
     @property
     def address_offset(self) -> int:
-        """Property adapted HalRegNode class."""
+        """Returns the address offset adjusted by the accumulated bus offset."""
         return self.bus_offset + super().address_offset
 
     def get_template_line(self) -> str:
@@ -371,12 +476,14 @@ class HalMemNode(HalBaseNode, MemNode):
 
 
 class HalAddrmapNode(HalBaseNode, AddrmapNode):
-    """HalAddrmapNode class inheriting from HalBaseNode class and systemrdl AddrmapNode class.
+    """HAL node wrapping a SystemRDL address map (:class:`~systemrdl.node.AddrmapNode`).
 
-        Class methods:
+    Inherits from :class:`HalBaseNode` and :class:`~systemrdl.node.AddrmapNode`.
 
-        - :func:`get_template_line`
-        - :func:`get_cls_tmpl_params`
+    Class methods:
+
+    - :func:`get_template_line`
+    - :func:`get_cls_tmpl_params`
     """
 
     def __init__(self, node: AddrmapNode):
@@ -392,12 +499,12 @@ class HalAddrmapNode(HalBaseNode, AddrmapNode):
 
     @property
     def address_offset(self) -> int:
-        """Property adapted HalRegNode class."""
+        """Returns the address offset adjusted by the accumulated bus offset."""
         return self.bus_offset + super().address_offset
 
     @property
     def is_bus(self) -> bool:
-        """Check if addrmap contains only addrmap"""
+        """Returns True if this addrmap contains only other addrmaps (i.e., is a transparent bus)."""
         for child in self.halchildren():
             if not isinstance(child, HalAddrmapNode):
                 return False
@@ -405,7 +512,7 @@ class HalAddrmapNode(HalBaseNode, AddrmapNode):
 
     @property
     def is_mem_addrmap(self) -> bool:
-        """Checks if this is an addrmap containing (only) a memory."""
+        """Returns True if this addrmap contains only :class:`HalMemNode` children."""
         for child in self.halchildren():
             if not isinstance(child, HalMemNode):
                 return False
