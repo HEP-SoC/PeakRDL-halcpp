@@ -1,0 +1,7 @@
+peakrdl\_halcpp.include package
+===============================
+
+.. automodule:: peakrdl_halcpp.include
+   :members:
+   :show-inheritance:
+   :undoc-members:

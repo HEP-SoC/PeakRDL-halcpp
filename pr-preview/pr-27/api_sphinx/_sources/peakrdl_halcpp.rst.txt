@@ -1,0 +1,43 @@
+peakrdl\_halcpp package
+=======================
+
+.. automodule:: peakrdl_halcpp
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   peakrdl_halcpp.include
+   peakrdl_halcpp.templates
+
+Submodules
+----------
+
+peakrdl\_halcpp.exporter module
+-------------------------------
+
+.. automodule:: peakrdl_halcpp.exporter
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+peakrdl\_halcpp.halnode module
+------------------------------
+
+.. automodule:: peakrdl_halcpp.halnode
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+peakrdl\_halcpp.halutils module
+-------------------------------
+
+.. automodule:: peakrdl_halcpp.halutils
+   :members:
+   :show-inheritance:
+   :undoc-members:
