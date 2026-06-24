@@ -1,7 +1,13 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
+const fs = require('fs');
+const path = require('path');
 const {themes: prismThemes} = require('prism-react-renderer');
+
+const _about = fs.readFileSync(path.resolve(__dirname, '../src/peakrdl_halcpp/__about__.py'), 'utf8');
+const _versionMatch = _about.match(/__version__\s*=\s*"([^"]+)"/);
+const packageVersion = _versionMatch ? _versionMatch[1] : 'unknown';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -85,6 +91,11 @@ const config = {
             label: 'Documentation',
           },
           // {to: '/blog', label: 'Blog', position: 'left'},
+          {
+            type: 'html',
+            position: 'right',
+            value: `<span style="font-size:0.85em;opacity:0.8">v${packageVersion}</span>`,
+          },
           {
             href: 'https://github.com/hep-soc/peakrdl-halcpp',
             label: 'GitHub',
