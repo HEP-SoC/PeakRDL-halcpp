@@ -19,12 +19,12 @@ namespace atxmega_spi_nm
     public:
         using TYPE = CTRL<BASE, WIDTH, PARENT_TYPE>;
 
-        static halcpp::FieldRW<0, 1, TYPE> PRESCALER;
-        static halcpp::FieldRW<2, 3, TYPE> MODE;
-        static halcpp::FieldRW<4, 4, TYPE> MASTER;
-        static halcpp::FieldRW<5, 5, TYPE> DORD;
-        static halcpp::FieldRW<6, 6, TYPE> ENABLE;
-        static halcpp::FieldRW<7, 7, TYPE> CLK2X;
+        static inline halcpp::FieldRW<0, 1, TYPE> PRESCALER{};
+        static inline halcpp::FieldRW<2, 3, TYPE> MODE{};
+        static inline halcpp::FieldRW<4, 4, TYPE> MASTER{};
+        static inline halcpp::FieldRW<5, 5, TYPE> DORD{};
+        static inline halcpp::FieldRW<6, 6, TYPE> ENABLE{};
+        static inline halcpp::FieldRW<7, 7, TYPE> CLK2X{};
 
         using halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>::operator=;
     };
@@ -37,7 +37,7 @@ namespace atxmega_spi_nm
     public:
         using TYPE = INTCTRL<BASE, WIDTH, PARENT_TYPE>;
 
-        static halcpp::FieldRW<0, 1, TYPE> INTLVL;
+        static inline halcpp::FieldRW<0, 1, TYPE> INTLVL{};
 
         using halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>::operator=;
     };
@@ -50,8 +50,8 @@ namespace atxmega_spi_nm
     public:
         using TYPE = STATUS<BASE, WIDTH, PARENT_TYPE>;
 
-        static halcpp::FieldRO<6, 6, TYPE> WRCOL;
-        static halcpp::FieldRO<7, 7, TYPE> IF;
+        static inline halcpp::FieldRO<6, 6, TYPE> WRCOL{};
+        static inline halcpp::FieldRO<7, 7, TYPE> IF{};
     };
 
 
@@ -68,8 +68,8 @@ namespace atxmega_spi_nm
     public:
         using TYPE = DATA<BASE, WIDTH, PARENT_TYPE>;
 
-        static halcpp::FieldWO<0, 7, TYPE> WDATA;
-        static halcpp::FieldRO<0, 7, TYPE> RDATA;
+        static inline halcpp::FieldWO<0, 7, TYPE> WDATA{};
+        static inline halcpp::FieldRO<0, 7, TYPE> RDATA{};
 
         using halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>::operator=;
     };

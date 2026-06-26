@@ -37,7 +37,7 @@ namespace {{ halnode.orig_type_name }}_nm
     {
     public:
     {% for  s, v, d in enum_strings|zip(enum_values, enum_desc) %}
-        static const halcpp::Const<{{ const_width }}, {{ v }}> {{ s }}; // {{ d }}
+        static constexpr halcpp::Const<{{ const_width }}, {{ v }}> {{ s }}{}; // {{ d }}
     {% endfor %}
     };
     {% endif %}
@@ -53,7 +53,7 @@ namespace {{ halnode.orig_type_name }}_nm
 
     {# Add the fields to the register #}
     {% for f in r.halchildren(children_type=HalFieldNode, skip_buses=skip_buses) %}
-        static halcpp::{{ f.cpp_access_type }}<{{ f.low }}, {{ f.high }}, TYPE> {{ f.inst_name }};
+        static inline halcpp::{{ f.cpp_access_type }}<{{ f.low }}, {{ f.high }}, TYPE> {{ f.inst_name }}{};
     {% endfor %}
     {# Inherit the overloaded '=' operator from the base class if register can be write from software #}
     {% if r.has_sw_writable %}
@@ -77,7 +77,7 @@ namespace {{ halnode.orig_type_name }}_nm
     {
     public:
     {% for  s, v, d in enum_strings|zip(enum_values, enum_desc) %}
-        static const halcpp::Const<{{ const_width }}, {{ v }}> {{ s }}; // {{ d }}
+        static constexpr halcpp::Const<{{ const_width }}, {{ v }}> {{ s }}{}; // {{ d }}
     {% endfor %}
     };
     {% endif %}
@@ -93,7 +93,7 @@ namespace {{ halnode.orig_type_name }}_nm
 
     {# Add the fields to the register #}
     {% for f in r.halchildren(children_type=HalFieldNode, skip_buses=skip_buses) %}
-        static halcpp::{{ f.cpp_access_type }}<{{ f.low }}, {{ f.high }}, TYPE> {{ f.inst_name }};
+        static inline halcpp::{{ f.cpp_access_type }}<{{ f.low }}, {{ f.high }}, TYPE> {{ f.inst_name }}{};
     {% endfor %}
     {# Inherit the overloaded '=' operator from the base class if register can be write from software #}
     {% if r.has_sw_writable %}

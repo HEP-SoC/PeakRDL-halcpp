@@ -19,7 +19,7 @@ namespace regs_and_mem_nm
     public:
         using TYPE = CSR<BASE, WIDTH, PARENT_TYPE>;
 
-        static halcpp::FieldRW<0, 7, TYPE> ctrl;
+        static inline halcpp::FieldRW<0, 7, TYPE> ctrl{};
 
         using halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>::operator=;
     };
@@ -32,7 +32,7 @@ namespace regs_and_mem_nm
     public:
         using TYPE = CSR2<BASE, WIDTH, PARENT_TYPE>;
 
-        static halcpp::FieldRW<0, 7, TYPE> ctrl;
+        static inline halcpp::FieldRW<0, 7, TYPE> ctrl{};
 
         using halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>::operator=;
     };

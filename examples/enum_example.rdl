@@ -1,0 +1,23 @@
+addrmap enum_example {
+    enum system_state_e {
+        IDLE = 0 {
+            desc = "The system is idle and ready for input";
+        };
+
+        BUSY = 1 {
+            desc = "Busy processing an input";
+        };
+
+        SLEEP = 2; // No properties assigned
+        SHUTDOWN; // Infers value of 3
+    };
+
+    reg {
+        field {
+            sw=rw;
+            hw=rw;
+            encode=system_state_e;
+        }f1[2];
+
+    } r1;
+};
