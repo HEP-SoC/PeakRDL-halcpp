@@ -1,0 +1,15 @@
+// Tests field encoding (enumeration).
+addrmap enum_field {
+    default regwidth = 32;
+
+    reg {
+        enum mode_e {
+            DISABLED = 2'b00 { desc = "Module disabled"; };
+            ACTIVE   = 2'b01 { desc = "Module active"; };
+            SLEEP    = 2'b10 { desc = "Sleep mode"; };
+        };
+
+        field { encode = mode_e; sw=rw; hw=r; } mode[1:0] = 0;
+        field { sw=rw; hw=r; } en[2:2] = 0;
+    } ctrl_reg @0x0;
+};

@@ -1,0 +1,26 @@
+addrmap regs_and_mem {
+    name = "Registers and Memory Example";
+    default regwidth = 32;
+
+    reg {
+        field { sw=rw; hw=r; } ctrl[7:0];
+    } csr @0x0;
+
+    reg {
+        field { sw=rw; hw=r; } ctrl[7:0];
+    } csr2 @0x4;
+
+    // anonymous definition of mem (SystemRDL 11.1.b)
+    mem {
+        memwidth = 32;
+        mementries = 64;
+    } external mem1 @0x1000;
+
+    // definitive definition of mem (SystemRDL 11.1.a)
+    mem mem2_t {
+        memwidth = 32;
+        mementries = 64;
+    };
+
+    external mem2_t mem2 @0x2000;
+};

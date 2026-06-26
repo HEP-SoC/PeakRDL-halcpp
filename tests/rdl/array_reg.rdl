@@ -1,0 +1,11 @@
+// Tests register arrays (RegArrayNode in generated C++).
+addrmap array_reg {
+    default regwidth = 32;
+
+    reg chan_t {
+        field { sw=rw; hw=r; } data[31:0];
+    };
+
+    // 4-element array; default stride = 4 bytes (one register width)
+    chan_t channel[4] @0x0;
+};

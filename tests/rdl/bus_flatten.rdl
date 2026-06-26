@@ -1,0 +1,21 @@
+// Tests transparent-bus flattening (--skip-buses).
+// top_ctrl makes bus_flatten a non-bus addrmap.
+// transparent_bus_t is a bus: it contains only addrmaps.
+addrmap bus_flatten {
+    default regwidth = 32;
+
+    reg {
+        field { sw=rw; hw=r; } ctrl[31:0];
+    } top_ctrl @0x0;
+
+    addrmap transparent_bus_t {
+        addrmap leaf_t {
+            reg {
+                field { sw=rw; hw=r; } data[31:0];
+            } data_reg @0x0;
+        };
+        leaf_t leaf;
+    };
+
+    transparent_bus_t bus_inst @0x100;
+};
