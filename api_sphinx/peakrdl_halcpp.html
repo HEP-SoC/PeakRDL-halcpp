@@ -1,0 +1,1009 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="peakrdl_halcpp.include package" href="peakrdl_halcpp.include.html"><link rel="prev" title="PeakRDL-halcpp API Reference" href="index.html">
+        <link rel="canonical" href="/PeakRDL-halcpp/api_sphinx/peakrdl_halcpp.html">
+
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+        <title>peakrdl_halcpp package - PeakRDL-halcpp API 0.4.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #0072B5;
+  --color-brand-content: #0072B5;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #6AB0DE;
+  --color-brand-content: #6AB0DE;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  --color-brand-primary: #6AB0DE;
+  --color-brand-content: #6AB0DE;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">PeakRDL-halcpp API 0.4.2 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  <span class="sidebar-brand-text">PeakRDL-halcpp API 0.4.2 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">peakrdl_halcpp package</a><input aria-label="Toggle navigation of peakrdl_halcpp package" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="peakrdl_halcpp.include.html">peakrdl_halcpp.include package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="peakrdl_halcpp.templates.html">peakrdl_halcpp.templates package</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/peakrdl_halcpp.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="module-peakrdl_halcpp">
+<span id="peakrdl-halcpp-package"></span><h1>peakrdl_halcpp package<a class="headerlink" href="#module-peakrdl_halcpp" title="Link to this heading">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="peakrdl_halcpp.include.html">peakrdl_halcpp.include package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="peakrdl_halcpp.include.html#list-of-files">List of files:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="peakrdl_halcpp.templates.html">peakrdl_halcpp.templates package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="peakrdl_halcpp.templates.html#list-of-files">List of files:</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">¶</a></h2>
+</section>
+<section id="module-peakrdl_halcpp.exporter">
+<span id="peakrdl-halcpp-exporter-module"></span><h2>peakrdl_halcpp.exporter module<a class="headerlink" href="#module-peakrdl_halcpp.exporter" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="peakrdl_halcpp.exporter.HalExporter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">peakrdl_halcpp.exporter.</span></span><span class="sig-name descname"><span class="pre">HalExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peakrdl_halcpp/exporter.html#HalExporter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.exporter.HalExporter" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>HAL C++ PeakRDL plugin top class to generate the C++ HAL from SystemRDL description.</p>
+<p>Class methods:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#peakrdl_halcpp.exporter.HalExporter.copy_base_headers" title="peakrdl_halcpp.exporter.HalExporter.copy_base_headers"><code class="xref py py-func docutils literal notranslate"><span class="pre">copy_base_headers()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#peakrdl_halcpp.exporter.HalExporter.export" title="peakrdl_halcpp.exporter.HalExporter.export"><code class="xref py py-func docutils literal notranslate"><span class="pre">export()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#peakrdl_halcpp.exporter.HalExporter.process_template" title="peakrdl_halcpp.exporter.HalExporter.process_template"><code class="xref py py-func docutils literal notranslate"><span class="pre">process_template()</span></code></a></p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.exporter.HalExporter.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.14)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peakrdl_halcpp/exporter.html#HalExporter.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.exporter.HalExporter.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="peakrdl_halcpp.exporter.HalExporter.cpp_dir">
+<span class="sig-name descname"><span class="pre">cpp_dir</span></span><a class="headerlink" href="#peakrdl_halcpp.exporter.HalExporter.cpp_dir" title="Link to this definition">¶</a></dt>
+<dd><p>HAL C++ copied header library location within the generated files output directory</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="peakrdl_halcpp.exporter.HalExporter.base_headers">
+<span class="sig-name descname"><span class="pre">base_headers</span></span><a class="headerlink" href="#peakrdl_halcpp.exporter.HalExporter.base_headers" title="Link to this definition">¶</a></dt>
+<dd><p>HAL C++ headers list (copied into <a class="reference internal" href="#peakrdl_halcpp.exporter.HalExporter.cpp_dir" title="peakrdl_halcpp.exporter.HalExporter.cpp_dir"><code class="xref py py-attr docutils literal notranslate"><span class="pre">cpp_dir</span></code></a>)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.exporter.HalExporter.copy_base_headers">
+<span class="sig-name descname"><span class="pre">copy_base_headers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outdir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peakrdl_halcpp/exporter.html#HalExporter.copy_base_headers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.exporter.HalExporter.copy_base_headers" title="Link to this definition">¶</a></dt>
+<dd><p>Copies the HAL C++ headers to the generated files location given
+by the outdir parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>outdir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Output directory in which the output files are generated.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.exporter.HalExporter.export">
+<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">node:</span> <span class="pre">~systemrdl.node.AddrmapNode,</span> <span class="pre">outdir:</span> <span class="pre">str,</span> <span class="pre">list_files:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">ext_modules:</span> <span class="pre">~typing.List</span> <span class="pre">=</span> <span class="pre">[&lt;class</span> <span class="pre">'str'&gt;],</span> <span class="pre">skip_buses:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peakrdl_halcpp/exporter.html#HalExporter.export"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.exporter.HalExporter.export" title="Link to this definition">¶</a></dt>
+<dd><p>Main function of the plugin extension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>AddrmapNode</em>) – Top AddrmapNode of the SystemRDL description.</p></li>
+<li><p><strong>outdir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Output directory in which the output files are generated.</p></li>
+<li><p><strong>list_files</strong> (<em>bool = False</em>) – Don’t generate but print the files that would be generated.</p></li>
+<li><p><strong>ext_modules</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – List of modules (i.e., SystemRDL addrmap objects) with extended functionalities.</p></li>
+<li><p><strong>skip_buses</strong> (<em>bool = False</em>) – If True, AddrMapNodes containing only AddrMapNodes (transparent buses)
+are removed from the hierarchy and their children are promoted.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.exporter.HalExporter.process_template">
+<span class="sig-name descname"><span class="pre">process_template</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.14)"><span class="pre">Dict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="_modules/peakrdl_halcpp/exporter.html#HalExporter.process_template"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.exporter.HalExporter.process_template" title="Link to this definition">¶</a></dt>
+<dd><p>Generates a C++ header file based on a jinja2 template.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>context</strong> (<em>Dict</em>) – Dictionary containing a HalAddrmapNode and the HalUtils object
+(and other variables) passed to the jinja2 env</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Text of the generated C++ header for a given HalAddrmap node.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-peakrdl_halcpp.halnode">
+<span id="peakrdl-halcpp-halnode-module"></span><h2>peakrdl_halcpp.halnode module<a class="headerlink" href="#module-peakrdl_halcpp.halnode" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalBaseNode">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">peakrdl_halcpp.halnode.</span></span><span class="sig-name descname"><span class="pre">HalBaseNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Component</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RDLEnvironment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalBaseNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalBaseNode" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></p>
+<p>HAL node base class.</p>
+<p>This class inherits from the systemrdl Node class. Each subclass will also inherit
+its systemrdl Node subclass specialization counterpart (e.g, HalFieldNode inherits
+from FieldNode).</p>
+digraph inheritance35bb04c66f {
+bgcolor=transparent;
+rankdir=TB;
+size=&quot;8.0, 12.0&quot;;
+  &quot;AddressableNode&quot; [color=&quot;#6AB0DE&quot;,fillcolor=&quot;#E7F2FA&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;rounded, filled&quot;,tooltip=&quot;Base-class for any kind of node that can have an address&quot;];
+  &quot;Node&quot; -&gt; &quot;AddressableNode&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;AddrmapNode&quot; [color=&quot;#6AB0DE&quot;,fillcolor=&quot;#E7F2FA&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;rounded, filled&quot;,tooltip=&quot;Represents an RDL ``addrmap``&quot;];
+  &quot;AddressableNode&quot; -&gt; &quot;AddrmapNode&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;FieldNode&quot; [color=&quot;#6AB0DE&quot;,fillcolor=&quot;#E7F2FA&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;rounded, filled&quot;,tooltip=&quot;Represents an RDL ``field``&quot;];
+  &quot;VectorNode&quot; -&gt; &quot;FieldNode&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;HalAddrmapNode&quot; [URL=&quot;#peakrdl_halcpp.halnode.HalAddrmapNode&quot;,color=&quot;#6AB0DE&quot;,fillcolor=&quot;#E7F2FA&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;rounded, filled&quot;,target=&quot;_top&quot;,tooltip=&quot;HAL node wrapping a SystemRDL address map (:class:`~systemrdl.node.AddrmapNode`).&quot;];
+  &quot;HalBaseNode&quot; -&gt; &quot;HalAddrmapNode&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;AddrmapNode&quot; -&gt; &quot;HalAddrmapNode&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;HalBaseNode&quot; [URL=&quot;#peakrdl_halcpp.halnode.HalBaseNode&quot;,color=&quot;#6AB0DE&quot;,fillcolor=&quot;#E7F2FA&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;rounded, filled&quot;,target=&quot;_top&quot;,tooltip=&quot;HAL node base class.&quot;];
+  &quot;Node&quot; -&gt; &quot;HalBaseNode&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;HalFieldNode&quot; [URL=&quot;#peakrdl_halcpp.halnode.HalFieldNode&quot;,color=&quot;#6AB0DE&quot;,fillcolor=&quot;#E7F2FA&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;rounded, filled&quot;,target=&quot;_top&quot;,tooltip=&quot;HalFieldNode class inheriting from HalBaseNode class and systemrdl FieldNode class.&quot;];
+  &quot;HalBaseNode&quot; -&gt; &quot;HalFieldNode&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;FieldNode&quot; -&gt; &quot;HalFieldNode&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;HalMemNode&quot; [URL=&quot;#peakrdl_halcpp.halnode.HalMemNode&quot;,color=&quot;#6AB0DE&quot;,fillcolor=&quot;#E7F2FA&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;rounded, filled&quot;,target=&quot;_top&quot;,tooltip=&quot;HAL node wrapping a SystemRDL memory (:class:`~systemrdl.node.MemNode`).&quot;];
+  &quot;HalBaseNode&quot; -&gt; &quot;HalMemNode&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;MemNode&quot; -&gt; &quot;HalMemNode&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;HalRegNode&quot; [URL=&quot;#peakrdl_halcpp.halnode.HalRegNode&quot;,color=&quot;#6AB0DE&quot;,fillcolor=&quot;#E7F2FA&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;rounded, filled&quot;,target=&quot;_top&quot;,tooltip=&quot;HAL node wrapping a SystemRDL register (:class:`~systemrdl.node.RegNode`).&quot;];
+  &quot;HalBaseNode&quot; -&gt; &quot;HalRegNode&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;RegNode&quot; -&gt; &quot;HalRegNode&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;HalRegfileNode&quot; [URL=&quot;#peakrdl_halcpp.halnode.HalRegfileNode&quot;,color=&quot;#6AB0DE&quot;,fillcolor=&quot;#E7F2FA&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;rounded, filled&quot;,target=&quot;_top&quot;,tooltip=&quot;HAL node wrapping a SystemRDL register file (:class:`~systemrdl.node.RegfileNode`).&quot;];
+  &quot;HalBaseNode&quot; -&gt; &quot;HalRegfileNode&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;RegfileNode&quot; -&gt; &quot;HalRegfileNode&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;MemNode&quot; [color=&quot;#6AB0DE&quot;,fillcolor=&quot;#E7F2FA&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;rounded, filled&quot;,tooltip=&quot;Represents an RDL ``mem``&quot;];
+  &quot;AddressableNode&quot; -&gt; &quot;MemNode&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;Node&quot; [color=&quot;#6AB0DE&quot;,fillcolor=&quot;#E7F2FA&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;rounded, filled&quot;,tooltip=&quot;The Node class is the base for all Node overlay classes.&quot;];
+  &quot;RegNode&quot; [color=&quot;#6AB0DE&quot;,fillcolor=&quot;#E7F2FA&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;rounded, filled&quot;,tooltip=&quot;Represents an RDL ``reg``&quot;];
+  &quot;AddressableNode&quot; -&gt; &quot;RegNode&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;RegfileNode&quot; [color=&quot;#6AB0DE&quot;,fillcolor=&quot;#E7F2FA&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;rounded, filled&quot;,tooltip=&quot;Represents an RDL ``regfile``&quot;];
+  &quot;AddressableNode&quot; -&gt; &quot;RegfileNode&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+  &quot;VectorNode&quot; [color=&quot;#6AB0DE&quot;,fillcolor=&quot;#E7F2FA&quot;,fontname=&quot;Vera Sans, DejaVu Sans, Liberation Sans, Arial, Helvetica, sans&quot;,fontsize=10,height=0.25,shape=box,style=&quot;rounded, filled&quot;,tooltip=&quot;Base-class for any kind of node that is vector-like.&quot;];
+  &quot;Node&quot; -&gt; &quot;VectorNode&quot; [arrowsize=0.5,style=&quot;setlinewidth(0.5)&quot;];
+}
+<p>Class methods:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode.get_docstring" title="peakrdl_halcpp.halnode.HalBaseNode.get_docstring"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_docstring()</span></code></a></p></li>
+<li><p><code class="xref py py-func docutils literal notranslate"><span class="pre">_halfactory()</span></code></p></li>
+<li><p><a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode.halunrolled" title="peakrdl_halcpp.halnode.HalBaseNode.halunrolled"><code class="xref py py-func docutils literal notranslate"><span class="pre">halunrolled()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode.halchildren" title="peakrdl_halcpp.halnode.HalBaseNode.halchildren"><code class="xref py py-func docutils literal notranslate"><span class="pre">halchildren()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode.haldescendants" title="peakrdl_halcpp.halnode.HalBaseNode.haldescendants"><code class="xref py py-func docutils literal notranslate"><span class="pre">haldescendants()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+<dl class="py property">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalBaseNode.inst_name_hal">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">inst_name_hal</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#peakrdl_halcpp.halnode.HalBaseNode.inst_name_hal" title="Link to this definition">¶</a></dt>
+<dd><p>Return the node name with the ‘_hal’ suffix.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalBaseNode.orig_type_name_hal">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">orig_type_name_hal</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#peakrdl_halcpp.halnode.HalBaseNode.orig_type_name_hal" title="Link to this definition">¶</a></dt>
+<dd><p>Return the original type name with the ‘_hal’ suffix.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalBaseNode.orig_type_name">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">orig_type_name</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#peakrdl_halcpp.halnode.HalBaseNode.orig_type_name" title="Link to this definition">¶</a></dt>
+<dd><p>Returns type_name if orig_type_name is none.</p>
+<p>Node instantiate anonymously do not have orig_type_name so use type_name.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalBaseNode.is_bus">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_bus</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><a class="headerlink" href="#peakrdl_halcpp.halnode.HalBaseNode.is_bus" title="Link to this definition">¶</a></dt>
+<dd><p>Returns True if the HAL node is considered a bus (i.e., an addrmap containing only addrmaps).</p>
+<p>Always returns False for non-addrmap nodes. Overridden in <a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode" title="peakrdl_halcpp.halnode.HalAddrmapNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">HalAddrmapNode</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalBaseNode.get_docstring">
+<span class="sig-name descname"><span class="pre">get_docstring</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalBaseNode.get_docstring"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalBaseNode.get_docstring" title="Link to this definition">¶</a></dt>
+<dd><p>Converts the node description property into a C++ multi-line comment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A <code class="docutils literal notranslate"><span class="pre">/*</span> <span class="pre">...</span> <span class="pre">*/</span></code> formatted comment containing the node’s <code class="docutils literal notranslate"><span class="pre">desc</span></code> property,
+or an empty string if no description is set.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalBaseNode.halunrolled">
+<span class="sig-name descname"><span class="pre">halunrolled</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.14)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Node</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalBaseNode.halunrolled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalBaseNode.halunrolled" title="Link to this definition">¶</a></dt>
+<dd><p>Yields one HAL node per array element, or yields the node itself if not an array.</p>
+<p>Adapted from the systemrdl Node unrolling logic. For array nodes, each yielded
+node has its <code class="docutils literal notranslate"><span class="pre">current_idx</span></code> set to the corresponding index tuple.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalBaseNode.halchildren">
+<span class="sig-name descname"><span class="pre">halchildren</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">children_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;class</span> <span class="pre">'systemrdl.node.Node'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_not_present</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_buses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bus_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_orig_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.14)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Node</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalBaseNode.halchildren"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalBaseNode.halchildren" title="Link to this definition">¶</a></dt>
+<dd><p>Yields HAL-wrapped children of this node, with optional filtering.</p>
+<p>Wraps systemrdl <code class="docutils literal notranslate"><span class="pre">Node.children</span></code> so that each child is converted to the
+appropriate HAL subclass via <code class="xref py py-func docutils literal notranslate"><span class="pre">_halfactory()</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>children_type</strong> (<em>Node</em><em>, </em><em>optional</em>) – Only yield children that are instances of this type. Defaults to <code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code>
+(all types).</p></li>
+<li><p><strong>unroll</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, unroll array children into individual element nodes.</p></li>
+<li><p><strong>skip_not_present</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – If True (default), skip nodes whose <code class="docutils literal notranslate"><span class="pre">ispresent</span></code> property is False.</p></li>
+<li><p><strong>skip_buses</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, transparent bus addrmaps (containing only addrmaps) are
+flattened and their children are yielded instead.</p></li>
+<li><p><strong>bus_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – Cumulative address offset inherited from skipped bus nodes.</p></li>
+<li><p><strong>unique_orig_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, yield at most one child per unique <code class="docutils literal notranslate"><span class="pre">orig_type_name</span></code>.</p></li>
+<li><p><strong>type_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>, </em><em>optional</em>) – Dictionary used internally to track seen <code class="docutils literal notranslate"><span class="pre">orig_type_name</span></code> values and
+detect parameterised type conflicts. Pass <code class="docutils literal notranslate"><span class="pre">None</span></code> to start fresh.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalBaseNode.haldescendants">
+<span class="sig-name descname"><span class="pre">haldescendants</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">descendants_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">&lt;class</span> <span class="pre">'systemrdl.node.Node'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unroll</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_not_present</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_post_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_buses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bus_offset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unique_orig_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.14)"><span class="pre">Iterator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Node</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalBaseNode.haldescendants"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalBaseNode.haldescendants" title="Link to this definition">¶</a></dt>
+<dd><p>Yields all HAL-wrapped descendants of this node, with optional filtering.</p>
+<p>Adapted from systemrdl <code class="docutils literal notranslate"><span class="pre">Node.descendants</span></code>. Recursively calls
+<a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode.halchildren" title="peakrdl_halcpp.halnode.HalBaseNode.halchildren"><code class="xref py py-func docutils literal notranslate"><span class="pre">halchildren()</span></code></a> to traverse the full subtree.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>descendants_type</strong> (<em>Node</em><em>, </em><em>optional</em>) – Only yield descendants that are instances of this type. Defaults to
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code> (all types).</p></li>
+<li><p><strong>unroll</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, unroll array nodes into individual element nodes.</p></li>
+<li><p><strong>skip_not_present</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – If True (default), skip nodes whose <code class="docutils literal notranslate"><span class="pre">ispresent</span></code> property is False.</p></li>
+<li><p><strong>in_post_order</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, yield children before their parent (post-order traversal).
+Defaults to pre-order.</p></li>
+<li><p><strong>skip_buses</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, transparent bus addrmaps are flattened and their children
+are yielded instead.</p></li>
+<li><p><strong>bus_offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – Cumulative address offset inherited from skipped bus nodes.</p></li>
+<li><p><strong>unique_orig_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, yield at most one descendant per unique <code class="docutils literal notranslate"><span class="pre">orig_type_name</span></code>.</p></li>
+<li><p><strong>type_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>, </em><em>optional</em>) – Dictionary used internally to track seen <code class="docutils literal notranslate"><span class="pre">orig_type_name</span></code> values.
+Pass <code class="docutils literal notranslate"><span class="pre">None</span></code> to start fresh.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalFieldNode">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">peakrdl_halcpp.halnode.</span></span><span class="sig-name descname"><span class="pre">HalFieldNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FieldNode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalFieldNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalFieldNode" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode" title="peakrdl_halcpp.halnode.HalBaseNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">HalBaseNode</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">FieldNode</span></code></p>
+<p>HalFieldNode class inheriting from HalBaseNode class and systemrdl FieldNode class.</p>
+<p>Class methods:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#peakrdl_halcpp.halnode.HalFieldNode.get_enums" title="peakrdl_halcpp.halnode.HalFieldNode.get_enums"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_enums()</span></code></a></p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalFieldNode.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FieldNode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalFieldNode.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalFieldNode.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalFieldNode.address_offset">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">address_offset</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#peakrdl_halcpp.halnode.HalFieldNode.address_offset" title="Link to this definition">¶</a></dt>
+<dd><p>Always returns 0. Fields have no independent address; the offset is on the parent register.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalFieldNode.cpp_access_type">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">cpp_access_type</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><a class="headerlink" href="#peakrdl_halcpp.halnode.HalFieldNode.cpp_access_type" title="Link to this definition">¶</a></dt>
+<dd><p>C++ access right template selection.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalFieldNode.get_enums">
+<span class="sig-name descname"><span class="pre">get_enums</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalFieldNode.get_enums"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalFieldNode.get_enums" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the enumeration(s) of a FieldNode.</p>
+<p>Inside an addrmap node, all enumerations must have a different name.
+The jinja template used to create the C++ header filters enumerations
+with already-existing names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">(has_enum,</span> <span class="pre">enum_cls_name,</span> <span class="pre">enum_strings,</span> <span class="pre">enum_values,</span> <span class="pre">enum_desc,</span> <span class="pre">const_width)</span></code>
+where <code class="docutils literal notranslate"><span class="pre">has_enum</span></code> is a bool indicating whether an encoding is defined.
+All other elements are <code class="docutils literal notranslate"><span class="pre">None</span></code> when <code class="docutils literal notranslate"><span class="pre">has_enum</span></code> is False.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalRegNode">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">peakrdl_halcpp.halnode.</span></span><span class="sig-name descname"><span class="pre">HalRegNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RegNode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalRegNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalRegNode" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode" title="peakrdl_halcpp.halnode.HalBaseNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">HalBaseNode</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">RegNode</span></code></p>
+<p>HAL node wrapping a SystemRDL register (<code class="xref py py-class docutils literal notranslate"><span class="pre">RegNode</span></code>).</p>
+<p>Inherits from <a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode" title="peakrdl_halcpp.halnode.HalBaseNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">HalBaseNode</span></code></a> and <code class="xref py py-class docutils literal notranslate"><span class="pre">RegNode</span></code>.</p>
+<p>Class methods:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegNode.get_template_line" title="peakrdl_halcpp.halnode.HalRegNode.get_template_line"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_template_line()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegNode.get_cls_tmpl_params" title="peakrdl_halcpp.halnode.HalRegNode.get_cls_tmpl_params"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_cls_tmpl_params()</span></code></a></p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalRegNode.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RegNode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalRegNode.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalRegNode.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalRegNode.cpp_access_type">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">cpp_access_type</span></span><a class="headerlink" href="#peakrdl_halcpp.halnode.HalRegNode.cpp_access_type" title="Link to this definition">¶</a></dt>
+<dd><p>C++ access right template selection.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalRegNode.address_offset">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">address_offset</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#peakrdl_halcpp.halnode.HalRegNode.address_offset" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the address offset adjusted by the accumulated bus offset.</p>
+<p>For array registers with no current index set, the offset of the first
+element is used.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalRegNode.width">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">width</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#peakrdl_halcpp.halnode.HalRegNode.width" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the register width in bits, derived from the highest bit position of its fields.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalRegNode.get_template_line">
+<span class="sig-name descname"><span class="pre">get_template_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalRegNode.get_template_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalRegNode.get_template_line" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the class template string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalRegNode.get_cls_tmpl_params">
+<span class="sig-name descname"><span class="pre">get_cls_tmpl_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalRegNode.get_cls_tmpl_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalRegNode.get_cls_tmpl_params" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the class template parameter string.</p>
+<p>These parameters must match the the template returned by <a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegNode.get_template_line" title="peakrdl_halcpp.halnode.HalRegNode.get_template_line"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_template_line()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalRegfileNode">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">peakrdl_halcpp.halnode.</span></span><span class="sig-name descname"><span class="pre">HalRegfileNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RegfileNode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalRegfileNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalRegfileNode" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode" title="peakrdl_halcpp.halnode.HalBaseNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">HalBaseNode</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">RegfileNode</span></code></p>
+<p>HAL node wrapping a SystemRDL register file (<code class="xref py py-class docutils literal notranslate"><span class="pre">RegfileNode</span></code>).</p>
+<p>Inherits from <a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode" title="peakrdl_halcpp.halnode.HalBaseNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">HalBaseNode</span></code></a> and <code class="xref py py-class docutils literal notranslate"><span class="pre">RegfileNode</span></code>.</p>
+<p>Class methods:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegfileNode.get_template_line" title="peakrdl_halcpp.halnode.HalRegfileNode.get_template_line"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_template_line()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegfileNode.get_cls_tmpl_params" title="peakrdl_halcpp.halnode.HalRegfileNode.get_cls_tmpl_params"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_cls_tmpl_params()</span></code></a></p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalRegfileNode.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RegfileNode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalRegfileNode.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalRegfileNode.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalRegfileNode.cpp_access_type">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">cpp_access_type</span></span><a class="headerlink" href="#peakrdl_halcpp.halnode.HalRegfileNode.cpp_access_type" title="Link to this definition">¶</a></dt>
+<dd><p>C++ access right template selection.</p>
+<p>For RegfileNodes, the access rights are selected at lower
+levels (e.g., registers).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalRegfileNode.address_offset">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">address_offset</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#peakrdl_halcpp.halnode.HalRegfileNode.address_offset" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the address offset adjusted by the accumulated bus offset.</p>
+<p>For array register files with no current index set, the offset of the
+first element is used.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalRegfileNode.get_template_line">
+<span class="sig-name descname"><span class="pre">get_template_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalRegfileNode.get_template_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalRegfileNode.get_template_line" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the class template string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalRegfileNode.get_cls_tmpl_params">
+<span class="sig-name descname"><span class="pre">get_cls_tmpl_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalRegfileNode.get_cls_tmpl_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalRegfileNode.get_cls_tmpl_params" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the class template parameter string.</p>
+<p>These parameters must match the the template returned by <a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegfileNode.get_template_line" title="peakrdl_halcpp.halnode.HalRegfileNode.get_template_line"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_template_line()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalMemNode">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">peakrdl_halcpp.halnode.</span></span><span class="sig-name descname"><span class="pre">HalMemNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">MemNode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalMemNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalMemNode" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode" title="peakrdl_halcpp.halnode.HalBaseNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">HalBaseNode</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">MemNode</span></code></p>
+<p>HAL node wrapping a SystemRDL memory (<code class="xref py py-class docutils literal notranslate"><span class="pre">MemNode</span></code>).</p>
+<p>Inherits from <a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode" title="peakrdl_halcpp.halnode.HalBaseNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">HalBaseNode</span></code></a> and <code class="xref py py-class docutils literal notranslate"><span class="pre">MemNode</span></code>.</p>
+<p>Class methods:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#peakrdl_halcpp.halnode.HalMemNode.get_template_line" title="peakrdl_halcpp.halnode.HalMemNode.get_template_line"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_template_line()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#peakrdl_halcpp.halnode.HalMemNode.get_cls_tmpl_params" title="peakrdl_halcpp.halnode.HalMemNode.get_cls_tmpl_params"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_cls_tmpl_params()</span></code></a></p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalMemNode.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">MemNode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalMemNode.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalMemNode.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalMemNode.address_offset">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">address_offset</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#peakrdl_halcpp.halnode.HalMemNode.address_offset" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the address offset adjusted by the accumulated bus offset.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalMemNode.get_template_line">
+<span class="sig-name descname"><span class="pre">get_template_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalMemNode.get_template_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalMemNode.get_template_line" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the class template string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalMemNode.get_cls_tmpl_params">
+<span class="sig-name descname"><span class="pre">get_cls_tmpl_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalMemNode.get_cls_tmpl_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalMemNode.get_cls_tmpl_params" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the class template parameter string.</p>
+<p>These parameters must match the the template returned by <a class="reference internal" href="#peakrdl_halcpp.halnode.HalMemNode.get_template_line" title="peakrdl_halcpp.halnode.HalMemNode.get_template_line"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_template_line()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalAddrmapNode">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">peakrdl_halcpp.halnode.</span></span><span class="sig-name descname"><span class="pre">HalAddrmapNode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AddrmapNode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalAddrmapNode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalAddrmapNode" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode" title="peakrdl_halcpp.halnode.HalBaseNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">HalBaseNode</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">AddrmapNode</span></code></p>
+<p>HAL node wrapping a SystemRDL address map (<code class="xref py py-class docutils literal notranslate"><span class="pre">AddrmapNode</span></code>).</p>
+<p>Inherits from <a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode" title="peakrdl_halcpp.halnode.HalBaseNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">HalBaseNode</span></code></a> and <code class="xref py py-class docutils literal notranslate"><span class="pre">AddrmapNode</span></code>.</p>
+<p>Class methods:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode.get_template_line" title="peakrdl_halcpp.halnode.HalAddrmapNode.get_template_line"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_template_line()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode.get_cls_tmpl_params" title="peakrdl_halcpp.halnode.HalAddrmapNode.get_cls_tmpl_params"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_cls_tmpl_params()</span></code></a></p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalAddrmapNode.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AddrmapNode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalAddrmapNode.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalAddrmapNode.__init__" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalAddrmapNode.bus_offset">
+<span class="sig-name descname"><span class="pre">bus_offset</span></span><a class="headerlink" href="#peakrdl_halcpp.halnode.HalAddrmapNode.bus_offset" title="Link to this definition">¶</a></dt>
+<dd><p>The bus offset is used for address offset correction when the –skip-buses option is used</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalAddrmapNode.is_top_node">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_top_node</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><a class="headerlink" href="#peakrdl_halcpp.halnode.HalAddrmapNode.is_top_node" title="Link to this definition">¶</a></dt>
+<dd><p>Checks if this is the top node.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalAddrmapNode.address_offset">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">address_offset</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#peakrdl_halcpp.halnode.HalAddrmapNode.address_offset" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the address offset adjusted by the accumulated bus offset.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalAddrmapNode.is_bus">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_bus</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><a class="headerlink" href="#peakrdl_halcpp.halnode.HalAddrmapNode.is_bus" title="Link to this definition">¶</a></dt>
+<dd><p>Returns True if this addrmap contains only other addrmaps (i.e., is a transparent bus).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalAddrmapNode.is_mem_addrmap">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">is_mem_addrmap</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><a class="headerlink" href="#peakrdl_halcpp.halnode.HalAddrmapNode.is_mem_addrmap" title="Link to this definition">¶</a></dt>
+<dd><p>Returns True if this addrmap contains only <a class="reference internal" href="#peakrdl_halcpp.halnode.HalMemNode" title="peakrdl_halcpp.halnode.HalMemNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">HalMemNode</span></code></a> children.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalAddrmapNode.get_template_line">
+<span class="sig-name descname"><span class="pre">get_template_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalAddrmapNode.get_template_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalAddrmapNode.get_template_line" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the class template string.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halnode.HalAddrmapNode.get_cls_tmpl_params">
+<span class="sig-name descname"><span class="pre">get_cls_tmpl_params</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="_modules/peakrdl_halcpp/halnode.html#HalAddrmapNode.get_cls_tmpl_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halnode.HalAddrmapNode.get_cls_tmpl_params" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the class template parameter string.</p>
+<p>These parameters must match the the template returned by <a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode.get_template_line" title="peakrdl_halcpp.halnode.HalAddrmapNode.get_template_line"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_template_line()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-peakrdl_halcpp.halutils">
+<span id="peakrdl-halcpp-halutils-module"></span><h2>peakrdl_halcpp.halutils module<a class="headerlink" href="#module-peakrdl_halcpp.halutils" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halutils.HalUtils">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">peakrdl_halcpp.halutils.</span></span><span class="sig-name descname"><span class="pre">HalUtils</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ext_modules</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/peakrdl_halcpp/halutils.html#HalUtils"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halutils.HalUtils" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Utility helpers used by the jinja2 template during C++ header generation.</p>
+<p>Class methods:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#peakrdl_halcpp.halutils.HalUtils.get_include_file" title="peakrdl_halcpp.halutils.HalUtils.get_include_file"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_include_file()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#peakrdl_halcpp.halutils.HalUtils.has_extern" title="peakrdl_halcpp.halutils.HalUtils.has_extern"><code class="xref py py-func docutils literal notranslate"><span class="pre">has_extern()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#peakrdl_halcpp.halutils.HalUtils.get_extern" title="peakrdl_halcpp.halutils.HalUtils.get_extern"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_extern()</span></code></a></p></li>
+<li><p><a class="reference internal" href="#peakrdl_halcpp.halutils.HalUtils.generate_file_header" title="peakrdl_halcpp.halutils.HalUtils.generate_file_header"><code class="xref py py-func docutils literal notranslate"><span class="pre">generate_file_header()</span></code></a></p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halutils.HalUtils.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ext_modules</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span></span><a class="reference internal" href="_modules/peakrdl_halcpp/halutils.html#HalUtils.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halutils.HalUtils.__init__" title="Link to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ext_modules</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>]</em>) – List of addrmap instance names that have user-supplied <code class="docutils literal notranslate"><span class="pre">*_hal_ext.h</span></code>
+extension headers.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halutils.HalUtils.ext_modules">
+<span class="sig-name descname"><span class="pre">ext_modules</span></span><a class="headerlink" href="#peakrdl_halcpp.halutils.HalUtils.ext_modules" title="Link to this definition">¶</a></dt>
+<dd><p>List of modules (i.e., SystemRDL addrmap objects) with extended functionalities.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halutils.HalUtils.get_include_file">
+<span class="sig-name descname"><span class="pre">get_include_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">halnode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode" title="peakrdl_halcpp.halnode.HalAddrmapNode"><span class="pre">HalAddrmapNode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="_modules/peakrdl_halcpp/halutils.html#HalUtils.get_include_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halutils.HalUtils.get_include_file" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the header filename to <code class="docutils literal notranslate"><span class="pre">#include</span></code> for a given HAL node.</p>
+<p>If the node has an extension header, returns <code class="docutils literal notranslate"><span class="pre">&lt;name&gt;_hal_ext.h</span></code>;
+otherwise returns <code class="docutils literal notranslate"><span class="pre">&lt;name&gt;_hal.h</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>halnode</strong> (<a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode" title="peakrdl_halcpp.halnode.HalAddrmapNode"><em>HalAddrmapNode</em></a>) – The HAL addrmap node whose include filename is needed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Header filename (without path).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halutils.HalUtils.has_extern">
+<span class="sig-name descname"><span class="pre">has_extern</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">halnode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode" title="peakrdl_halcpp.halnode.HalAddrmapNode"><span class="pre">HalAddrmapNode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span></span><a class="reference internal" href="_modules/peakrdl_halcpp/halutils.html#HalUtils.has_extern"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halutils.HalUtils.has_extern" title="Link to this definition">¶</a></dt>
+<dd><p>Returns True if the HAL node has a user-supplied extension header.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>halnode</strong> (<a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode" title="peakrdl_halcpp.halnode.HalAddrmapNode"><em>HalAddrmapNode</em></a>) – The HAL addrmap node to check.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if <code class="docutils literal notranslate"><span class="pre">halnode.inst_name</span></code> appears in <a class="reference internal" href="#peakrdl_halcpp.halutils.HalUtils.ext_modules" title="peakrdl_halcpp.halutils.HalUtils.ext_modules"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ext_modules</span></code></a>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halutils.HalUtils.get_extern">
+<span class="sig-name descname"><span class="pre">get_extern</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">halnode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode" title="peakrdl_halcpp.halnode.HalAddrmapNode"><span class="pre">HalAddrmapNode</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="_modules/peakrdl_halcpp/halutils.html#HalUtils.get_extern"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halutils.HalUtils.get_extern" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the C++ type name for the node, using the <code class="docutils literal notranslate"><span class="pre">_ext</span></code> variant when applicable.</p>
+<p>If the node has an extension header, the <code class="docutils literal notranslate"><span class="pre">_hal</span></code> suffix of the original
+type name is replaced by <code class="docutils literal notranslate"><span class="pre">_ext</span></code>; otherwise the standard <code class="docutils literal notranslate"><span class="pre">_hal</span></code> name is
+returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>halnode</strong> (<a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode" title="peakrdl_halcpp.halnode.HalAddrmapNode"><em>HalAddrmapNode</em></a>) – The HAL addrmap node.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>C++ type name string (<code class="docutils literal notranslate"><span class="pre">&lt;name&gt;_ext</span></code> or <code class="docutils literal notranslate"><span class="pre">&lt;name&gt;_hal</span></code>).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="peakrdl_halcpp.halutils.HalUtils.generate_file_header">
+<span class="sig-name descname"><span class="pre">generate_file_header</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="_modules/peakrdl_halcpp/halutils.html#HalUtils.generate_file_header"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#peakrdl_halcpp.halutils.HalUtils.generate_file_header" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a one-line C++ comment used as the header of every generated file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A <code class="docutils literal notranslate"><span class="pre">//</span> <span class="pre">Generated</span> <span class="pre">with</span> <span class="pre">...</span></code> comment string.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="peakrdl_halcpp.include.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">peakrdl_halcpp.include package</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, CERN
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">peakrdl_halcpp package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-peakrdl_halcpp.exporter">peakrdl_halcpp.exporter module</a><ul>
+<li><a class="reference internal" href="#peakrdl_halcpp.exporter.HalExporter"><code class="docutils literal notranslate"><span class="pre">HalExporter</span></code></a><ul>
+<li><a class="reference internal" href="#peakrdl_halcpp.exporter.HalExporter.__init__"><code class="docutils literal notranslate"><span class="pre">HalExporter.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.exporter.HalExporter.cpp_dir"><code class="docutils literal notranslate"><span class="pre">HalExporter.cpp_dir</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.exporter.HalExporter.base_headers"><code class="docutils literal notranslate"><span class="pre">HalExporter.base_headers</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.exporter.HalExporter.copy_base_headers"><code class="docutils literal notranslate"><span class="pre">HalExporter.copy_base_headers()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.exporter.HalExporter.export"><code class="docutils literal notranslate"><span class="pre">HalExporter.export()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.exporter.HalExporter.process_template"><code class="docutils literal notranslate"><span class="pre">HalExporter.process_template()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-peakrdl_halcpp.halnode">peakrdl_halcpp.halnode module</a><ul>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode"><code class="docutils literal notranslate"><span class="pre">HalBaseNode</span></code></a><ul>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode.inst_name_hal"><code class="docutils literal notranslate"><span class="pre">HalBaseNode.inst_name_hal</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode.orig_type_name_hal"><code class="docutils literal notranslate"><span class="pre">HalBaseNode.orig_type_name_hal</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode.orig_type_name"><code class="docutils literal notranslate"><span class="pre">HalBaseNode.orig_type_name</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode.is_bus"><code class="docutils literal notranslate"><span class="pre">HalBaseNode.is_bus</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode.get_docstring"><code class="docutils literal notranslate"><span class="pre">HalBaseNode.get_docstring()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode.halunrolled"><code class="docutils literal notranslate"><span class="pre">HalBaseNode.halunrolled()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode.halchildren"><code class="docutils literal notranslate"><span class="pre">HalBaseNode.halchildren()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalBaseNode.haldescendants"><code class="docutils literal notranslate"><span class="pre">HalBaseNode.haldescendants()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalFieldNode"><code class="docutils literal notranslate"><span class="pre">HalFieldNode</span></code></a><ul>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalFieldNode.__init__"><code class="docutils literal notranslate"><span class="pre">HalFieldNode.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalFieldNode.address_offset"><code class="docutils literal notranslate"><span class="pre">HalFieldNode.address_offset</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalFieldNode.cpp_access_type"><code class="docutils literal notranslate"><span class="pre">HalFieldNode.cpp_access_type</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalFieldNode.get_enums"><code class="docutils literal notranslate"><span class="pre">HalFieldNode.get_enums()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegNode"><code class="docutils literal notranslate"><span class="pre">HalRegNode</span></code></a><ul>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegNode.__init__"><code class="docutils literal notranslate"><span class="pre">HalRegNode.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegNode.cpp_access_type"><code class="docutils literal notranslate"><span class="pre">HalRegNode.cpp_access_type</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegNode.address_offset"><code class="docutils literal notranslate"><span class="pre">HalRegNode.address_offset</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegNode.width"><code class="docutils literal notranslate"><span class="pre">HalRegNode.width</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegNode.get_template_line"><code class="docutils literal notranslate"><span class="pre">HalRegNode.get_template_line()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegNode.get_cls_tmpl_params"><code class="docutils literal notranslate"><span class="pre">HalRegNode.get_cls_tmpl_params()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegfileNode"><code class="docutils literal notranslate"><span class="pre">HalRegfileNode</span></code></a><ul>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegfileNode.__init__"><code class="docutils literal notranslate"><span class="pre">HalRegfileNode.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegfileNode.cpp_access_type"><code class="docutils literal notranslate"><span class="pre">HalRegfileNode.cpp_access_type</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegfileNode.address_offset"><code class="docutils literal notranslate"><span class="pre">HalRegfileNode.address_offset</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegfileNode.get_template_line"><code class="docutils literal notranslate"><span class="pre">HalRegfileNode.get_template_line()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalRegfileNode.get_cls_tmpl_params"><code class="docutils literal notranslate"><span class="pre">HalRegfileNode.get_cls_tmpl_params()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalMemNode"><code class="docutils literal notranslate"><span class="pre">HalMemNode</span></code></a><ul>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalMemNode.__init__"><code class="docutils literal notranslate"><span class="pre">HalMemNode.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalMemNode.address_offset"><code class="docutils literal notranslate"><span class="pre">HalMemNode.address_offset</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalMemNode.get_template_line"><code class="docutils literal notranslate"><span class="pre">HalMemNode.get_template_line()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalMemNode.get_cls_tmpl_params"><code class="docutils literal notranslate"><span class="pre">HalMemNode.get_cls_tmpl_params()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode"><code class="docutils literal notranslate"><span class="pre">HalAddrmapNode</span></code></a><ul>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode.__init__"><code class="docutils literal notranslate"><span class="pre">HalAddrmapNode.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode.bus_offset"><code class="docutils literal notranslate"><span class="pre">HalAddrmapNode.bus_offset</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode.is_top_node"><code class="docutils literal notranslate"><span class="pre">HalAddrmapNode.is_top_node</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode.address_offset"><code class="docutils literal notranslate"><span class="pre">HalAddrmapNode.address_offset</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode.is_bus"><code class="docutils literal notranslate"><span class="pre">HalAddrmapNode.is_bus</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode.is_mem_addrmap"><code class="docutils literal notranslate"><span class="pre">HalAddrmapNode.is_mem_addrmap</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode.get_template_line"><code class="docutils literal notranslate"><span class="pre">HalAddrmapNode.get_template_line()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halnode.HalAddrmapNode.get_cls_tmpl_params"><code class="docutils literal notranslate"><span class="pre">HalAddrmapNode.get_cls_tmpl_params()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-peakrdl_halcpp.halutils">peakrdl_halcpp.halutils module</a><ul>
+<li><a class="reference internal" href="#peakrdl_halcpp.halutils.HalUtils"><code class="docutils literal notranslate"><span class="pre">HalUtils</span></code></a><ul>
+<li><a class="reference internal" href="#peakrdl_halcpp.halutils.HalUtils.__init__"><code class="docutils literal notranslate"><span class="pre">HalUtils.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halutils.HalUtils.ext_modules"><code class="docutils literal notranslate"><span class="pre">HalUtils.ext_modules</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halutils.HalUtils.get_include_file"><code class="docutils literal notranslate"><span class="pre">HalUtils.get_include_file()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halutils.HalUtils.has_extern"><code class="docutils literal notranslate"><span class="pre">HalUtils.has_extern()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halutils.HalUtils.get_extern"><code class="docutils literal notranslate"><span class="pre">HalUtils.get_extern()</span></code></a></li>
+<li><a class="reference internal" href="#peakrdl_halcpp.halutils.HalUtils.generate_file_header"><code class="docutils literal notranslate"><span class="pre">HalUtils.generate_file_header()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=ff822928"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

@@ -1,0 +1,16 @@
+.. PeakRDL-halcpp API documentation master file, created by sphinx-apidoc.
+
+PeakRDL-halcpp API Reference
+=============================
+
+For the full user documentation, tutorials, and usage guides, see the
+`PeakRDL-halcpp documentation site <https://hep-soc.github.io/PeakRDL-halcpp/>`_.
+
+This page covers the Python API reference only.
+
+
+.. toctree::
+   :maxdepth: 4
+   :caption: Contents:
+
+   peakrdl_halcpp
