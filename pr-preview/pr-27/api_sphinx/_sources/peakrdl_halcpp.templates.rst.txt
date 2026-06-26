@@ -1,7 +1,0 @@
-peakrdl\_halcpp.templates package
-=================================
-
-.. automodule:: peakrdl_halcpp.templates
-   :members:
-   :show-inheritance:
-   :undoc-members:
