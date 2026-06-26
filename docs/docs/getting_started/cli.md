@@ -28,6 +28,8 @@ peakrdl halcpp [-h] [-I INCDIR] [-t TOP] [--rename INST_NAME]
 |[`--ext`](#__ext)                |Option    |*    |exporter args        |
 |[`--list-files`](#__list_files)  |Option    |    0|exporter args        |
 |[`--skip-buses`](#__skip_buses)  |Option    |    0|exporter args        |
+|[`-f`](#_f)                      |Option    |    1|optional arguments   |
+|[`--peakrdl-cfg`](#__peakrdl_cfg)|Option    |    1|optional arguments   |
 
 ### `-h` `--help` {#_h___help}
 
@@ -72,3 +74,11 @@ Don't generate files, but instead just list the files that will be generated, an
 ### `--skip-buses` {#__skip_buses}
 
 By default the SystemRDL hierarchy is preserved but it can be simplified by removing buses (i.e., addrmap containing only addrmaps, not registers). This is achieved by passing the --skip-buses flag.
+
+### `-f` {#_f}
+
+Specify a file containing more command line arguments.
+
+### `--peakrdl-cfg` {#__peakrdl_cfg}
+
+Specify a PeakRDL configuration TOML file.
