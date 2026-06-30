@@ -105,6 +105,7 @@ class HalExporter():
         for halnode in concatenated_iterable:
             # Create the context for the template generation
             context = {
+                'parameters': halnode.parameters.items(),
                 'halnode': halnode,
                 'halutils': halutils,
                 'skip_buses': skip_buses,

@@ -6,6 +6,7 @@
 #define __{{ halnode.orig_type_name_hal|upper }}_H_
 
 #include <stdint.h>
+#include <string_view>
 #include "include/halcpp_base.h"
 
 #if defined(__clang__)
@@ -21,6 +22,20 @@
 {% if not halnode.is_bus %}
 namespace {{ halnode.orig_type_name }}_nm
 {
+    {# =========== 0. Generate constants =========== -#}
+    {% for name, value in parameters %}
+    {% if value is boolean %}
+    constexpr bool {{name}} = {{value}};
+    {% elif value is number %}
+    {# According to SystemRDL spec 6.2.1 all numbers are integral and unsigned.
+       and only supports `bits` and `longint unsigned`. 
+       However register size is 32bit, for that they will interpreted as uin32_t #}
+    constexpr uint32_t {{name}} = {{value}};
+    {% elif value is string %}
+    constexpr std::string_view {{name}} = "{{value}}";
+    {% endif %}
+    {% endfor %}
+
     {#- Enum with same name are not duplicated -#}
     {%- set seen_enum_names = [] -%}
 
