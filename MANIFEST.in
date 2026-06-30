@@ -1,2 +1,0 @@
-recursive-include src/peakrdl_halcpp/templates *.j2
-recursive-include src/peakrdl_halcpp/include *.h

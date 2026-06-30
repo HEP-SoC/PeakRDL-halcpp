@@ -34,11 +34,11 @@ constexpr bool valid_index( int32_t I, uint32_t E )
     return  I >= -1 and I < static_cast<int32_t>(E);
 }
 
-template< 
+template<
     template<uint32_t B, uint32_t W, typename P> typename REG_T,
     uint32_t BASE, uint32_t WIDTH, uint32_t STRIDE, typename PARENT_TYPE, uint32_t ... Extents
 >
-class REG_ARR_NODE 
+class REG_ARR_NODE
 {
     static constexpr uint32_t Dimensions = sizeof...(Extents);
     static_assert( Dimensions > 0 );
@@ -58,5 +58,3 @@ public :
 }
 
 #endif // !_REG_ARR_NODE_H_
-
-

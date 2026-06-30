@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import TYPE_CHECKING
 
 from peakrdl.plugins.exporter import ExporterSubcommandPlugin  # pylint: disable=import-error
@@ -6,6 +8,7 @@ from .exporter import HalExporter
 
 if TYPE_CHECKING:
     import argparse
+
     from systemrdl.node import AddrmapNode
 
 
@@ -16,22 +19,22 @@ class Exporter(ExporterSubcommandPlugin):
     :class:`~peakrdl_halcpp.exporter.HalExporter`.
     """
 
-    short_desc = 'Generates C++ Hardware Abstraction Layer (HAL) libraries.'
-    long_desc = 'Generates C++ Hardware Abstraction Layer (HAL) libraries.'
+    short_desc = "Generates C++ Hardware Abstraction Layer (HAL) libraries."
+    long_desc = "Generates C++ Hardware Abstraction Layer (HAL) libraries."
 
-    def add_exporter_arguments(self, arg_group: 'argparse.ArgumentParser') -> None:
+    def add_exporter_arguments(self, arg_group: argparse._ActionsContainer) -> None:
         """Registers halcpp-specific CLI arguments with the PeakRDL argument parser.
 
         Parameters
         ----------
-        arg_group : argparse.ArgumentParser
+        arg_group : argparse._ActionsContainer
             Argument group provided by PeakRDL into which arguments are added.
         """
         arg_group.add_argument(
             "--ext",
             nargs="*",
             help="List of addrmap modules that have implemented <name>_HAL_EXT class in \
-                <name>_hal_ext.h header file, used for extending functionality."
+                <name>_hal_ext.h header file, used for extending functionality.",
         )
 
         arg_group.add_argument(
@@ -40,7 +43,7 @@ class Exporter(ExporterSubcommandPlugin):
             default=False,
             action="store_true",
             help="Dont generate files, but instead just list the files that will be \
-                generated, and external files that need to be included."
+                generated, and external files that need to be included.",
         )
 
         arg_group.add_argument(
@@ -49,10 +52,10 @@ class Exporter(ExporterSubcommandPlugin):
             default=False,
             action="store_true",
             help="Addrmaps containing only addrmaps, not registers, can be removed by \
-                passing --skip-buses flag."
+                passing --skip-buses flag.",
         )
 
-    def do_export(self, top_node: 'AddrmapNode', options: 'argparse.Namespace') -> None:
+    def do_export(self, top_node: AddrmapNode, options: argparse.Namespace) -> None:
         """Invoked by PeakRDL to run the export after argument parsing.
 
         Parameters

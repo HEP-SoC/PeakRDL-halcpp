@@ -1,16 +1,17 @@
+import contextlib
 import os
-from typing import Union, Any, List, Dict
 import shutil
 from itertools import chain
-import logging
+from typing import Any
 
 import jinja2 as jj
-from systemrdl.node import RootNode, AddrmapNode
+from systemrdl.node import AddrmapNode
 
-from .halutils import *
-from .halnode import *
+from peakrdl_halcpp.halnode import HalAddrmapNode, HalFieldNode, HalMemNode, HalRegfileNode, HalRegNode
+from peakrdl_halcpp.halutils import HalUtils
 
-class HalExporter():
+
+class HalExporter:
     """HAL C++ PeakRDL plugin top class to generate the C++ HAL from SystemRDL description.
 
     Class methods:
@@ -23,8 +24,7 @@ class HalExporter():
     def __init__(self, **kwargs: Any):
         # Check for stray kwargs
         if kwargs:
-            raise TypeError("got an unexpected keyword argument '%s'" %
-                            list(kwargs.keys())[0])
+            raise TypeError(f"got an unexpected keyword argument '{next(iter(kwargs.keys()))}'")  # noqa: TRY003
 
         #: HAL C++ copied header library location within the generated files output directory
         self.cpp_dir = "include"
@@ -32,8 +32,7 @@ class HalExporter():
         filetype = "*.h"
         abspaths = os.path.join(os.path.dirname(__file__), self.cpp_dir)
         #: HAL C++ headers list (copied into :attr:`~cpp_dir`)
-        self.base_headers = [f for f in os.listdir(
-            abspaths) if f.endswith(filetype[1:])]
+        self.base_headers = [f for f in os.listdir(abspaths) if f.endswith(filetype[1:])]
 
     def copy_base_headers(self, outdir: str):
         """Copies the HAL C++ headers to the generated files location given
@@ -44,20 +43,20 @@ class HalExporter():
         outdir: str
             Output directory in which the output files are generated.
         """
-        abspaths = [os.path.join(os.path.dirname(
-            __file__), self.cpp_dir, x) for x in self.base_headers]
+        abspaths = [os.path.join(os.path.dirname(__file__), self.cpp_dir, x) for x in self.base_headers]
         outdir = os.path.join(outdir, "include")
         if not os.path.exists(outdir):
             os.makedirs(outdir)
         [shutil.copy(x, outdir) for x in abspaths]
 
-    def export(self,
-               node: 'AddrmapNode',
-               outdir: str,
-               list_files: bool = False,
-               ext_modules: List = [str],
-               skip_buses: bool = False
-               ):
+    def export(
+        self,
+        node: AddrmapNode,
+        outdir: str,
+        list_files: bool = False,
+        ext_modules: list[str] | None = None,
+        skip_buses: bool = False,
+    ):
         """Main function of the plugin extension.
 
         Parameters
@@ -77,8 +76,7 @@ class HalExporter():
 
         # Check the node is an AddrmapNode object
         if not isinstance(node, AddrmapNode):
-            raise TypeError(
-                "'node' argument expects type AddrmapNode. Got '%s'" % type(node).__name__)
+            raise TypeError(f"'node' argument expects type AddrmapNode. Got '{type(node).__name__}'")  # noqa: TRY003
 
         halutils = HalUtils(ext_modules)
 
@@ -87,32 +85,31 @@ class HalExporter():
 
         if not list_files:
             # Create the output directory for the generated files
-            try:
+            with contextlib.suppress(FileExistsError):
                 os.makedirs(outdir)
-            except FileExistsError:
-                pass
 
             # Copy the base header files (fixed code) to the output directory
             self.copy_base_headers(outdir)
 
         # Iterate over all the decendants of the top HalAddrmap object
-        concatenated_iterable = chain(top.haldescendants(
-            descendants_type=HalAddrmapNode, skip_buses=skip_buses, unique_orig_type=True), top)
+        concatenated_iterable = chain(
+            top.haldescendants(descendants_type=HalAddrmapNode, skip_buses=skip_buses, unique_orig_type=True), top
+        )
 
         if list_files:
-            print('INFO: Only listing files (no actual generation)')
+            print("INFO: Only listing files (no actual generation)")
 
         for halnode in concatenated_iterable:
             # Create the context for the template generation
             context = {
-                'halnode': halnode,
-                'halutils': halutils,
-                'skip_buses': skip_buses,
-                'HalAddrmapNode': HalAddrmapNode,
-                'HalMemNode': HalMemNode,
-                'HalRegfileNode': HalRegfileNode,
-                'HalRegNode': HalRegNode,
-                'HalFieldNode': HalFieldNode,
+                "halnode": halnode,
+                "halutils": halutils,
+                "skip_buses": skip_buses,
+                "HalAddrmapNode": HalAddrmapNode,
+                "HalMemNode": HalMemNode,
+                "HalRegfileNode": HalRegfileNode,
+                "HalRegNode": HalRegNode,
+                "HalFieldNode": HalFieldNode,
             }
 
             # The next lines generate the C++ header file for the
@@ -121,18 +118,17 @@ class HalExporter():
 
             # All addrmaps use the original type name (not instance name)
             # This ensures include statements match the actual filenames
-            out_file = os.path.join(
-                outdir, halnode.orig_type_name_hal.lower() + ".h")
+            out_file = os.path.join(outdir, halnode.orig_type_name_hal.lower() + ".h")
 
             # Generate the files if --list-files parameter is not set
             if list_files:
-                print('INFO: ' + out_file)
+                print("INFO: " + out_file)
             else:
-                print('INFO: Generated file: ' + out_file)
-                with open(out_file, 'w') as f:
+                print("INFO: Generated file: " + out_file)
+                with open(out_file, "w") as f:
                     f.write(text)
 
-    def process_template(self, context: Dict) -> str:
+    def process_template(self, context: dict) -> str:
         """Generates a C++ header file based on a jinja2 template.
 
         Parameters
@@ -149,13 +145,15 @@ class HalExporter():
         # Create a jinja2 env with the template contained in the templates
         # folder located in the same directory than this file
         env = jj.Environment(
-            loader=jj.FileSystemLoader(
-                '%s/templates/' % os.path.dirname(__file__)),
+            loader=jj.FileSystemLoader(f"{os.path.dirname(__file__)}/templates/"),
             trim_blocks=True,
-            lstrip_blocks=True)
+            lstrip_blocks=True,
+            autoescape=False,  # noqa: S701
+            # Since we dont generate XML or HTML, we can disable autoescape
+        )
         # Add the base zip function to the env
         env.filters.update({
-            'zip': zip,
+            "zip": zip,
         })
         # Render the C++ header text using the jinja2 template and the
         # specific context

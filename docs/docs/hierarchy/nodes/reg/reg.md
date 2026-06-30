@@ -77,4 +77,3 @@ using RegRW = ...
 ```
 
 It is advised to use these specializations to construct your registers
-

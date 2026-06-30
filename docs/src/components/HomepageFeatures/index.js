@@ -30,7 +30,7 @@ const FeatureList = [
     description: (
       <>
         PeakRDL is an open-source, Python-based toolchain that implements
-        the SystemRDL 2.0 standard for efficient register map description 
+        the SystemRDL 2.0 standard for efficient register map description
         and generation in hardware designs
       </>
     ),

@@ -36,7 +36,7 @@ nvm use 22
 cmake -S docs -B build/docs
 ```
 
-CMake reads the package version from `src/peakrdl_halcpp/__about__.py` automatically.
+CMake reads the package version from `pyproject.toml` automatically.
 
 ### Available targets
 

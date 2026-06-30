@@ -20,4 +20,3 @@ class RegfileNode {
 The template parameters are:
 *   `BASE` is an address offset within an `AddrmapNode` or `RegFileNode`.
 *   `PARENT_TYPE` accepts a specialization of an `AddrmapNode` or `RegFileNode` template, and is the type of the containing node.
-

@@ -1,60 +1,65 @@
 name: build
+
 on:
   push:
     branches:
       - master
     tags:
       - '*'
+  pull_request:
+    branches:
+      - master
+
 jobs:
-  lint:
+  check:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
         with:
-          python-version: 3.8
-      - name: Install dependencies
-        run: |
-          python -m pip install -U pylint
-      - name: Install
-        run: |
-          python -m pip install .
-  build_sdist:
-    needs:
-      - lint
-    name: Build source distribution
+          enable-cache: true
+      - run: make install
+      - run: make check
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          python-version: ${{ matrix.python-version }}
+      - run: make install
+      - run: make test
+      - uses: codecov/codecov-action@v4
+        if: matrix.python-version == '3.12'
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+  build:
+    needs: [check, test]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: 3.8
-      - name: Build sdist
-        run: python setup.py sdist
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: make build
+      - uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: dist/*.tar.gz
+          path: dist/
+
   deploy:
-    needs:
-      - build_sdist
+    needs: build
     if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist
-      - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+      - uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          user: __token__
           password: ${{ secrets.PYPY_TOKEN }}

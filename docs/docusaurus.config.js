@@ -5,8 +5,8 @@ const fs = require('fs');
 const path = require('path');
 const {themes: prismThemes} = require('prism-react-renderer');
 
-const _about = fs.readFileSync(path.resolve(__dirname, '../src/peakrdl_halcpp/__about__.py'), 'utf8');
-const _versionMatch = _about.match(/__version__\s*=\s*"([^"]+)"/);
+const _pyproject = fs.readFileSync(path.resolve(__dirname, '../pyproject.toml'), 'utf8');
+const _versionMatch = _pyproject.match(/version\s*=\s*"([^"]+)"/);
 const packageVersion = _versionMatch ? _versionMatch[1] : 'unknown';
 
 /** @type {import('@docusaurus/types').Config} */

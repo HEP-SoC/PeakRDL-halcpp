@@ -24,4 +24,3 @@ The template parameters are:
 
 `MemNode` provides `get()` and `set()` methods for word-level access to the memory region.
 All requests are forwarded to the parent node with the offset applied.
-

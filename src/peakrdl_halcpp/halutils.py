@@ -1,9 +1,7 @@
-from typing import List
-
 from .halnode import HalAddrmapNode
 
 
-class HalUtils():
+class HalUtils:
     """Utility helpers used by the jinja2 template during C++ header generation.
 
     Class methods:
@@ -14,11 +12,11 @@ class HalUtils():
     - :func:`generate_file_header`
     """
 
-    def __init__(self, ext_modules: List[str]) -> None:
+    def __init__(self, ext_modules: list[str] | None = None) -> None:
         """
         Parameters
         ----------
-        ext_modules : List[str]
+        ext_modules : list[str] or None, optional
             List of addrmap instance names that have user-supplied ``*_hal_ext.h``
             extension headers.
         """
@@ -57,10 +55,7 @@ class HalUtils():
         bool
             True if ``halnode.inst_name`` appears in :attr:`ext_modules`.
         """
-        if self.ext_modules is not None:
-            if halnode.inst_name in self.ext_modules:
-                return True
-        return False
+        return self.ext_modules is not None and halnode.inst_name in self.ext_modules
 
     def get_extern(self, halnode: HalAddrmapNode) -> str:
         """Returns the C++ type name for the node, using the ``_ext`` variant when applicable.
@@ -80,7 +75,7 @@ class HalUtils():
             C++ type name string (``<name>_ext`` or ``<name>_hal``).
         """
         if self.has_extern(halnode):
-            return halnode.orig_type_name.replace('_hal', '_ext')
+            return halnode.orig_type_name.replace("_hal", "_ext")
         return halnode.orig_type_name_hal
 
     def generate_file_header(self) -> str:
@@ -91,5 +86,5 @@ class HalUtils():
         str
             A ``// Generated with ...`` comment string.
         """
-        comment = f"// Generated with PeakRD-halcpp : https://github.com/Risto97/PeakRDL-halcpp\n"
+        comment = "// Generated with PeakRD-halcpp : https://github.com/HEP-SoC/PeakRDL-halcpp\n"
         return comment

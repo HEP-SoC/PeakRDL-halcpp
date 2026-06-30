@@ -2,8 +2,8 @@
 cmake_minimum_required(VERSION 3.25)
 
 # Get version from python package
-file(READ "${CMAKE_CURRENT_SOURCE_DIR}/../src/peakrdl_halcpp/__about__.py" _about)
-string(REGEX MATCH "__version__ = \"([^\"]+)\"" _ ${_about})
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/../pyproject.toml" _pyproject)
+string(REGEX MATCH "version = \"([^\"]+)\"" _ ${_pyproject})
 set(_halcpp_version ${CMAKE_MATCH_1})
 
 project(PeakRDL-halcpp-Documentation
