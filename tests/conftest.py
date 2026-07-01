@@ -1,6 +1,7 @@
 import os
 import tempfile
 from pathlib import Path
+from typing import cast
 
 import pytest
 from systemrdl import RDLCompiler
@@ -27,7 +28,7 @@ def compile_rdl():
         rdlc = RDLCompiler()
         rdlc.compile_file(str(rdl_file))
         root = rdlc.elaborate()
-        return root.children(unroll=True)[0]
+        return cast(AddrmapNode, root.children(unroll=True)[0])
 
     return _compile
 
@@ -44,6 +45,6 @@ def compile_rdl_string():
             root = rdlc.elaborate()
         finally:
             os.unlink(fname)
-        return root.children(unroll=True)[0]
+        return cast(AddrmapNode, root.children(unroll=True)[0])
 
     return _compile

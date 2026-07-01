@@ -3,7 +3,7 @@ from __future__ import annotations
 import itertools
 import logging
 from collections.abc import Iterator
-from typing import TYPE_CHECKING, ClassVar, cast
+from typing import TYPE_CHECKING, ClassVar, TypeVar, cast, overload
 
 from systemrdl.node import (
     AddressableNode,
@@ -19,6 +19,8 @@ from systemrdl.node import (
 
 if TYPE_CHECKING:
     from systemrdl.compiler import RDLEnvironment
+
+_HalNodeT = TypeVar("_HalNodeT", bound="HalBaseNode")
 
 # Logger generation for halnode module
 halnode_logger = logging.getLogger("halnode_logger")
@@ -157,18 +159,43 @@ class HalBaseNode(Node):
         Adapted from the systemrdl Node unrolling logic. For array nodes, each yielded
         node has its ``current_idx`` set to the corresponding index tuple.
         """
-        cls = type(self)
         if isinstance(self, AddressableNode) and self.is_array:  # pylint: disable=no-member
             # Is an array. Yield a Node object for each instance
             array_dims = cast(list[int], self.array_dimensions)  # pylint: disable=no-member
             range_list = [range(n) for n in array_dims]
             for idxs in itertools.product(*range_list):
-                N = cls(self.inst, self.env, self.parent)
+                N = HalBaseNode._halfactory(self, self.env, self.parent)
+                if N is None:
+                    continue
                 cast(AddressableNode, N).current_idx = list(idxs)
                 yield N
         else:
             # Not an array. Nothing to unroll
-            yield cls(self.inst, self.env, self.parent)
+            yield self
+
+    @overload
+    def halchildren(
+        self,
+        children_type: type[_HalNodeT],
+        unroll: bool = ...,
+        skip_not_present: bool = ...,
+        skip_buses: bool = ...,
+        bus_offset: int = ...,
+        unique_orig_type: bool = ...,
+        type_dict: dict | None = ...,
+    ) -> Iterator[_HalNodeT]: ...
+
+    @overload
+    def halchildren(
+        self,
+        children_type: type[Node] = ...,
+        unroll: bool = ...,
+        skip_not_present: bool = ...,
+        skip_buses: bool = ...,
+        bus_offset: int = ...,
+        unique_orig_type: bool = ...,
+        type_dict: dict | None = ...,
+    ) -> Iterator[HalBaseNode]: ...
 
     def halchildren(
         self,
@@ -429,7 +456,7 @@ class HalRegNode(HalBaseNode, RegNode):
         if self.is_array and self.current_idx is None:
             return self.bus_offset + next(self.halunrolled()).address_offset
         else:
-            return self.bus_offset + super().address_offset
+            return self.bus_offset + super(HalBaseNode, self).address_offset
 
     @property
     def width(self) -> int:
@@ -484,7 +511,7 @@ class HalRegfileNode(HalBaseNode, RegfileNode):
         if self.is_array and self.current_idx is None:
             return self.bus_offset + next(self.halunrolled()).address_offset
         else:
-            return self.bus_offset + super().address_offset
+            return self.bus_offset + super(HalBaseNode, self).address_offset
 
     def get_template_line(self) -> str:
         """Returns the class template string."""
@@ -518,7 +545,7 @@ class HalMemNode(HalBaseNode, MemNode):
     @property
     def address_offset(self) -> int:
         """Returns the address offset adjusted by the accumulated bus offset."""
-        return self.bus_offset + super().address_offset
+        return self.bus_offset + super(HalBaseNode, self).address_offset
 
     def get_template_line(self) -> str:
         """Returns the class template string."""
@@ -557,7 +584,7 @@ class HalAddrmapNode(HalBaseNode, AddrmapNode):
     @property
     def address_offset(self) -> int:
         """Returns the address offset adjusted by the accumulated bus offset."""
-        return self.bus_offset + super().address_offset
+        return self.bus_offset + super(HalBaseNode, self).address_offset
 
     @property
     def is_bus(self) -> bool:

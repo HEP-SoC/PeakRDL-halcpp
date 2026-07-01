@@ -41,9 +41,7 @@ def test_golden_output(case_name, rdl_file, export_kwargs, update_golden, compil
             (expected_dir / gen_file.name).write_text(gen_file.read_text())
         pytest.skip(f"Golden files updated in {expected_dir}")
 
-    assert expected_dir.exists(), (
-        f"No golden directory for '{case_name}'. Run: pytest --update-golden"
-    )
+    assert expected_dir.exists(), f"No golden directory for '{case_name}'. Run: pytest --update-golden"
 
     expected_names = {f.name for f in expected_dir.iterdir() if f.suffix == ".h"}
     generated_names = {f.name for f in generated}
@@ -53,6 +51,4 @@ def test_golden_output(case_name, rdl_file, export_kwargs, update_golden, compil
 
     for gen_file in sorted(generated):
         expected_text = (expected_dir / gen_file.name).read_text()
-        assert gen_file.read_text() == expected_text, (
-            f"[{case_name}] content mismatch in {gen_file.name}"
-        )
+        assert gen_file.read_text() == expected_text, f"[{case_name}] content mismatch in {gen_file.name}"

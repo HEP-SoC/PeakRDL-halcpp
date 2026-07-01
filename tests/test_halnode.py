@@ -1,7 +1,5 @@
 """Unit tests for HalBaseNode and its subclasses."""
 
-import pytest
-
 from peakrdl_halcpp.halnode import (
     HalAddrmapNode,
     HalFieldNode,
@@ -9,7 +7,6 @@ from peakrdl_halcpp.halnode import (
     HalRegfileNode,
     HalRegNode,
 )
-
 
 # ---------------------------------------------------------------------------
 # Name properties
@@ -28,7 +25,6 @@ class TestNameProperties:
         top = compile_rdl_string(self._simple())
         assert HalAddrmapNode(top).orig_type_name_hal == "my_map_hal"
 
-
     def test_inst_name_differs_from_type(self, compile_rdl_string):
         rdl = """
         addrmap parent {
@@ -40,14 +36,14 @@ class TestNameProperties:
         };
         """
         top = compile_rdl_string(rdl)
-        child = list(HalAddrmapNode(top).halchildren(HalAddrmapNode))[0]
+        child = next(iter(HalAddrmapNode(top).halchildren(HalAddrmapNode)))
         assert child.inst_name_hal == "my_inst_hal"
         assert child.orig_type_name_hal == "child_t_hal"
 
     def test_orig_type_name_falls_back_to_type_name_for_anonymous(self, compile_rdl_string):
         rdl = "addrmap outer { addrmap { default regwidth=32; reg { field {sw=rw; hw=r;} f[7:0]; } ctrl @0x0; } anon_inst; };"
         top = compile_rdl_string(rdl)
-        child = list(HalAddrmapNode(top).halchildren(HalAddrmapNode))[0]
+        child = next(iter(HalAddrmapNode(top).halchildren(HalAddrmapNode)))
         # Anonymous types have no orig_type_name; the property falls back to type_name
         assert child.orig_type_name is not None
 
@@ -102,7 +98,7 @@ class TestIsBus:
     def test_non_addrmap_nodes_never_are_bus(self, compile_rdl_string):
         rdl = "addrmap m { default regwidth=32; reg { field {sw=rw; hw=r;} f[7:0]; } ctrl @0x0; };"
         top = compile_rdl_string(rdl)
-        reg = list(HalAddrmapNode(top).halchildren(HalRegNode))[0]
+        reg = next(iter(HalAddrmapNode(top).halchildren(HalRegNode)))
         assert reg.is_bus is False
 
 
@@ -117,13 +113,13 @@ class TestHalfactory:
 
     def test_field_node(self, compile_rdl_string):
         top = compile_rdl_string(self._top_reg_rdl())
-        reg = list(HalAddrmapNode(top).halchildren(HalRegNode))[0]
-        field = list(reg.halchildren(HalFieldNode))[0]
+        reg = next(iter(HalAddrmapNode(top).halchildren(HalRegNode)))
+        field = next(iter(reg.halchildren(HalFieldNode)))
         assert isinstance(field, HalFieldNode)
 
     def test_reg_node(self, compile_rdl_string):
         top = compile_rdl_string(self._top_reg_rdl())
-        reg = list(HalAddrmapNode(top).halchildren(HalRegNode))[0]
+        reg = next(iter(HalAddrmapNode(top).halchildren(HalRegNode)))
         assert isinstance(reg, HalRegNode)
 
     def test_addrmap_node(self, compile_rdl_string):
@@ -134,7 +130,7 @@ class TestHalfactory:
         };
         """
         top = compile_rdl_string(rdl)
-        child = list(HalAddrmapNode(top).halchildren(HalAddrmapNode))[0]
+        child = next(iter(HalAddrmapNode(top).halchildren(HalAddrmapNode)))
         assert isinstance(child, HalAddrmapNode)
 
     def test_mem_node(self, compile_rdl_string):
@@ -144,7 +140,7 @@ class TestHalfactory:
         };
         """
         top = compile_rdl_string(rdl)
-        mem = list(HalAddrmapNode(top).halchildren(HalMemNode))[0]
+        mem = next(iter(HalAddrmapNode(top).halchildren(HalMemNode)))
         assert isinstance(mem, HalMemNode)
 
     def test_regfile_node(self, compile_rdl_string):
@@ -158,7 +154,7 @@ class TestHalfactory:
         };
         """
         top = compile_rdl_string(rdl)
-        rf = list(HalAddrmapNode(top).halchildren(HalRegfileNode))[0]
+        rf = next(iter(HalAddrmapNode(top).halchildren(HalRegfileNode)))
         assert isinstance(rf, HalRegfileNode)
 
 
@@ -171,8 +167,8 @@ class TestFieldAccessType:
     def _top_with_field(self, compile_rdl_string, sw_access: str):
         rdl = f"addrmap m {{ default regwidth=32; reg {{ field {{sw={sw_access}; hw=r;}} f[7:0]; }} ctrl @0x0; }};"
         top = compile_rdl_string(rdl)
-        reg = list(HalAddrmapNode(top).halchildren(HalRegNode))[0]
-        return list(reg.halchildren(HalFieldNode))[0]
+        reg = next(iter(HalAddrmapNode(top).halchildren(HalRegNode)))
+        return next(iter(reg.halchildren(HalFieldNode)))
 
     def test_rw(self, compile_rdl_string):
         assert self._top_with_field(compile_rdl_string, "rw").cpp_access_type == "FieldRW"
@@ -180,8 +176,8 @@ class TestFieldAccessType:
     def test_ro(self, compile_rdl_string):
         rdl = "addrmap m { default regwidth=32; reg { field {sw=r; hw=rw;} f[7:0]; } ctrl @0x0; };"
         top = compile_rdl_string(rdl)
-        reg = list(HalAddrmapNode(top).halchildren(HalRegNode))[0]
-        field = list(reg.halchildren(HalFieldNode))[0]
+        reg = next(iter(HalAddrmapNode(top).halchildren(HalRegNode)))
+        field = next(iter(reg.halchildren(HalFieldNode)))
         assert field.cpp_access_type == "FieldRO"
 
     def test_wo(self, compile_rdl_string):
@@ -190,8 +186,8 @@ class TestFieldAccessType:
     def test_field_address_offset_always_zero(self, compile_rdl_string):
         rdl = "addrmap m { default regwidth=32; reg { field {sw=rw; hw=r;} f[7:0]; } ctrl @0x40; };"
         top = compile_rdl_string(rdl)
-        reg = list(HalAddrmapNode(top).halchildren(HalRegNode))[0]
-        field = list(reg.halchildren(HalFieldNode))[0]
+        reg = next(iter(HalAddrmapNode(top).halchildren(HalRegNode)))
+        field = next(iter(reg.halchildren(HalFieldNode)))
         assert field.address_offset == 0
 
 
@@ -204,31 +200,31 @@ class TestRegProperties:
     def test_reg_access_type_rw(self, compile_rdl_string):
         rdl = "addrmap m { default regwidth=32; reg { field {sw=rw; hw=r;} f[7:0]; } ctrl @0x0; };"
         top = compile_rdl_string(rdl)
-        reg = list(HalAddrmapNode(top).halchildren(HalRegNode))[0]
+        reg = next(iter(HalAddrmapNode(top).halchildren(HalRegNode)))
         assert reg.cpp_access_type == "RegRW"
 
     def test_reg_access_type_ro(self, compile_rdl_string):
         rdl = "addrmap m { default regwidth=32; reg { field {sw=r; hw=rw;} f[7:0]; } ctrl @0x0; };"
         top = compile_rdl_string(rdl)
-        reg = list(HalAddrmapNode(top).halchildren(HalRegNode))[0]
+        reg = next(iter(HalAddrmapNode(top).halchildren(HalRegNode)))
         assert reg.cpp_access_type == "RegRO"
 
     def test_width_8bit(self, compile_rdl_string):
         rdl = "addrmap m { default regwidth=32; reg { field {sw=rw; hw=r;} f[7:0]; } ctrl @0x0; };"
         top = compile_rdl_string(rdl)
-        reg = list(HalAddrmapNode(top).halchildren(HalRegNode))[0]
+        reg = next(iter(HalAddrmapNode(top).halchildren(HalRegNode)))
         assert reg.width == 8
 
     def test_width_32bit(self, compile_rdl_string):
         rdl = "addrmap m { default regwidth=32; reg { field {sw=rw; hw=r;} f[31:0]; } ctrl @0x0; };"
         top = compile_rdl_string(rdl)
-        reg = list(HalAddrmapNode(top).halchildren(HalRegNode))[0]
+        reg = next(iter(HalAddrmapNode(top).halchildren(HalRegNode)))
         assert reg.width == 32
 
     def test_address_offset(self, compile_rdl_string):
         rdl = "addrmap m { default regwidth=32; reg { field {sw=rw; hw=r;} f[7:0]; } ctrl @0x40; };"
         top = compile_rdl_string(rdl)
-        reg = list(HalAddrmapNode(top).halchildren(HalRegNode))[0]
+        reg = next(iter(HalAddrmapNode(top).halchildren(HalRegNode)))
         assert reg.address_offset == 0x40
 
 
@@ -252,7 +248,7 @@ class TestAddrmapProperties:
 
     def test_nested_node_is_not_top(self, compile_rdl_string):
         top = compile_rdl_string(self._NESTED)
-        child = list(HalAddrmapNode(top).halchildren(HalAddrmapNode))[0]
+        child = next(iter(HalAddrmapNode(top).halchildren(HalAddrmapNode)))
         assert child.is_top_node is False
 
     def test_get_template_line_top_has_void_default(self, compile_rdl_string):
@@ -261,7 +257,7 @@ class TestAddrmapProperties:
 
     def test_get_template_line_nested_no_default(self, compile_rdl_string):
         top = compile_rdl_string(self._NESTED)
-        child = list(HalAddrmapNode(top).halchildren(HalAddrmapNode))[0]
+        child = next(iter(HalAddrmapNode(top).halchildren(HalAddrmapNode)))
         assert "PARENT_TYPE=void" not in child.get_template_line()
         assert "PARENT_TYPE" in child.get_template_line()
 
