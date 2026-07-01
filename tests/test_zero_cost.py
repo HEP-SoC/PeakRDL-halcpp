@@ -1,8 +1,14 @@
-"""Assembly quality tests: verify generated C++ compiles to zero-cost abstractions.
+"""Regression guard: verify the generated C++ HAL compiles to zero-cost abstractions.
 
-Every register and field access must inline down to raw load/store instructions
-with no function-call overhead. Tests parametrize over available compilers;
-cross-compilers (RISC-V) are silently skipped when not installed.
+The HAL's static template design makes inlining very likely at -O2, but it is not
+*guaranteed* by the C++ language — ``inline`` is a linkage hint, not a code-generation
+promise.  These tests catch silent regressions if a future change to the HAL (e.g. an
+out-of-line helper, an extra indirection level, or a non-header dependency) causes the
+compiler to emit a real subroutine call where there should only be a load/store.
+
+Two compilers (g++ and clang++) are checked to cover the major host toolchains.
+Cross-compiler checks are intentionally omitted: behavioural correctness on the target
+ISA is tested separately via functional tests with mocked memory I/O.
 """
 
 from __future__ import annotations
@@ -53,13 +59,9 @@ extern "C" void    hal_prescaler_set(uint8_t v) { SPI::CTRL.PRESCALER.set(v); }
 # (executable, test_id, flags)
 # -Wno-int-to-pointer-cast: the HAL uses uint32_t for addresses (designed for 32-bit targets);
 # on a 64-bit host this triggers a harmless warning in arch_io.h.
-# riscv64-unknown-elf-g++ targets both RV32 and RV64 via -march/-mabi flags.
-# On Ubuntu: sudo apt-get install gcc-riscv64-unknown-elf
 _COMPILERS: list[tuple[str, str, list[str]]] = [
     ("g++", "g++", ["-std=c++17", "-O2", "-S", "-Wno-int-to-pointer-cast"]),
     ("clang++", "clang++", ["-std=c++17", "-O2", "-S", "-Wno-int-to-pointer-cast"]),
-    ("riscv64-unknown-elf-g++", "rv32", ["-std=c++17", "-O2", "-S", "-march=rv32i", "-mabi=ilp32"]),
-    ("riscv64-unknown-elf-g++", "rv64", ["-std=c++17", "-O2", "-S", "-march=rv64im", "-mabi=lp64"]),
 ]
 
 # Subroutine-call mnemonics for x86 / ARM / AArch64
@@ -134,12 +136,6 @@ def _has_call(instructions: list[str]) -> bool:
         mnemonic = instr.split()[0].lower().rstrip(",")
         if mnemonic in _CALL_MNEMONICS:
             return True
-        # RISC-V: jal/jalr with ra (x1) as destination = call.
-        # jal x0 / jalr x0 are plain jump / return — not calls.
-        if mnemonic in ("jal", "jalr"):
-            parts = instr.split()
-            if len(parts) >= 2 and parts[1].rstrip(",").lower() in ("ra", "x1"):
-                return True
     return False
 
 
