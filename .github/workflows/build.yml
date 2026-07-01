@@ -39,8 +39,21 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
+  assembly:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Install RISC-V cross-compiler
+        run: sudo apt-get install -y gcc-riscv64-unknown-elf
+      - run: make install
+      - name: Run assembly quality tests
+        run: uv run pytest tests/test_assembly.py -v
+
   build:
-    needs: [check, test]
+    needs: [check, test, assembly]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
