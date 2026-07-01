@@ -1,0 +1,44 @@
+name: PeakRDL-halcpp test
+
+on:
+  push:
+    branches:
+      - "*"
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compiler: [ {cpp: g++, c: gcc}, {cpp: clang++, c: clang} ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get remove --purge man-db -y
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            cmake \
+            make \
+            clang \
+            lld \
+            gcc g++ \
+            tree \
+            python3 python3-pip
+          pip install .
+
+      - name: Configure CMake
+        run: |
+          cmake -S tests -B build \
+            -DCMAKE_C_COMPILER=${{ matrix.compiler.c }} \
+            -DCMAKE_CXX_COMPILER=${{ matrix.compiler.cpp }}
+
+      - name: Build
+        run: cmake --build build
+
+      - name: Run tests
+        working-directory: build
+        run: ctest --output-on-failure

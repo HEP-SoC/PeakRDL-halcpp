@@ -1,0 +1,7 @@
+addrmap addrmap_rw_reg_2d_array {
+    reg {
+        field {sw=rw;} f1[4:0] = 0;
+        field {sw=rw;} f2[8:5] = 0;
+    } r1[3][2];
+};
+

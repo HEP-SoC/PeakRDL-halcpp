@@ -5,6 +5,7 @@
 #include <type_traits>
 #include "halcpp_utils.h"
 #include "field_node.h"
+#include "fixp_field_node.h"
 #include "reg_node.h"
 #include "regfile_node.h"
 #include "array_nodes.h"

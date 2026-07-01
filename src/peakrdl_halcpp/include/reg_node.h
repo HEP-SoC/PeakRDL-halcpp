@@ -106,12 +106,12 @@ namespace halcpp
          * @return operator const T() The value of the register converted to type T.
          */
         template <typename T>
-        inline operator const T()
-        {
+        inline operator T() const {
             static_assert(std::is_integral<T>::value, "T must be an integral type.");
             static_assert(
-                sizeof(T) >= (float)(BASE_TYPE::width / 8),
+                sizeof(T) >= (BASE_TYPE::width / 8),
                 "T must be smaller than or equal to Field width, otherwise data will be lost");
+
             return static_cast<T>(get());
         }
     };

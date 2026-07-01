@@ -1,0 +1,11 @@
+addrmap addrmap_mixed_access {
+    reg {
+        field {sw=rw;} f1[3:0] = 0;
+        field {sw=r;} f2[7:4] = 0;
+        field {sw=w;} f3[11:8] = 0;
+        field {sw=rw;} f5[15:12] = 0;
+        field {sw=r;} f6[19:16] = 0;
+        field {sw=w;} f7[23:20] = 0;
+    } r1;
+};
+

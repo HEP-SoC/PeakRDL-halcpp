@@ -1,0 +1,13 @@
+addrmap addrmap_hier_mixed{
+    addrmap_rw rw_ip0;
+    addrmap_wo wo_ip0;
+    addrmap_ro ro_ip0;
+
+    addrmap_rw rw_ip1;
+    addrmap_wo wo_ip1;
+    addrmap_ro ro_ip1;
+};
+
+
+
+
