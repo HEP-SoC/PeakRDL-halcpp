@@ -19,7 +19,7 @@ namespace enum_field_nm
         static const halcpp::Const<2, 2> SLEEP; // Sleep mode
     };
 
-    
+
     template <uint32_t BASE, uint32_t WIDTH, typename PARENT_TYPE>
     class CTRL_REG : public halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>
     {

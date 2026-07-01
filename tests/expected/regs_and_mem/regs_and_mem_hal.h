@@ -12,7 +12,7 @@
 namespace regs_and_mem_nm
 {
 
-    
+
     template <uint32_t BASE, uint32_t WIDTH, typename PARENT_TYPE>
     class CSR : public halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>
     {
@@ -25,7 +25,7 @@ namespace regs_and_mem_nm
     };
 
 
-    
+
     template <uint32_t BASE, uint32_t WIDTH, typename PARENT_TYPE>
     class CSR2 : public halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>
     {

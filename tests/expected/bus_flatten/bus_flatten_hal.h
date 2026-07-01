@@ -13,7 +13,7 @@
 namespace bus_flatten_nm
 {
 
-    
+
     template <uint32_t BASE, uint32_t WIDTH, typename PARENT_TYPE>
     class TOP_CTRL : public halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>
     {

@@ -115,7 +115,7 @@ void assert_rw_at(uint32_t bit_idx, uint32_t exp_bit_val, uint32_t exp_field_val
     uint32_t mask = 1u << bit_idx;
     uint32_t rec_bit = (actual_field_val & mask) ? 1u : 0u;
 
-    if ((exp_bit_val != rec_bit) or 
+    if ((exp_bit_val != rec_bit) or
         (exp_field_val != actual_field_val)) {
         std::cerr << "Field RW at() accessor test error for " << field_path;
         std::cerr << "\n\tBit index: " << std::dec << bit_idx;

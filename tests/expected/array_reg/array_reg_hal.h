@@ -12,7 +12,7 @@
 namespace array_reg_nm
 {
 
-    
+
     template <uint32_t BASE, uint32_t WIDTH, typename PARENT_TYPE>
     class CHAN_T : public halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>
     {

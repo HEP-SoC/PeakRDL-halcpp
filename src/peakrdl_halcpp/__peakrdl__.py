@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
 import pathlib
+from typing import TYPE_CHECKING
 
 from peakrdl.plugins.exporter import ExporterSubcommandPlugin
 
@@ -91,5 +91,4 @@ class Exporter(ExporterSubcommandPlugin):
 
             test_outdir = pathlib.Path(options.output) / "tests"
             test_outdir.mkdir(parents=True, exist_ok=True)
-            tests.export(node=top_node,
-                         outdir=str(test_outdir))
+            tests.export(node=top_node, outdir=str(test_outdir))

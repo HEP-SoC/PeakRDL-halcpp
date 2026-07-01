@@ -22,6 +22,21 @@ if TYPE_CHECKING:
 
 _HalNodeT = TypeVar("_HalNodeT", bound="HalBaseNode")
 
+
+class MissingRdlPropertyError(ValueError):
+    """Raised when a required RDL property is not defined on a node."""
+
+    def __init__(self) -> None:
+        super().__init__("One of intwidth or fracwidth properties need to be defined for FixpFieldNode")
+
+
+class UnexpectedAccessRightsError(ValueError):
+    """Raised when a node's software access rights do not match any known combination."""
+
+    def __init__(self, inst_name: str | None) -> None:
+        super().__init__(f"Node field access rights are not found {inst_name}")
+
+
 # Logger generation for halnode module
 halnode_logger = logging.getLogger("halnode_logger")
 # Console handler
@@ -384,10 +399,7 @@ class HalFieldNode(HalBaseNode, FieldNode):
         elif self.is_sw_readable:
             return "FieldRO"
         else:
-            raise ValueError(  # noqa: TRY003
-                f"Node field access rights are not found \
-                              {self.inst.inst_name}"
-            )
+            raise UnexpectedAccessRightsError(self.inst.inst_name)
 
     def get_enums(self):
         """Returns the enumeration(s) of a FieldNode.
@@ -420,37 +432,38 @@ class HalFieldNode(HalBaseNode, FieldNode):
 
         return False, None, None, None, None, None
 
+
 class HalFixpFieldNode(HalFieldNode, FieldNode):
     """HalFixpFieldNode class inheriting from HalBaseNode class and systemrdl FieldNode class.
 
-        Class methods:
+    Class methods:
 
-        - :func:`get_enums`
+    - :func:`get_enums`
     """
 
     @property
     def fracwidth(self) -> int:
-        intwidth: int|None = self.get_property("intwidth", default=None)
-        fracwidth: int|None = self.get_property("fracwidth", default=None)
+        intwidth: int | None = self.get_property("intwidth", default=None)
+        fracwidth: int | None = self.get_property("fracwidth", default=None)
 
         if fracwidth:
             return int(fracwidth)
         elif intwidth:
             return self.width - intwidth
-        
-        raise ValueError("One of intwidth or fracwidth properties need to be defined fro FixpFieldNode")
+
+        raise MissingRdlPropertyError()
 
     @property
     def intwidth(self) -> int:
-        intwidth: int|None = self.get_property("intwidth", default=None)
-        fracwidth: int|None = self.get_property("fracwidth", default=None)
+        intwidth: int | None = self.get_property("intwidth", default=None)
+        fracwidth: int | None = self.get_property("fracwidth", default=None)
 
         if intwidth:
             return int(intwidth)
         elif fracwidth:
             return self.width - fracwidth
-        
-        raise ValueError("One of intwidth or fracwidth properties need to be defined fro FixpFieldNode")
+
+        raise MissingRdlPropertyError()
 
     @property
     def cpp_access_type(self) -> str:
@@ -462,8 +475,8 @@ class HalFixpFieldNode(HalFieldNode, FieldNode):
         elif self.is_sw_readable:
             return "FixpFieldRO"
         else:
-            raise ValueError(f'Node field access rights are not found \
-                              {self.inst.inst_name}')
+            raise UnexpectedAccessRightsError(self.inst.inst_name)
+
 
 class HalRegNode(HalBaseNode, RegNode):
     """HAL node wrapping a SystemRDL register (:class:`~systemrdl.node.RegNode`).

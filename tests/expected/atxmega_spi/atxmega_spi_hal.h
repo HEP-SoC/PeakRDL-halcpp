@@ -12,7 +12,7 @@
 namespace atxmega_spi_nm
 {
 
-    
+
     template <uint32_t BASE, uint32_t WIDTH, typename PARENT_TYPE>
     class CTRL : public halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>
     {
@@ -30,7 +30,7 @@ namespace atxmega_spi_nm
     };
 
 
-    
+
     template <uint32_t BASE, uint32_t WIDTH, typename PARENT_TYPE>
     class INTCTRL : public halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>
     {
@@ -43,7 +43,7 @@ namespace atxmega_spi_nm
     };
 
 
-    
+
     template <uint32_t BASE, uint32_t WIDTH, typename PARENT_TYPE>
     class STATUS : public halcpp::RegRO<BASE, WIDTH, PARENT_TYPE>
     {

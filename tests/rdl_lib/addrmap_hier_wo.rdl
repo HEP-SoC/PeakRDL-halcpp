@@ -3,6 +3,3 @@ addrmap addrmap_hier_wo{
     addrmap_wo wo_ip1;
     addrmap_wo wo_ip2;
 };
-
-
-

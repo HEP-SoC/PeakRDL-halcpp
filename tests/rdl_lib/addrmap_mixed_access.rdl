@@ -8,4 +8,3 @@ addrmap addrmap_mixed_access {
         field {sw=w;} f7[23:20] = 0;
     } r1;
 };
-

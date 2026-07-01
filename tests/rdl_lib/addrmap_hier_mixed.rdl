@@ -7,7 +7,3 @@ addrmap addrmap_hier_mixed{
     addrmap_wo wo_ip1;
     addrmap_ro ro_ip1;
 };
-
-
-
-

@@ -3,5 +3,3 @@ addrmap addrmap_hier_ro{
     addrmap_ro ro_ip1;
     addrmap_ro ro_ip2;
 };
-
-

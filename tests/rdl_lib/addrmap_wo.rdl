@@ -9,4 +9,3 @@ addrmap addrmap_wo {
         field {sw=w;} f6[31:16] = 0;
     } r2;
 };
-

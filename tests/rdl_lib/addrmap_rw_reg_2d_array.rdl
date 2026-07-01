@@ -4,4 +4,3 @@ addrmap addrmap_rw_reg_2d_array {
         field {sw=rw;} f2[8:5] = 0;
     } r1[3][2];
 };
-

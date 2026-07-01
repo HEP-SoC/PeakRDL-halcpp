@@ -12,7 +12,7 @@
 namespace leaf_t_nm
 {
 
-    
+
     template <uint32_t BASE, uint32_t WIDTH, typename PARENT_TYPE>
     class DATA_REG : public halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>
     {

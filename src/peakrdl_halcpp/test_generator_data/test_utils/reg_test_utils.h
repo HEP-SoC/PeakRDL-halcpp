@@ -77,5 +77,3 @@ void test_wo_reg(REG_T &reg){
 }
 
 #endif // !__REG_TEST_UTILS_H_
-
-
