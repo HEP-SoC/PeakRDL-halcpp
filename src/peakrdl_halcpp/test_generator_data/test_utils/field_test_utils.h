@@ -100,7 +100,7 @@ void test_rw_field_marching_ones(FIELD_T &field, const char* field_path){
     uint32_t width = field.get_width();
     test_rw_field(0, 0, field, field_path);
     for (uint32_t i = 0; i < width; i++) {
-        uint32_t write_val = 1 << i;
+        uint32_t write_val = 1u << i;
         test_rw_field(write_val, write_val, field, field_path);
     }
 }
@@ -108,7 +108,8 @@ void test_rw_field_marching_ones(FIELD_T &field, const char* field_path){
 template<typename FIELD_T>
 void test_rw_field_overflow(FIELD_T &field, const char* field_path){
     uint32_t width = field.get_width();
-    test_rw_field((1 << width), 0, field, field_path);
+    uint32_t overflow_val = (width < 32u) ? (1u << width) : 0u;
+    test_rw_field(overflow_val, 0, field, field_path);
 }
 
 void assert_rw_at(uint32_t bit_idx, uint32_t exp_bit_val, uint32_t exp_field_val, uint32_t actual_field_val, const char* field_path) {
@@ -134,13 +135,13 @@ void test_rw_field_at_accessor(FIELD_T &field, const char* field_path){
     uint32_t exp_val = 0;
     for_sequence<WIDTH>([&field, &exp_val, &field_path](auto i) {
         field.template at<i>() = 1;
-        exp_val = exp_val | (1 << i);
+        exp_val = exp_val | (1u << i);
         assert_rw_at(i, 1, exp_val, field.get(), field_path);
     });
 
     // Set the last bit of the field to 0, (currently all bits are 1)
     field.template at<-1>() = 0;
-    exp_val = (1 << (WIDTH-1)) - 1;
+    exp_val = (1u << (WIDTH-1)) - 1u;
     assert_rw_at(WIDTH-1, 0, exp_val, field.get(), field_path);
 }
 
