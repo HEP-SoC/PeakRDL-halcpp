@@ -19,6 +19,10 @@ namespace regs_and_mem_nm
     public:
         using TYPE = CSR<BASE, WIDTH, PARENT_TYPE>;
 
+        static constexpr uint32_t onwrite_hazard_mask = 0x0;
+        static constexpr uint32_t onwrite_hazard_safe_val = 0x0;
+        static constexpr bool has_onread_hazard = false;
+
         static halcpp::FieldRW<0, 7, TYPE> ctrl;
 
         using halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>::operator=;
@@ -31,6 +35,10 @@ namespace regs_and_mem_nm
     {
     public:
         using TYPE = CSR2<BASE, WIDTH, PARENT_TYPE>;
+
+        static constexpr uint32_t onwrite_hazard_mask = 0x0;
+        static constexpr uint32_t onwrite_hazard_safe_val = 0x0;
+        static constexpr bool has_onread_hazard = false;
 
         static halcpp::FieldRW<0, 7, TYPE> ctrl;
 

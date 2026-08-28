@@ -19,6 +19,10 @@ namespace atxmega_spi_nm
     public:
         using TYPE = CTRL<BASE, WIDTH, PARENT_TYPE>;
 
+        static constexpr uint32_t onwrite_hazard_mask = 0x0;
+        static constexpr uint32_t onwrite_hazard_safe_val = 0x0;
+        static constexpr bool has_onread_hazard = false;
+
         static halcpp::FieldRW<0, 1, TYPE> PRESCALER;
         static halcpp::FieldRW<2, 3, TYPE> MODE;
         static halcpp::FieldRW<4, 4, TYPE> MASTER;
@@ -37,6 +41,10 @@ namespace atxmega_spi_nm
     public:
         using TYPE = INTCTRL<BASE, WIDTH, PARENT_TYPE>;
 
+        static constexpr uint32_t onwrite_hazard_mask = 0x0;
+        static constexpr uint32_t onwrite_hazard_safe_val = 0x0;
+        static constexpr bool has_onread_hazard = false;
+
         static halcpp::FieldRW<0, 1, TYPE> INTLVL;
 
         using halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>::operator=;
@@ -49,6 +57,10 @@ namespace atxmega_spi_nm
     {
     public:
         using TYPE = STATUS<BASE, WIDTH, PARENT_TYPE>;
+
+        static constexpr uint32_t onwrite_hazard_mask = 0x0;
+        static constexpr uint32_t onwrite_hazard_safe_val = 0x0;
+        static constexpr bool has_onread_hazard = false;
 
         static halcpp::FieldRO<6, 6, TYPE> WRCOL;
         static halcpp::FieldRO<7, 7, TYPE> IF;
@@ -67,6 +79,10 @@ namespace atxmega_spi_nm
     {
     public:
         using TYPE = DATA<BASE, WIDTH, PARENT_TYPE>;
+
+        static constexpr uint32_t onwrite_hazard_mask = 0x0;
+        static constexpr uint32_t onwrite_hazard_safe_val = 0x0;
+        static constexpr bool has_onread_hazard = false;
 
         static halcpp::FieldWO<0, 7, TYPE> WDATA;
         static halcpp::FieldRO<0, 7, TYPE> RDATA;
