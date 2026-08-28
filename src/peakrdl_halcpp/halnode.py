@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Optional, Iterator, List
+from typing import TYPE_CHECKING, Optional, Iterator, List, Tuple
 import itertools
 import logging
 
@@ -302,6 +302,18 @@ class HalFieldNode(HalBaseNode, FieldNode):
             raise ValueError(f'Node field access rights are not found \
                               {self.inst.inst_name}')
 
+    @property
+    def onwrite(self) -> Optional[str]:
+        """Returns the SystemRDL 'onwrite' property name (e.g. 'woclr'), or None if unset."""
+        onwrite_prop = self.get_property('onwrite')
+        return onwrite_prop.name if onwrite_prop is not None else None
+
+    @property
+    def onread(self) -> Optional[str]:
+        """Returns the SystemRDL 'onread' property name (e.g. 'rclr'), or None if unset."""
+        onread_prop = self.get_property('onread')
+        return onread_prop.name if onread_prop is not None else None
+
     def get_enums(self):
         """Returns the enumeration(s) of a FieldNode.
 
@@ -378,6 +390,54 @@ class HalRegNode(HalBaseNode, RegNode):
     def width(self) -> int:
         """Returns the register width in bits, derived from the highest bit position of its fields."""
         return max([c.high for c in self.halchildren(HalFieldNode)]) + 1
+
+    # onwrite values where writing 0 is always a no-op (safe to echo back 0)
+    _ONWRITE_ZERO_SAFE = {'woset', 'woclr', 'wot'}
+    # onwrite values where writing 1 is always a no-op (safe to echo back 1)
+    _ONWRITE_ONE_SAFE = {'wzs', 'wzc', 'wzt'}
+    # onwrite values that trigger unconditionally on any write; no safe echo value exists
+    _ONWRITE_UNSAFE = {'wclr', 'wset', 'wuser'}
+
+    def get_onwrite_hazard(self) -> Tuple[int, int]:
+        """Computes the bitmask/safe-echo-value needed to avoid disturbing sibling fields
+        with write side effects (onwrite=woclr/woset/... etc.) when another field in the
+        same register is set via read-modify-write.
+
+        Returns
+        -------
+        tuple
+            ``(mask, safe_val)`` where ``mask`` has a bit set for every bit position
+            belonging to a field with a maskable onwrite side effect, and ``safe_val``
+            holds the no-op bit value (0 or 1) to echo back for each of those bits.
+        """
+        mask = 0
+        safe_val = 0
+        for f in self.halchildren(HalFieldNode):
+            onwrite = f.onwrite
+            if onwrite is None:
+                continue
+            field_bits = ((1 << (f.high - f.low + 1)) - 1) << f.low
+            if onwrite in HalRegNode._ONWRITE_UNSAFE:
+                halnode_logger.warning(
+                    f"Field '{f.inst_name}' in register '{self.inst_name}' has onwrite={onwrite}, "
+                    f"which triggers unconditionally on any write to the register. This cannot be "
+                    f"protected against in software; writing any other field in this register will "
+                    f"disturb '{f.inst_name}'.")
+                continue
+            mask |= field_bits
+            if onwrite in HalRegNode._ONWRITE_ONE_SAFE:
+                safe_val |= field_bits
+        return mask, safe_val
+
+    def has_onread_hazard(self) -> bool:
+        """Returns True if any field in this register has an onread side effect
+        (e.g. rclr, rset), making a full register read destructive.
+
+        When True, per-field set() (which performs a read-modify-write) cannot be used
+        safely on this register: a mere incidental read of the register (needed to
+        preserve the other fields' values) would silently disturb this field.
+        """
+        return any(f.onread is not None for f in self.halchildren(HalFieldNode))
 
     def get_template_line(self) -> str:
         """Returns the class template string."""

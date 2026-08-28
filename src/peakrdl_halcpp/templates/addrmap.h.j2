@@ -51,6 +51,11 @@ namespace {{ halnode.orig_type_name }}_nm
     public:
         using TYPE = {{ r.orig_type_name|upper }}{{ r.get_cls_tmpl_params() }};
 
+    {% set hz_mask, hz_safe_val = r.get_onwrite_hazard() %}
+        static constexpr uint32_t onwrite_hazard_mask = 0x{{ "%0x"|format(hz_mask) }};
+        static constexpr uint32_t onwrite_hazard_safe_val = 0x{{ "%0x"|format(hz_safe_val) }};
+        static constexpr bool has_onread_hazard = {{ "true" if r.has_onread_hazard() else "false" }};
+
     {# Add the fields to the register #}
     {% for f in r.halchildren(children_type=HalFieldNode, skip_buses=skip_buses) %}
         static halcpp::{{ f.cpp_access_type }}<{{ f.low }}, {{ f.high }}, TYPE> {{ f.inst_name }};
@@ -90,6 +95,11 @@ namespace {{ halnode.orig_type_name }}_nm
     {
     public:
         using TYPE = {{ r.orig_type_name|upper }}{{ r.get_cls_tmpl_params() }};
+
+    {% set hz_mask, hz_safe_val = r.get_onwrite_hazard() %}
+        static constexpr uint32_t onwrite_hazard_mask = 0x{{ "%0x"|format(hz_mask) }};
+        static constexpr uint32_t onwrite_hazard_safe_val = 0x{{ "%0x"|format(hz_safe_val) }};
+        static constexpr bool has_onread_hazard = {{ "true" if r.has_onread_hazard() else "false" }};
 
     {# Add the fields to the register #}
     {% for f in r.halchildren(children_type=HalFieldNode, skip_buses=skip_buses) %}
