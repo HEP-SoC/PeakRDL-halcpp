@@ -127,6 +127,73 @@ namespace halcpp
     template <class TYPE>
     constexpr bool node_has_get_v = node_has_get<TYPE>::value;
 
+    /**
+     * @brief Type trait to check if a type has an `onwrite_hazard_mask` static member.
+     *
+     * Used to detect (at compile time) whether a register type carries the write-side-effect
+     * masking constants emitted by the code generator, without requiring every possible
+     * parent type to define them.
+     *
+     * @tparam TYPE The type to check.
+     */
+    template <class TYPE, class = void>
+    struct node_has_onwrite_hazard : std::false_type
+    {
+    };
+
+    /**
+     * @brief Specialization of `node_has_onwrite_hazard` for types that define
+     * `onwrite_hazard_mask`.
+     *
+     * @tparam TYPE The type to check.
+     */
+    template <class TYPE>
+    struct node_has_onwrite_hazard<TYPE, std::void_t<decltype(TYPE::onwrite_hazard_mask)>> : std::true_type
+    {
+    };
+
+    /**
+     * @brief Convenience variable template for `node_has_onwrite_hazard`.
+     *
+     * @tparam TYPE The type to check.
+     */
+    template <class TYPE>
+    constexpr bool node_has_onwrite_hazard_v = node_has_onwrite_hazard<TYPE>::value;
+
+    /**
+     * @brief Type trait exposing a register's `has_onread_hazard` flag, defaulting to false
+     * for types that don't define it.
+     *
+     * A register has an onread hazard when one of its fields has a destructive-read side
+     * effect (onread=rclr/rset/ruser). Reading such a register - even incidentally, as part
+     * of a read-modify-write to set a sibling field - silently disturbs it.
+     *
+     * @tparam TYPE The type to check.
+     */
+    template <class TYPE, class = void>
+    struct node_onread_hazard : std::false_type
+    {
+    };
+
+    /**
+     * @brief Specialization of `node_onread_hazard` for types that define `has_onread_hazard`.
+     *
+     * @tparam TYPE The type to check.
+     */
+    template <class TYPE>
+    struct node_onread_hazard<TYPE, std::void_t<decltype(TYPE::has_onread_hazard)>>
+        : std::integral_constant<bool, TYPE::has_onread_hazard>
+    {
+    };
+
+    /**
+     * @brief Convenience variable template for `node_onread_hazard`.
+     *
+     * @tparam TYPE The type to check.
+     */
+    template <class TYPE>
+    constexpr bool node_onread_hazard_v = node_onread_hazard<TYPE>::value;
+
 }
 
 #endif // !_HALCPP_UTILS_H_

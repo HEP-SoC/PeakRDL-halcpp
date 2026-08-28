@@ -99,7 +99,20 @@ namespace halcpp
         static inline void set(typename BASE_TYPE::dataType val)
         {
             if constexpr (node_has_get_v<parent>)
-                parent::set((parent::get() & BASE_TYPE::field_mask()) | ((val & BASE_TYPE::bit_mask()) << BASE_TYPE::start_bit));
+            {
+                static_assert(!node_onread_hazard_v<parent>,
+                    "This register contains a field with a destructive-read side effect "
+                    "(onread=rclr/rset/ruser). Setting a single field requires a "
+                    "read-modify-write, which would silently disturb that field. Write the "
+                    "whole register instead.");
+
+                uint32_t reg_val = parent::get();
+                if constexpr (node_has_onwrite_hazard_v<parent>)
+                    reg_val = (reg_val & ~parent::onwrite_hazard_mask)
+                            | (parent::onwrite_hazard_safe_val & parent::onwrite_hazard_mask);
+
+                parent::set((reg_val & BASE_TYPE::field_mask()) | ((val & BASE_TYPE::bit_mask()) << BASE_TYPE::start_bit));
+            }
             else
                 parent::set(val << BASE_TYPE::start_bit);
         }
