@@ -53,7 +53,11 @@ namespace halcpp
          */
         static constexpr uint32_t bit_mask()
         {
-            return (((1u << (width)) - 1));
+            if constexpr (width >= 32) {
+                return ~0u;
+            } else {
+                return ((1u << width) - 1u);
+            }
         }
 
 
