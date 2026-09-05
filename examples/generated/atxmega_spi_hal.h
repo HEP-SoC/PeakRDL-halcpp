@@ -5,10 +5,6 @@
 #include <stdint.h>
 #include "include/halcpp_base.h"
 
-#if defined(__clang__)
-#pragma clang diagnostic ignored "-Wundefined-var-template"
-#endif
-
 namespace atxmega_spi_nm
 {
 
@@ -19,12 +15,12 @@ namespace atxmega_spi_nm
     public:
         using TYPE = CTRL<BASE, WIDTH, PARENT_TYPE>;
 
-        static halcpp::FieldRW<0, 1, TYPE> PRESCALER;
-        static halcpp::FieldRW<2, 3, TYPE> MODE;
-        static halcpp::FieldRW<4, 4, TYPE> MASTER;
-        static halcpp::FieldRW<5, 5, TYPE> DORD;
-        static halcpp::FieldRW<6, 6, TYPE> ENABLE;
-        static halcpp::FieldRW<7, 7, TYPE> CLK2X;
+        static inline halcpp::FieldRW<0, 1, TYPE> PRESCALER;
+        static inline halcpp::FieldRW<2, 3, TYPE> MODE;
+        static inline halcpp::FieldRW<4, 4, TYPE> MASTER;
+        static inline halcpp::FieldRW<5, 5, TYPE> DORD;
+        static inline halcpp::FieldRW<6, 6, TYPE> ENABLE;
+        static inline halcpp::FieldRW<7, 7, TYPE> CLK2X;
 
         using halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>::operator=;
     };
@@ -37,7 +33,7 @@ namespace atxmega_spi_nm
     public:
         using TYPE = INTCTRL<BASE, WIDTH, PARENT_TYPE>;
 
-        static halcpp::FieldRW<0, 1, TYPE> INTLVL;
+        static inline halcpp::FieldRW<0, 1, TYPE> INTLVL;
 
         using halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>::operator=;
     };
@@ -50,8 +46,8 @@ namespace atxmega_spi_nm
     public:
         using TYPE = STATUS<BASE, WIDTH, PARENT_TYPE>;
 
-        static halcpp::FieldRO<6, 6, TYPE> WRCOL;
-        static halcpp::FieldRO<7, 7, TYPE> IF;
+        static inline halcpp::FieldRO<6, 6, TYPE> WRCOL;
+        static inline halcpp::FieldRO<7, 7, TYPE> IF;
     };
 
 
@@ -68,8 +64,8 @@ namespace atxmega_spi_nm
     public:
         using TYPE = DATA<BASE, WIDTH, PARENT_TYPE>;
 
-        static halcpp::FieldWO<0, 7, TYPE> WDATA;
-        static halcpp::FieldRO<0, 7, TYPE> RDATA;
+        static inline halcpp::FieldWO<0, 7, TYPE> WDATA;
+        static inline halcpp::FieldRO<0, 7, TYPE> RDATA;
 
         using halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>::operator=;
     };
@@ -89,10 +85,10 @@ class ATXMEGA_SPI_HAL : public AddrmapNode<BASE, PARENT_TYPE>
 public:
     using TYPE = ATXMEGA_SPI_HAL<BASE, PARENT_TYPE>;
 
-    static atxmega_spi_nm::CTRL<0x0, 8, TYPE> CTRL;
-    static atxmega_spi_nm::INTCTRL<0x1, 2, TYPE> INTCTRL;
-    static atxmega_spi_nm::STATUS<0x2, 8, TYPE> STATUS;
-    static atxmega_spi_nm::DATA<0x3, 8, TYPE> DATA;
+    static inline atxmega_spi_nm::CTRL<0x0, 8, TYPE> CTRL;
+    static inline atxmega_spi_nm::INTCTRL<0x1, 2, TYPE> INTCTRL;
+    static inline atxmega_spi_nm::STATUS<0x2, 8, TYPE> STATUS;
+    static inline atxmega_spi_nm::DATA<0x3, 8, TYPE> DATA;
 };
 
 #endif // !__ATXMEGA_SPI_HAL_H_

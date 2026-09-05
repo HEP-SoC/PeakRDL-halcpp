@@ -5,10 +5,6 @@
 #include <stdint.h>
 #include "include/halcpp_base.h"
 
-#if defined(__clang__)
-#pragma clang diagnostic ignored "-Wundefined-var-template"
-#endif
-
 namespace regs_and_mem_nm
 {
 
@@ -19,7 +15,7 @@ namespace regs_and_mem_nm
     public:
         using TYPE = CSR<BASE, WIDTH, PARENT_TYPE>;
 
-        static halcpp::FieldRW<0, 7, TYPE> ctrl;
+        static inline halcpp::FieldRW<0, 7, TYPE> ctrl;
 
         using halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>::operator=;
     };
@@ -32,7 +28,7 @@ namespace regs_and_mem_nm
     public:
         using TYPE = CSR2<BASE, WIDTH, PARENT_TYPE>;
 
-        static halcpp::FieldRW<0, 7, TYPE> ctrl;
+        static inline halcpp::FieldRW<0, 7, TYPE> ctrl;
 
         using halcpp::RegRW<BASE, WIDTH, PARENT_TYPE>::operator=;
     };
@@ -58,10 +54,10 @@ class REGS_AND_MEM_HAL : public AddrmapNode<BASE, PARENT_TYPE>
 public:
     using TYPE = REGS_AND_MEM_HAL<BASE, PARENT_TYPE>;
 
-    static regs_and_mem_nm::CSR<0x0, 8, TYPE> csr;
-    static regs_and_mem_nm::CSR2<0x4, 8, TYPE> csr2;
-    static regs_and_mem_nm::MEM1<0x1000, 256, TYPE> mem1;
-    static regs_and_mem_nm::MEM2_T<0x2000, 256, TYPE> mem2;
+    static inline regs_and_mem_nm::CSR<0x0, 8, TYPE> csr;
+    static inline regs_and_mem_nm::CSR2<0x4, 8, TYPE> csr2;
+    static inline regs_and_mem_nm::MEM1<0x1000, 256, TYPE> mem1;
+    static inline regs_and_mem_nm::MEM2_T<0x2000, 256, TYPE> mem2;
 };
 
 #endif // !__REGS_AND_MEM_HAL_H_
